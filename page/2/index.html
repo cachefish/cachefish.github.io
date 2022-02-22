@@ -162,6 +162,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/17/%E5%8D%81%E4%B8%80%E3%80%81springboot-%E9%85%8D%E7%BD%AElog4j2%E4%BB%A5%E5%8F%8A%E6%89%93%E5%8C%85%E6%88%90zip%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/17/%E5%8D%81%E4%B8%80%E3%80%81springboot-%E9%85%8D%E7%BD%AElog4j2%E4%BB%A5%E5%8F%8A%E6%89%93%E5%8C%85%E6%88%90zip%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">十一、springboot 配置log4j2以及打包成zip文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-17 16:58:14" itemprop="dateCreated datePublished" datetime="2022-02-17T16:58:14+08:00">2022-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-30 09:29:29" itemprop="dateModified" datetime="2020-03-30T09:29:29+08:00">2020-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springBoot/" itemprop="url" rel="index"><span itemprop="name">springBoot</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>其实我们前面已经配置了日志，但是最近总感觉日志日志格式看的不舒服，并且每次打包都是一个jar 文件，lib都包含在jar 中，每次做很小的修改都需要重新替换jar文件，jar文件会比较大，传输起来比较慢。所以做一些改进。</p>
+<h1 id="配置log4j2"><a href="#配置log4j2" class="headerlink" title="配置log4j2"></a>配置log4j2</h1><p>好了，废话不多说了，先来在Springboot中配置log4j2吧。</p>
+<h2 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h2><p>springboot 项目默认的是使用logback 的，所以我们想要使用log4j ，需要将原来的logback 框架屏蔽掉，再引入log4j.<br>首先我们在pom.xml 文件中加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">           &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">           &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">           &lt;exclusions&gt;&lt;!-- 去掉默认配置 --&gt;</span><br><span class="line">               &lt;exclusion&gt;</span><br><span class="line">                   &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                   &lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;</span><br><span class="line">               &lt;/exclusion&gt;</span><br><span class="line">           &lt;/exclusions&gt;</span><br><span class="line">       &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">       &lt;dependency&gt;</span><br><span class="line">           &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">           &lt;artifactId&gt;spring-boot-starter-log4j2&lt;/artifactId&gt;</span><br><span class="line">       &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写log4j2-xml"><a href="#编写log4j2-xml" class="headerlink" title="编写log4j2.xml"></a>编写log4j2.xml</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;Configuration status=&quot;WARN&quot; monitorInterval=&quot;300&quot; packages=&quot;cn.mastercom.cat&quot;&gt;</span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;property name=&quot;MtnoWebRoot&quot; &gt;$&#123;sys:user.dir&#125;/logs&lt;/property&gt;</span><br><span class="line">        &lt;property name=&quot;INFO_FILE&quot;&gt;zlflovemm_log&lt;/property&gt;</span><br><span class="line">        &lt;property name=&quot;ERROR_FILE&quot;&gt;zlflovemm__error&lt;/property&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line">    &lt;Appenders&gt;</span><br><span class="line">        &lt;Console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;</span><br><span class="line">            &lt;ThresholdFilter level=&quot;ALL&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;</span><br><span class="line">            &lt;PatternLayout pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; [%t] %-5level %logger&#123;36&#125; - %msg%n&quot; /&gt;</span><br><span class="line">        &lt;/Console&gt;</span><br><span class="line"></span><br><span class="line">        &lt;RollingRandomAccessFile name=&quot;infolog&quot;</span><br><span class="line">                                 fileName=&quot;$&#123;MtnoWebRoot&#125;/$&#123;INFO_FILE&#125;.log&quot;</span><br><span class="line">                                 filePattern=&quot;$&#123;MtnoWebRoot&#125;/$&#123;INFO_FILE&#125;-%d&#123;yyyy-MM-dd&#125;-%i.log&quot;&gt;</span><br><span class="line">            &lt;PatternLayout</span><br><span class="line">                    pattern=&quot;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%t] [%X&#123;sessionID&#125;] [%X&#123;imei&#125;] %-5level %logger&#123;36&#125; - %msg%n&quot; /&gt;</span><br><span class="line">            &lt;!--  --&gt;</span><br><span class="line">            &lt;Policies&gt;</span><br><span class="line">                &lt;TimeBasedTriggeringPolicy interval=&quot;1&quot; modulate=&quot;true&quot; /&gt;</span><br><span class="line">                &lt;SizeBasedTriggeringPolicy size=&quot;2MB&quot; /&gt;</span><br><span class="line">            &lt;/Policies&gt;</span><br><span class="line">            &lt;DefaultRolloverStrategy max=&quot;1000&quot;&gt;</span><br><span class="line">                &lt;Delete basePath=&quot;$&#123;MtnoWebRoot&#125;&quot; maxDepth=&quot;1&quot;&gt;</span><br><span class="line">                    &lt;IfFileName glob=&quot;$&#123;INFO_FILE&#125;*.log&quot; /&gt;</span><br><span class="line">                    &lt;IfLastModified age=&quot;30d&quot; /&gt;</span><br><span class="line">                &lt;/Delete&gt;</span><br><span class="line">            &lt;/DefaultRolloverStrategy&gt;</span><br><span class="line">        &lt;/RollingRandomAccessFile&gt;</span><br><span class="line"></span><br><span class="line">        &lt;RollingRandomAccessFile name=&quot;errorlog&quot;</span><br><span class="line">                                 fileName=&quot;$&#123;MtnoWebRoot&#125;/$&#123;ERROR_FILE&#125;.log&quot;</span><br><span class="line">                                 filePattern=&quot;$&#123;MtnoWebRoot&#125;/$&#123;ERROR_FILE&#125;-%d&#123;yyyy-MM-dd&#125;-%i.log&quot;&gt;</span><br><span class="line">            &lt;PatternLayout</span><br><span class="line">                    pattern=&quot;%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; [%t] %-5level %logger&#123;36&#125; - %msg%n&quot; /&gt;</span><br><span class="line">            &lt;Policies&gt;</span><br><span class="line">                &lt;TimeBasedTriggeringPolicy interval=&quot;1&quot; modulate=&quot;true&quot; /&gt;</span><br><span class="line">                &lt;SizeBasedTriggeringPolicy size=&quot;200MB&quot; /&gt;</span><br><span class="line">            &lt;/Policies&gt;</span><br><span class="line">            &lt;DefaultRolloverStrategy max=&quot;1000&quot;&gt;</span><br><span class="line">                &lt;Delete basePath=&quot;$&#123;MtnoWebRoot&#125;&quot; maxDepth=&quot;1&quot;&gt;</span><br><span class="line">                    &lt;IfFileName glob=&quot;$&#123;INFO_FILE&#125;*.log&quot; /&gt;</span><br><span class="line">                    &lt;IfLastModified age=&quot;30d&quot; /&gt;</span><br><span class="line">                &lt;/Delete&gt;</span><br><span class="line">            &lt;/DefaultRolloverStrategy&gt;</span><br><span class="line">        &lt;/RollingRandomAccessFile&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &lt;Async name=&quot;Async&quot;&gt;</span><br><span class="line">            &lt;AppenderRef ref=&quot;infolog&quot;/&gt;</span><br><span class="line">            &lt;AppenderRef ref=&quot;errorlog&quot;/&gt;</span><br><span class="line">        &lt;/Async&gt;</span><br><span class="line">    &lt;/Appenders&gt;</span><br><span class="line"></span><br><span class="line">    &lt;Loggers&gt;</span><br><span class="line"></span><br><span class="line">        &lt;asyncRoot level=&quot;INFO&quot;&gt;</span><br><span class="line">            &lt;AppenderRef ref=&quot;infolog&quot;/&gt;</span><br><span class="line">            &lt;AppenderRef ref=&quot;errorlog&quot; level=&quot;error&quot;/&gt;</span><br><span class="line">            &lt;AppenderRef ref=&quot;Console&quot; /&gt;</span><br><span class="line">        &lt;/asyncRoot&gt;</span><br><span class="line">    &lt;/Loggers&gt;</span><br><span class="line">&lt;/Configuration&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面配置的是生成日志的格式，大家可以自行修改。以及配置了单个日志文件最大为200M ,只保留最近30天的文件。</p>
+<h2 id="application-properties-配置"><a href="#application-properties-配置" class="headerlink" title="application.properties 配置"></a>application.properties 配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#日志配置</span><br><span class="line">logging.config=classpath:log4j2.xml</span><br><span class="line">debug=false</span><br></pre></td></tr></table></figure>
+
+
+<p>实现上面这三步，就轻松的在项目中使用log4j日志啦。</p>
+<h1 id="打包外置配置文件"><a href="#打包外置配置文件" class="headerlink" title="打包外置配置文件"></a>打包外置配置文件</h1><p>上面配置的日志，先不测试了，等这个打包的配置也配置好了，再来一起测试。</p>
+<p>如果我们直接使用自带的mvn package 的话，会将我们依赖的jar 包已经配置文件统统打包成可运行的jar 文件。这样虽然方便，但是这样的话每次都需要重新打包，并且传输起来比较麻烦，所以我们就需要将lib 和配置文件从jar 文件中分离。这样项目修改了，只需要替换一下比较小的部分就可以了。</p>
+<h2 id="pom-xml-修改"><a href="#pom-xml-修改" class="headerlink" title="pom.xml 修改"></a>pom.xml 修改</h2><p>打开我们的pom.xml 文件,最下面我们的<build></build>中我们加入如下代码。因为我们的项目之前加入了打包成docker 镜像，所以整个的都贴出来，不需要打包成docker的可以去掉。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">       &lt;!--打包后的项目名称--&gt;</span><br><span class="line">       &lt;resources&gt;</span><br><span class="line">           &lt;resource&gt;</span><br><span class="line">               &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">               &lt;targetPath&gt;$&#123;project.build.directory&#125;$&#123;file.separator&#125;classes&lt;/targetPath&gt;</span><br><span class="line">           &lt;/resource&gt;</span><br><span class="line">           &lt;resource&gt;</span><br><span class="line">               &lt;directory&gt;src/main/java&lt;/directory&gt;</span><br><span class="line">               &lt;includes&gt;</span><br><span class="line">                   &lt;!--这里必须包含.xml否则Mybatis的xml无法打包--&gt;</span><br><span class="line">                   &lt;include&gt;**/*.xml&lt;/include&gt;</span><br><span class="line">               &lt;/includes&gt;</span><br><span class="line">               &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">           &lt;/resource&gt;</span><br><span class="line">       &lt;/resources&gt;</span><br><span class="line"></span><br><span class="line">       &lt;plugins&gt;</span><br><span class="line">           &lt;!--java编译插件--&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">               &lt;configuration&gt;</span><br><span class="line">                   &lt;source&gt;1.8&lt;/source&gt;</span><br><span class="line">                   &lt;target&gt;1.8&lt;/target&gt;</span><br><span class="line">                   &lt;encoding&gt;UTF-8&lt;/encoding&gt;</span><br><span class="line">                   &lt;fork&gt;true&lt;/fork&gt;</span><br><span class="line">               &lt;/configuration&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line">           &lt;!--打jar包的插件--&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;</span><br><span class="line">               &lt;configuration&gt;</span><br><span class="line">                   &lt;archive&gt;</span><br><span class="line">                       &lt;manifest&gt;</span><br><span class="line">                           &lt;addClasspath&gt;true&lt;/addClasspath&gt;</span><br><span class="line">                           &lt;classpathPrefix&gt;lib&lt;/classpathPrefix&gt;</span><br><span class="line">                           &lt;!--程序启动入口--&gt;</span><br><span class="line">                           &lt;mainClass&gt;com.quellan.zlflovemm.ZlflovemmApplication&lt;/mainClass&gt;</span><br><span class="line">                       &lt;/manifest&gt;</span><br><span class="line">                       &lt;manifestEntries&gt;</span><br><span class="line">                           &lt;Class-Path&gt;./&lt;/Class-Path&gt;</span><br><span class="line">                       &lt;/manifestEntries&gt;</span><br><span class="line">                   &lt;/archive&gt;</span><br><span class="line">                   &lt;excludes&gt;</span><br><span class="line">                       &lt;exclude&gt;config/**&lt;/exclude&gt;</span><br><span class="line">                   &lt;/excludes&gt;</span><br><span class="line">               &lt;/configuration&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;</span><br><span class="line">               &lt;configuration&gt;</span><br><span class="line">                   &lt;!--not append assembly id in release file name--&gt;</span><br><span class="line">                   &lt;appendAssemblyId&gt;false&lt;/appendAssemblyId&gt;</span><br><span class="line">                   &lt;descriptors&gt;</span><br><span class="line">                       &lt;!--注意这里的路径--&gt;</span><br><span class="line">                       &lt;descriptor&gt;src/main/build/package.xml&lt;/descriptor&gt;</span><br><span class="line">                   &lt;/descriptors&gt;</span><br><span class="line">               &lt;/configuration&gt;</span><br><span class="line">               &lt;executions&gt;</span><br><span class="line">                   &lt;execution&gt;</span><br><span class="line">                       &lt;id&gt;make-assembly&lt;/id&gt;</span><br><span class="line">                       &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">                       &lt;goals&gt;</span><br><span class="line">                           &lt;goal&gt;single&lt;/goal&gt;</span><br><span class="line">                       &lt;/goals&gt;</span><br><span class="line">                   &lt;/execution&gt;</span><br><span class="line">               &lt;/executions&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line"></span><br><span class="line">           &lt;!-- Docker --&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;groupId&gt;com.spotify&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">               &lt;version&gt;1.0.0&lt;/version&gt;</span><br><span class="line">               &lt;!-- 将插件绑定在某个phase执行 --&gt;</span><br><span class="line">               &lt;executions&gt;</span><br><span class="line">                   &lt;execution&gt;</span><br><span class="line">                       &lt;id&gt;build-image&lt;/id&gt;</span><br><span class="line">                       &lt;!-- 用户只需执行mvn package ，就会自动执行mvn docker:build --&gt;</span><br><span class="line">                       &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">                       &lt;goals&gt;</span><br><span class="line">                           &lt;goal&gt;build&lt;/goal&gt;</span><br><span class="line">                       &lt;/goals&gt;</span><br><span class="line">                   &lt;/execution&gt;</span><br><span class="line">               &lt;/executions&gt;</span><br><span class="line">               &lt;configuration&gt;</span><br><span class="line">                   &lt;!-- 指定生成的镜像名 --&gt;</span><br><span class="line">                   &lt;imageName&gt;$&#123;docker.image.prefix&#125;/$&#123;project.artifactId&#125;:$&#123;project.version&#125;&lt;/imageName&gt;</span><br><span class="line">                   &lt;!-- 指定标签 --&gt;</span><br><span class="line">                   &lt;imageTags&gt;</span><br><span class="line">                       &lt;imageTag&gt;$&#123;project.version&#125;&lt;/imageTag&gt;</span><br><span class="line">                   &lt;/imageTags&gt;</span><br><span class="line">                   &lt;!-- 指定 Dockerfile 路径 --&gt;</span><br><span class="line">                   &lt;dockerDirectory&gt;src/main/docker&lt;/dockerDirectory&gt;</span><br><span class="line">                   &lt;!-- 指定远程 docker api地址 --&gt;</span><br><span class="line">                   &lt;dockerHost&gt;http://127.0.0.1:2375&lt;/dockerHost&gt;</span><br><span class="line">                   &lt;resources&gt;</span><br><span class="line">                       &lt;resource&gt;</span><br><span class="line">                           &lt;targetPath&gt;/&lt;/targetPath&gt;</span><br><span class="line">                           &lt;!-- jar包所在的路径此处配置的对应target目录 --&gt;</span><br><span class="line">                           &lt;directory&gt;$&#123;project.build.directory&#125;&lt;/directory&gt;</span><br><span class="line">                           &lt;!-- 需要包含的jar包,这里对应的是Dockerfile中添加的文件名　--&gt;</span><br><span class="line">                           &lt;include&gt;$&#123;project.build.finalName&#125;.jar&lt;/include&gt;</span><br><span class="line">                       &lt;/resource&gt;</span><br><span class="line">                   &lt;/resources&gt;</span><br><span class="line">               &lt;/configuration&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line">       &lt;/plugins&gt;</span><br><span class="line">   &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，如下两个地方，第一个di地方需要需改成我们自己项目的启动类。第二个地方需要配置我们的package.xml 文件路径。内容我们待会讲。</p>
+<p><img src="https://img-blog.csdnimg.cn/20191211180329352.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9xdWVsbGFuYW4uYmxvZy5jc2RuLm5ldA==,size_16,color_FFFFFF,t_70" alt="file"></p>
+<h2 id="package-xml"><a href="#package-xml" class="headerlink" title="package.xml"></a>package.xml</h2><p>我们在pom.xml 中配置好了后，我们在src&#x2F;main 目录下创建一个build 包，早build 目录下创建package.xml 文件。路径就是上面配置的，大家可以按照自己的喜好来。<br>内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;  </span><br><span class="line">&lt;assembly xmlns=&quot;http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;  </span><br><span class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd&quot;&gt;  </span><br><span class="line">    &lt;id&gt;package&lt;/id&gt;  </span><br><span class="line">    &lt;formats&gt;  </span><br><span class="line">        &lt;format&gt;zip&lt;/format&gt;</span><br><span class="line">    &lt;/formats&gt;  </span><br><span class="line">    &lt;!-- 改为false不会出现两层相同的目录 --&gt;</span><br><span class="line">    &lt;includeBaseDirectory&gt;false&lt;/includeBaseDirectory&gt;  </span><br><span class="line">    &lt;fileSets&gt;  </span><br><span class="line">        &lt;fileSet&gt;</span><br><span class="line">            &lt;directory&gt;bin&lt;/directory&gt;</span><br><span class="line">            &lt;outputDirectory&gt;$&#123;file.separator&#125;&lt;/outputDirectory&gt;  </span><br><span class="line">        &lt;/fileSet&gt;  </span><br><span class="line">        &lt;fileSet&gt;  </span><br><span class="line">            &lt;directory&gt;src/main/resources&lt;/directory&gt;  </span><br><span class="line">            &lt;outputDirectory&gt;$&#123;file.separator&#125;&lt;/outputDirectory&gt;  </span><br><span class="line">            &lt;excludes&gt;</span><br><span class="line">            	&lt;exclude&gt;static/**&lt;/exclude&gt;</span><br><span class="line">            	&lt;exclude&gt;templates/**&lt;/exclude&gt;</span><br><span class="line">            &lt;/excludes&gt;</span><br><span class="line">        &lt;/fileSet&gt;  </span><br><span class="line">        &lt;fileSet&gt;  </span><br><span class="line">            &lt;directory&gt;$&#123;project.build.directory&#125;&lt;/directory&gt;</span><br><span class="line">            &lt;outputDirectory&gt;$&#123;file.separator&#125;&lt;/outputDirectory&gt;</span><br><span class="line">            &lt;includes&gt;  </span><br><span class="line">                &lt;include&gt;*.jar&lt;/include&gt;  </span><br><span class="line">            &lt;/includes&gt;  </span><br><span class="line">        &lt;/fileSet&gt;  </span><br><span class="line">    &lt;/fileSets&gt;  </span><br><span class="line">    &lt;dependencySets&gt;  </span><br><span class="line">        &lt;dependencySet&gt;  </span><br><span class="line">    &lt;useProjectArtifact&gt;true&lt;/useProjectArtifact&gt;</span><br><span class="line">            &lt;outputDirectory&gt;lib&lt;/outputDirectory&gt;  </span><br><span class="line">            &lt;scope&gt;runtime&lt;/scope&gt;  </span><br><span class="line">            &lt;!--&lt;unpack&gt;false&lt;/unpack&gt; --&gt;</span><br><span class="line">            &lt;excludes&gt;  </span><br><span class="line">                &lt;!--&lt;exclude&gt;$&#123;project.name&#125;-$&#123;project.version&#125;&lt;/exclude&gt; --&gt;</span><br><span class="line">                &lt;exclude&gt;$&#123;groupId&#125;:$&#123;artifactId&#125;&lt;/exclude&gt;</span><br><span class="line">            &lt;/excludes&gt;  </span><br><span class="line">        &lt;/dependencySet&gt;  </span><br><span class="line">    &lt;/dependencySets&gt;  </span><br><span class="line">&lt;/assembly&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>好啦，上面的已经配置好啦，我们来测试一下。<br>直接mvn package成功后会生成如下文件，包含jar 和zip 文件。</p>
+<p><img src="https://img-blog.csdnimg.cn/20191211180332624.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9xdWVsbGFuYW4uYmxvZy5jc2RuLm5ldA==,size_16,color_FFFFFF,t_70" alt="file"><br>zip 文件解压后，就是我们第一次部署的文件，后面修改代码只用替换jar文件就可以了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20191211180332944.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9xdWVsbGFuYW4uYmxvZy5jc2RuLm5ldA==,size_16,color_FFFFFF,t_70" alt="file"></p>
+<p>我们生成的日志文件</p>
+<p><img src="https://img-blog.csdnimg.cn/20191211180333332.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9xdWVsbGFuYW4uYmxvZy5jc2RuLm5ldA==,size_16,color_FFFFFF,t_70" alt="file"></p>
+<h1 id="番外"><a href="#番外" class="headerlink" title="番外"></a>番外</h1><p>好了，就说这么多啦<br>代码上传到github：<br><a target="_blank" rel="noopener" href="https://github.com/QuellanAn/zlflovemm">https://github.com/QuellanAn/zlflovemm</a></p>
+<p>后续加油♡</p>
+<p>欢迎大家关注个人公众号 “程序员爱酸奶”</p>
+<p>分享各种学习资料，包含java，linux，大数据等。资料包含视频文档以及源码，同时分享本人及投递的优质技术博文。</p>
+<p>如果大家喜欢记得关注和分享哟❤</p>
+<p><img src="https://img-blog.csdnimg.cn/20191015213334732.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI3NzkwMDEx,size_16,color_FFFFFF,t_70" alt="file"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/17/%E5%8D%81%E3%80%81Spring-boot-%E7%AE%80%E5%8D%95%E4%BC%98%E9%9B%85%E7%9A%84%E6%95%B4%E5%90%88-Swagger2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1192,150 +1296,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/17/%E4%BA%8C%E3%80%81docker-%E9%95%9C%E5%83%8F%E5%AE%B9%E5%99%A8%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C-%E8%AE%A9%E6%88%91%E4%BB%AC%E7%94%A8docker-%E6%BA%9C%E5%BE%97%E9%A3%9E%E8%B5%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="来世做春风，浪漫且自由">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cachecatのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/17/%E4%BA%8C%E3%80%81docker-%E9%95%9C%E5%83%8F%E5%AE%B9%E5%99%A8%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C-%E8%AE%A9%E6%88%91%E4%BB%AC%E7%94%A8docker-%E6%BA%9C%E5%BE%97%E9%A3%9E%E8%B5%B7/" class="post-title-link" itemprop="url">二、docker 镜像容器常用操作(让我们用docker 溜得飞起)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-17 16:58:14" itemprop="dateCreated datePublished" datetime="2022-02-17T16:58:14+08:00">2022-02-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-30 09:29:29" itemprop="dateModified" datetime="2020-03-30T09:29:29+08:00">2020-03-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上篇讲了我们如何安装docker，现在该我们一展拳脚的时候了。接下来让我们一起学习一下docker常见的操作，让我们能够会使用 docker。</p>
-<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>在讲使用之前，还是先将一下docker 的基本概念，毕竟上篇就讲了docker 的安装。一些基本的名词还是需要了解一下的。<br>docker 最重要的就是镜像和容器了，还有一个仓库。</p>
-<p>那什么是docker 镜像呢？ </p>
-<p>docker 镜像就相当于一个 root 文件系统，不仅包含容器运行的程序和资源，还包含运行依赖的配置。但是镜像不包含任何动态的数据。</p>
-<p>通俗的来讲就像是我们项目运行需要各种依赖和配置以及各种部署。然后我们将这些环境和程序都打包在一起，形成一个可以直接运行的包。就相当于是docker镜像，将所有需要的环境都集成在一起。在哪都可以运行。</p>
-<p>docker 镜像是分层存储的。docker镜像在构建的时候是一层层构建的前一层是后一层的基础，使得镜像在复用、定制变得更加简单。也由于镜像是分层存储的，所以镜像显示的size 大小并不是实际占用的物理内存。因为有很多中间镜像都是公用的。所以实际占用的内存会比显示的size要小。</p>
-<p><img src="https://img-blog.csdnimg.cn/20191022172419183.jpeg" alt="file"></p>
-<p>查看容器实际的占用的内存使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  system df</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20191022172419421.jpeg" alt="file"></p>
-<p>现在知道镜像了，那镜像怎么使用呢？</p>
-<p>那就是通过容器啦，容器和镜像的关系就像是 对象和实例的关系。也就是说根据镜像创建一个可以直接运行的容器。容器是镜像的具体体现，所以容器就有创建，启动，停止，删除等操作。</p>
-<h1 id="镜像的使用"><a href="#镜像的使用" class="headerlink" title="镜像的使用"></a>镜像的使用</h1><p>好了，前面知道了什么是docker 镜像和容器，那现在就我们来看看怎么使用他们吧。</p>
-<h2 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h2><p>我们安装好docker 后，怎么获取镜像呢？和git 拉取一样也是使用pull.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull </span><br></pre></td></tr></table></figure>
-<p>详细的参数使用可以通过<code>docker pull --help </code>来查看</p>
-<p>比如我们现在下载一个nginx的景象</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
-<p>默认会下载latest 的镜像，表示下载最新的镜像。也可以下载稳定版本的，或者下载指定版本的。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx:stable</span><br><span class="line"></span><br><span class="line">docker pull nginx:1.16</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20191022172419766.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI3NzkwMDEx,size_16,color_FFFFFF,t_70" alt="file"></p>
-<h2 id="查询镜像"><a href="#查询镜像" class="headerlink" title="查询镜像"></a>查询镜像</h2><p>我们镜像下载下来了，我们怎么查看我们电脑上有哪些镜像呢？<br>其实上面我已经用了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker image ls </span><br><span class="line">或者</span><br><span class="line">docker images 两者的效果是一样的。</span><br></pre></td></tr></table></figure>
-<p>具体使用一样的可以使用<code>docker image --help</code>。我们接下来将我们常用的。<br>查询显示虚悬镜像</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images -f dangling=true</span><br></pre></td></tr></table></figure>
-<p>虚悬镜像是没有作用的，占用内存空间，虚悬镜像怎么来呢？一般是我们下载镜像，依赖一些中间镜像，然后我们删除了下载的镜像，但是只是删除了上层镜像，依赖的镜像没有删除。这样没有依赖的中间镜像就成了虚悬镜像，是可以删除的。</p>
-<p>删除虚悬镜像</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image prune</span><br></pre></td></tr></table></figure>
-<p>其他的一些查询操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#列出中间层镜像</span><br><span class="line">docker images -a</span><br><span class="line">#列出部分镜像</span><br><span class="line">docker images 仓库名</span><br><span class="line"></span><br><span class="line">#过滤</span><br><span class="line">docker images -f since=仓库名</span><br><span class="line">docker images -f before=仓库名</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><p>我们现在知道怎么拉取镜像，以及在本地查看镜像，那我们想要删除镜像怎么删除呢？</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image rm 镜像id</span><br></pre></td></tr></table></figure>
-<p>我们可以通过镜像id 来删除镜像，并且不用完整的镜像id ,只要可以做唯一区分就好了。<br><img src="https://img-blog.csdnimg.cn/2019102217242068.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI3NzkwMDEx,size_16,color_FFFFFF,t_70" alt="file"></p>
-<p>除了通过镜像id 来删除镜像，还可以通过以下的几种方式来删除，更过的可以通过<code>docker image rm --help</code>来查看</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 删除所有仓库名为***的镜像</span><br><span class="line">docker image rm $(docker images -q 仓库名)</span><br><span class="line"></span><br><span class="line"># 删除仓库名在***之前的镜像</span><br><span class="line">docker image rm $(docker images -q -f before=仓库名)</span><br></pre></td></tr></table></figure>
-
-<h1 id="容器的使用"><a href="#容器的使用" class="headerlink" title="容器的使用"></a>容器的使用</h1><p>上面讲了镜像的获取查看删除操作，那我们怎么根据镜像来操作相关的容器呢？</p>
-<h2 id="创建和启动"><a href="#创建和启动" class="headerlink" title="创建和启动"></a>创建和启动</h2><p>前面说了镜像和容器的关系就像是对象和实例的关系。我们一般使用都是使用实例，一样的我们docker使用也是使用docker容器。<br>那我们怎么根据镜像来创建容器并使用它呢？<br>使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  </span><br></pre></td></tr></table></figure>
-<p>比如我们前面下载了那么多Nginx，我们现在启动你nginx 试试。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:80 nginx:stable</span><br></pre></td></tr></table></figure>
-<p>-p 是用来指定映射端口的，8080是我们设置访问那个端口，80 是Nginx本身的端口。也可以后台启动</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8180:80 nginx:stable</span><br></pre></td></tr></table></figure>
-<p>设置容器name</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name myNginx -d -p 8280:80 nginx:stable </span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20191022172420349.jpeg" alt="file"></p>
-<p><img src="https://img-blog.csdnimg.cn/20191022172419372.jpeg" alt="file"></p>
-<p>我们现在在浏览器上访问一下8080，8081，8082这几个端口，应该都可以访问的。<br><img src="https://img-blog.csdnimg.cn/20191022172420923.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI3NzkwMDEx,size_16,color_FFFFFF,t_70" alt="file"></p>
-<h2 id="终止容器"><a href="#终止容器" class="headerlink" title="终止容器"></a>终止容器</h2><p>上面的容器启动了，我们现在想要停止容器，我们该怎么做呢？<br>如果我们没有后台启动，想要终止容器的话，直接Ctrl C 就可以退出来。如果我们是后台启动的，我们就需要通过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container stop 容器id</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20191022172421213.jpeg" alt="file"><br>可以看到，删除的时候一样的不需要完整的id ,只要可以唯一区分就可以。</p>
-<h2 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h2><p>其实上面已经用到了如何查询容器。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls</span><br></pre></td></tr></table></figure>
-<p>这个是查看正运行的容器。查看所有容器使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker containe la -a </span><br></pre></td></tr></table></figure>
-<p>更多的命令可以查看</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls --help</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20191022172421446.jpeg" alt="file"><br>上图可以看到我已经停止了三个Nginx容器。用 -a 才会显示。 </p>
-<h2 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h2><p>我们又想将关的容器重新启动，那怎么做</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker container start 容器id</span><br><span class="line"></span><br><span class="line">#重启运行中的容器</span><br><span class="line">docker container restart 容器id</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20191022172421768.jpeg" alt="file"></p>
-<h2 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker container rm 容器id</span><br><span class="line"></span><br><span class="line"># 删除运行中的容器</span><br><span class="line">docker container -f  容器id</span><br><span class="line"></span><br><span class="line"># 删除所有没有运行的容器</span><br><span class="line">docker container prune</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20191022172421990.jpeg" alt="file"></p>
-<h1 id="番外"><a href="#番外" class="headerlink" title="番外"></a>番外</h1><p>到此为止，我们常用的镜像和容器的操作就会使用啦。都是一些命令。忘记的可以–help 查看一下。</p>
-<p>好了，就说这么多啦</p>
-<p>后续加油♡</p>
-<p>欢迎大家关注个人公众号 “程序员爱酸奶”</p>
-<p>分享各种学习资料，包含java，linux，大数据等。资料包含视频文档以及源码，同时分享本人及投递的优质技术博文。</p>
-<p>如果大家喜欢记得关注和分享哟❤<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9ncmFwaC5iYWlkdS5jb20vcmVzb3VyY2UvMjEyYzc1MjZhNDhlMjBhZTU4YjhjMDE1Njg5MDE3NDYucG5n?x-oss-process=image/format,png" alt="file"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1405,7 +1365,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1418,7 +1378,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
