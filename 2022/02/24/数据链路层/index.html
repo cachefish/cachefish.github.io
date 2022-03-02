@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="数据链路层的必要性 为了尽可能避免数据传输过程中的损坏和丢失问题 因为物理层只是关心原始比特流的传送，不考虑所传输信号的意义和信息结构，所以物理层不可能识别或判断数据在传输过程中是否出现了损坏或丢失，从而也谈不上采取相应的措施去补救。收发双方的接收速率和发送速率不匹配引发的数据丢失问题。当数据发送方的能力大于接受方的数据接收能力时，接收方会因为来不及接收而产生数据溢出导致数据丢失，物理层不会考虑发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据链路层">
+<meta property="og:url" content="https://cachefish.github.io/2022/02/24/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="数据链路层的必要性 为了尽可能避免数据传输过程中的损坏和丢失问题 因为物理层只是关心原始比特流的传送，不考虑所传输信号的意义和信息结构，所以物理层不可能识别或判断数据在传输过程中是否出现了损坏或丢失，从而也谈不上采取相应的措施去补救。收发双方的接收速率和发送速率不匹配引发的数据丢失问题。当数据发送方的能力大于接受方的数据接收能力时，接收方会因为来不及接收而产生数据溢出导致数据丢失，物理层不会考虑发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/06edd6690d224c5997f3414d6cd44727.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAY2FjaGVmaXNo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2022-02-24T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-02T02:31:49.841Z">
+<meta property="article:tag" content="base network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/06edd6690d224c5997f3414d6cd44727.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAY2FjaGVmaXNo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/02/24/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据链路层 | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/24/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据链路层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-24 19:30:00" itemprop="dateCreated datePublished" datetime="2022-02-24T19:30:00+08:00">2022-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-02 10:31:49" itemprop="dateModified" datetime="2022-03-02T10:31:49+08:00">2022-03-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/base-network/" itemprop="url" rel="index"><span itemprop="name">base network</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="数据链路层的必要性"><a href="#数据链路层的必要性" class="headerlink" title="数据链路层的必要性"></a>数据链路层的必要性</h2><hr>
+<p>为了尽可能避免数据传输过程中的损坏和丢失问题 因为物理层只是关心原始比特流的传送，不考虑所传输信号的意义和信息结构，所以物理层不可能识别或判断数据在传输过程中是否出现了损坏或丢失，从而也谈不上采取相应的措施去补救。<br>收发双方的接收速率和发送速率不匹配引发的数据丢失问题。当数据发送方的能力大于接受方的数据接收能力时，接收方会因为来不及接收而产生数据溢出导致数据丢失，物理层不会考虑发送站点与接收站点速度。<br>总而言之，数据链路层拥有为了避免数据传输中的损失、丢失和维持传输速度的能力。</p>
+<hr>
+<h2 id="帧与成帧-数据控制"><a href="#帧与成帧-数据控制" class="headerlink" title="帧与成帧(数据控制)"></a>帧与成帧(数据控制)</h2><hr>
+<p>数据链路层采用被称为帧的协议数据单元作为数据传输逻辑单元。</p>
+<p>帧-&gt;  帧开始 | 地址 | 长度&#x2F;类型&#x2F;控制 | 数据 | FCS(帧校验序列) | 帧结束</p>
+<p>引入帧机制可以实现相邻结点之间的可靠传输，有助于提高数据传输的效率。</p>
+<p>&#x3D;&#x3D;作用:&#x3D;&#x3D;<br>使用帧的主要作用是数据被分成可恢复的区块并且可以很容易地检查这些区块是否被破坏。<br>传输过程中的故障会破坏某些帧。只有丢失的帧而不是整组数据需要重新传输。“错误检测和纠正”中论述了错误的检测和纠正。帧是一系列标准化的数据位，是网络通信的基本单元。<br>为了达到处理传输错误的目的，数据链路层要将数据流分成帧并且计算每帧的校验和，接收方对校验和进行检验；为了调节数据流的快慢，数据链路层要将数据分帧发送，当接收方速度过慢时，数据链路层可以停止发送下一帧并保持数据的完整性。</p>
+<hr>
+<h2 id="成帧过程"><a href="#成帧过程" class="headerlink" title="成帧过程"></a>成帧过程</h2><hr>
+<p>发送方的数据链路层可以将从网络成接收到的分组封装成帧的功能，为来自上层的分组加入必要的帧头与帧尾部分，称为成帧</p>
+<h3 id="帧同步"><a href="#帧同步" class="headerlink" title="帧同步"></a>帧同步</h3><p>四种定界方法(规定好的拆包格式)<br>网络中是以帧为最小单位进行传输的，所以接收端要正确的接收到帧，必须要清楚该帧在一串比特流中的开始和结尾，所以在组帧的时候既要加首部，也要加尾部。PS（而分组，即IP数据报仅仅是包含在帧的数据部分，所以不需要加尾部来定界，只需要添加首部就行了）</p>
+<p>帧同步的方法有以下四种：<br>1.字符计数法<br>2.字节填充的首尾界符法：<br>3.比特填充的首尾标志法：<br>4.物理编码违例法：</p>
+<hr>
+<h2 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h2><hr>
+<h4 id="差错"><a href="#差错" class="headerlink" title="差错"></a>差错</h4><p>指接收端收到的数据与发送段实际发出的数据出现不一致的现象。</p>
+<h4 id="差错控制-1"><a href="#差错控制-1" class="headerlink" title="差错控制"></a>差错控制</h4><p>采用可靠的有效的编码以减少或消除计算机系统中传输差错的方法，用于提高传输质量。</p>
+<h5 id="奇偶校验码、循环冗余校验码"><a href="#奇偶校验码、循环冗余校验码" class="headerlink" title="奇偶校验码、循环冗余校验码"></a>奇偶校验码、循环冗余校验码</h5><p>检错码本身不提供自动的错误纠正功能，需要一种与之相配套的错误纠正机制(反馈重发)</p>
+<h5 id="1-停止-等待方式"><a href="#1-停止-等待方式" class="headerlink" title="1. 停止-等待方式"></a>1. 停止-等待方式</h5><p> 发送段发送出一帧后必须停下来等待接收端的对发送帧的确认。如果发送方未收到应答，则一直等待，所以有相应的控制机制使发送方能继续进行，不会出现无尽的等待，造成发送的死锁，所以要使用超时重发技术，每发送一个帧，启动一个超时定时器，超时则重新传输。</p>
+<h5 id="2-连续ARQ协议"><a href="#2-连续ARQ协议" class="headerlink" title="2. 连续ARQ协议"></a>2. 连续ARQ协议</h5><p>发送方维持着一个一定大小的发送窗口，位于发送窗口内的所有分组都可连续发送出去，而中途不需要等待对方的确认；这样信道的利用率就提高了。而发送方每收到一个确认就把发送窗口向前滑动一个分组的位置。</p>
+<ul>
+<li>停止－等待Stop-and-Wait ARQ：发送窗口 &#x3D; 接收窗口 &#x3D; 1；效率低下。</li>
+<li>SR协议（选择重传）：当发送方接受到接受方的状态报告指示报文出错时，发送方只发送出错的报文。因此必须在接受端加大缓存，以备所有序号都收到且连续然后一并交给主机。</li>
+<li>GBN（回退N帧）协议：发送端发送完一个数据分组后，并不停下来等待确认消息，而是连续发送N个数据分组消息。当发送方接受到接受方的状态报告指示报文出错，发送方将重传过去的n个报文。该方法比停等式减少等待时间，提高吞吐率；但是一帧出错，必须重传其帧和后面n-1帧，增加了系统开销，在信道越差时，有待于确认的帧越多，可能要退回来重发很多帧，所以此方法性能不一定比停等式优越。</li>
+</ul>
+<hr>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><hr>
+<p>由于系统性能不同，会导致发送方与接收方的处理数据速度有所不同，对于数据链路层来说，控制的是相邻两结点之间的数据链路的流量(传输层控制的是源端到目的端之间端到端的流量)</p>
+<h3 id="滑动窗口协议实现流量控制与可靠性传输"><a href="#滑动窗口协议实现流量控制与可靠性传输" class="headerlink" title="滑动窗口协议实现流量控制与可靠性传输"></a>滑动窗口协议实现流量控制与可靠性传输</h3><p>本质:在收到一确认帧之前，对发送方可发送的帧的数目加以限制(是由发送方调整保留在重发表中的待确认帧的数目来实现的)<br>    如果接收方来不及对新到的帧进行处理，则停发确认信息，此时发送方的重发表就会增长，当达到重发表限度是，发送方就不再发送新的帧，知道再一次收到确认信息为止。<br><img src="https://img-blog.csdnimg.cn/06edd6690d224c5997f3414d6cd44727.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAY2FjaGVmaXNo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="image"></p>
+<hr>
+<h2 id="关于MAC地址："><a href="#关于MAC地址：" class="headerlink" title="关于MAC地址："></a>关于MAC地址：</h2><p>MAC地址是用来识别数据链路层中相连的结点<br>MAC地址长度为48位, 6个字节，一般用16进制数字加上冒号的形式来表示(例如: 08:00:27:03:fb:19)<br>MAC地址在网卡出厂时就确定了, 不能修改。 MAC地址通常是唯一的(虚拟机中的MAC地址不是真实的MAC地址可 能会冲突，也有些网卡支持用户配置MAC地址)<br>为什么存在MAC地址还需要IP地址去标识互联网中的一台主机呢？</p>
+<p>在数据链路层，存在多种异构的网络，比如以太网、令牌环网等，也就是数据链路层存在多种MTU，既多种不同的传输信道，如果只有MAC地址，在不同的网络之间是每有办法传输的，只能在MAC地址上封装一次抽象的IP地址来封装底层各种不同的网络。</p>
+<h2 id="MAC地址和IP地址的对比："><a href="#MAC地址和IP地址的对比：" class="headerlink" title="MAC地址和IP地址的对比："></a>MAC地址和IP地址的对比：</h2><p>一个数据报中的源IP地址和目的IP地址是为了标识这个数据的起点和终点<br>源MAC地址和目的MAC地址是为了标识上一站的地址和下一站的地址<br>在一个数据报的传输过程中，IP一直不变，而MAC地址是一直在变的<br>关于MTU(最大传输单元)： MTU相当于在发寄快递的时候对包裹的限制，这个限制是不同的链路层对应的物理层的限制。</p>
+<p>MAC帧中的数据长度规定为46-1500字节,ARP(地址解析协议)数据包的长度不够46字节要在后面补填充位，如果大于1500字节，必须要求网络层进行分片。<br>最大值1500称为以太网的最大传输单元(MTU)不同的网络类型有不同的MTU<br>如果一个数据包从以太网路由到拨号链路上，数据包长度大于拨号链路的MTU,则需要对数据包进行分片。<br>MTU对IP协议的影响： 由于链路层存在MTU的限制，导致网络层的报文如果超过1500字节，就必须要对齐进行分片发送。</p>
+<p>将较大的IP包分成多个小包, 并给每个小包打上标签，每个小包IP协议头的 16位标识(id) 都是相同的，这样在重组的时候就知道这个小包来自于哪个报文。<br>每个小包的IP协议头的3位标志字段中, 第2位MF置为0, 表示允许分片, 第3位DF来表示结束标记(当前是否是后一个小包, 是的话置为1, 否则置为0)。<br>到达对端时再将这些小包按顺序重组, 拼装到一起返回给传输层。一旦这些小包中任意一个小包丢失，接收端的重组就会失败，但是IP层不会负责重新传输数据。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/base-network/" rel="tag"># base network</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/24/%E7%89%A9%E7%90%86%E5%B1%82/" rel="prev" title="物理层">
+      <i class="fa fa-chevron-left"></i> 物理层
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">数据链路层的必要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A7%E4%B8%8E%E6%88%90%E5%B8%A7-%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">帧与成帧(数据控制)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E5%B8%A7%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">成帧过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A7%E5%90%8C%E6%AD%A5"><span class="nav-number">3.1.</span> <span class="nav-text">帧同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%AE%E9%94%99%E6%8E%A7%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">差错控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%AE%E9%94%99"><span class="nav-number">4.0.1.</span> <span class="nav-text">差错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%AE%E9%94%99%E6%8E%A7%E5%88%B6-1"><span class="nav-number">4.0.2.</span> <span class="nav-text">差错控制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C%E7%A0%81%E3%80%81%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="nav-number">4.0.2.1.</span> <span class="nav-text">奇偶校验码、循环冗余校验码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%81%9C%E6%AD%A2-%E7%AD%89%E5%BE%85%E6%96%B9%E5%BC%8F"><span class="nav-number">4.0.2.2.</span> <span class="nav-text">1. 停止-等待方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%BF%9E%E7%BB%ADARQ%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.0.2.3.</span> <span class="nav-text">2. 连续ARQ协议</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">流量控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE%E5%AE%9E%E7%8E%B0%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93"><span class="nav-number">5.1.</span> <span class="nav-text">滑动窗口协议实现流量控制与可靠性传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EMAC%E5%9C%B0%E5%9D%80%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">关于MAC地址：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAC%E5%9C%B0%E5%9D%80%E5%92%8CIP%E5%9C%B0%E5%9D%80%E7%9A%84%E5%AF%B9%E6%AF%94%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">MAC地址和IP地址的对比：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

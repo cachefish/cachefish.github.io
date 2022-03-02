@@ -20,29 +20,53 @@
     var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="来世做春风，浪漫且自由">
-<meta property="og:type" content="website">
-<meta property="og:title" content="cachecatのBlog">
-<meta property="og:url" content="https://cachefish.github.io/index.html">
+  <meta name="description" content="1. 语言基础 (C&#x2F;C++)（0） 指针和引用的区别 指针是一个新的变量，指向另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；而引用是一个别名，对引用的操作就是对变量的本身进行操作 指针可以有多级，引用只有一级 传参的时候，使用指针的话需要解引用才能对参数进行修改，而使用引用可以直接对参数进行修改 指针的大小一般是4个字节，引用的大小取决于被引用对象的大小 指针可以为空，引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础汇总">
+<meta property="og:url" content="https://cachefish.github.io/2022/02/23/%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86%E5%8F%91%E5%B8%83%E7%89%88/index.html">
 <meta property="og:site_name" content="cachecatのBlog">
-<meta property="og:description" content="来世做春风，浪漫且自由">
+<meta property="og:description" content="1. 语言基础 (C&#x2F;C++)（0） 指针和引用的区别 指针是一个新的变量，指向另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；而引用是一个别名，对引用的操作就是对变量的本身进行操作 指针可以有多级，引用只有一级 传参的时候，使用指针的话需要解引用才能对参数进行修改，而使用引用可以直接对参数进行修改 指针的大小一般是4个字节，引用的大小取决于被引用对象的大小 指针可以为空，引">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6.jpg">
+<meta property="og:image" content="https://cachefish.github.io/fig/DNS%E6%9F%A5%E8%AF%A2%E5%9B%BE%E8%A7%A3.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%B1%82.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/Bptree.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/select.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/epoll.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1.png">
+<meta property="og:image" content="https://img-blog.csdn.net/20140904215636015?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmd6aGVianV0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E4%B8%89%E6%80%81%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E4%BA%94%E6%80%81%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E4%B8%83%E6%80%81%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/bitmap1.png">
+<meta property="og:image" content="https://cachefish.github.io/fig/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8.png">
+<meta property="og:image" content="https://img-blog.csdn.net/20170206221148299?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEwNDM0OTg3NzY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://cachefish.github.io/fig/spark%E5%86%85%E5%AD%98%E4%B8%80.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/195230-f119edabb5683f38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp">
+<meta property="article:published_time" content="2022-02-23T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-02T02:27:04.244Z">
+<meta property="article:tag" content="面经">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cachefish.github.io/fig/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
 
-<link rel="canonical" href="https://cachefish.github.io/">
+<link rel="canonical" href="https://cachefish.github.io/2022/02/23/%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86%E5%8F%91%E5%B8%83%E7%89%88/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>cachecatのBlog</title>
+  <title>基础汇总 | cachecatのBlog</title>
   
 
 
@@ -156,349 +180,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/24/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="来世做春风，浪漫且自由">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cachecatのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/24/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="post-title-link" itemprop="url">数据链路层</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-24 19:30:00" itemprop="dateCreated datePublished" datetime="2022-02-24T19:30:00+08:00">2022-02-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-02 10:31:49" itemprop="dateModified" datetime="2022-03-02T10:31:49+08:00">2022-03-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/base-network/" itemprop="url" rel="index"><span itemprop="name">base network</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="数据链路层的必要性"><a href="#数据链路层的必要性" class="headerlink" title="数据链路层的必要性"></a>数据链路层的必要性</h2><hr>
-<p>为了尽可能避免数据传输过程中的损坏和丢失问题 因为物理层只是关心原始比特流的传送，不考虑所传输信号的意义和信息结构，所以物理层不可能识别或判断数据在传输过程中是否出现了损坏或丢失，从而也谈不上采取相应的措施去补救。<br>收发双方的接收速率和发送速率不匹配引发的数据丢失问题。当数据发送方的能力大于接受方的数据接收能力时，接收方会因为来不及接收而产生数据溢出导致数据丢失，物理层不会考虑发送站点与接收站点速度。<br>总而言之，数据链路层拥有为了避免数据传输中的损失、丢失和维持传输速度的能力。</p>
-<hr>
-<h2 id="帧与成帧-数据控制"><a href="#帧与成帧-数据控制" class="headerlink" title="帧与成帧(数据控制)"></a>帧与成帧(数据控制)</h2><hr>
-<p>数据链路层采用被称为帧的协议数据单元作为数据传输逻辑单元。</p>
-<p>帧-&gt;  帧开始 | 地址 | 长度&#x2F;类型&#x2F;控制 | 数据 | FCS(帧校验序列) | 帧结束</p>
-<p>引入帧机制可以实现相邻结点之间的可靠传输，有助于提高数据传输的效率。</p>
-<p>&#x3D;&#x3D;作用:&#x3D;&#x3D;<br>使用帧的主要作用是数据被分成可恢复的区块并且可以很容易地检查这些区块是否被破坏。<br>传输过程中的故障会破坏某些帧。只有丢失的帧而不是整组数据需要重新传输。“错误检测和纠正”中论述了错误的检测和纠正。帧是一系列标准化的数据位，是网络通信的基本单元。<br>为了达到处理传输错误的目的，数据链路层要将数据流分成帧并且计算每帧的校验和，接收方对校验和进行检验；为了调节数据流的快慢，数据链路层要将数据分帧发送，当接收方速度过慢时，数据链路层可以停止发送下一帧并保持数据的完整性。</p>
-<hr>
-<h2 id="成帧过程"><a href="#成帧过程" class="headerlink" title="成帧过程"></a>成帧过程</h2><hr>
-<p>发送方的数据链路层可以将从网络成接收到的分组封装成帧的功能，为来自上层的分组加入必要的帧头与帧尾部分，称为成帧</p>
-<h3 id="帧同步"><a href="#帧同步" class="headerlink" title="帧同步"></a>帧同步</h3><p>四种定界方法(规定好的拆包格式)<br>网络中是以帧为最小单位进行传输的，所以接收端要正确的接收到帧，必须要清楚该帧在一串比特流中的开始和结尾，所以在组帧的时候既要加首部，也要加尾部。PS（而分组，即IP数据报仅仅是包含在帧的数据部分，所以不需要加尾部来定界，只需要添加首部就行了）</p>
-<p>帧同步的方法有以下四种：<br>1.字符计数法<br>2.字节填充的首尾界符法：<br>3.比特填充的首尾标志法：<br>4.物理编码违例法：</p>
-<hr>
-<h2 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h2><hr>
-<h4 id="差错"><a href="#差错" class="headerlink" title="差错"></a>差错</h4><p>指接收端收到的数据与发送段实际发出的数据出现不一致的现象。</p>
-<h4 id="差错控制-1"><a href="#差错控制-1" class="headerlink" title="差错控制"></a>差错控制</h4><p>采用可靠的有效的编码以减少或消除计算机系统中传输差错的方法，用于提高传输质量。</p>
-<h5 id="奇偶校验码、循环冗余校验码"><a href="#奇偶校验码、循环冗余校验码" class="headerlink" title="奇偶校验码、循环冗余校验码"></a>奇偶校验码、循环冗余校验码</h5><p>检错码本身不提供自动的错误纠正功能，需要一种与之相配套的错误纠正机制(反馈重发)</p>
-<h5 id="1-停止-等待方式"><a href="#1-停止-等待方式" class="headerlink" title="1. 停止-等待方式"></a>1. 停止-等待方式</h5><p> 发送段发送出一帧后必须停下来等待接收端的对发送帧的确认。如果发送方未收到应答，则一直等待，所以有相应的控制机制使发送方能继续进行，不会出现无尽的等待，造成发送的死锁，所以要使用超时重发技术，每发送一个帧，启动一个超时定时器，超时则重新传输。</p>
-<h5 id="2-连续ARQ协议"><a href="#2-连续ARQ协议" class="headerlink" title="2. 连续ARQ协议"></a>2. 连续ARQ协议</h5><p>发送方维持着一个一定大小的发送窗口，位于发送窗口内的所有分组都可连续发送出去，而中途不需要等待对方的确认；这样信道的利用率就提高了。而发送方每收到一个确认就把发送窗口向前滑动一个分组的位置。</p>
-<ul>
-<li>停止－等待Stop-and-Wait ARQ：发送窗口 &#x3D; 接收窗口 &#x3D; 1；效率低下。</li>
-<li>SR协议（选择重传）：当发送方接受到接受方的状态报告指示报文出错时，发送方只发送出错的报文。因此必须在接受端加大缓存，以备所有序号都收到且连续然后一并交给主机。</li>
-<li>GBN（回退N帧）协议：发送端发送完一个数据分组后，并不停下来等待确认消息，而是连续发送N个数据分组消息。当发送方接受到接受方的状态报告指示报文出错，发送方将重传过去的n个报文。该方法比停等式减少等待时间，提高吞吐率；但是一帧出错，必须重传其帧和后面n-1帧，增加了系统开销，在信道越差时，有待于确认的帧越多，可能要退回来重发很多帧，所以此方法性能不一定比停等式优越。</li>
-</ul>
-<hr>
-<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><hr>
-<p>由于系统性能不同，会导致发送方与接收方的处理数据速度有所不同，对于数据链路层来说，控制的是相邻两结点之间的数据链路的流量(传输层控制的是源端到目的端之间端到端的流量)</p>
-<h3 id="滑动窗口协议实现流量控制与可靠性传输"><a href="#滑动窗口协议实现流量控制与可靠性传输" class="headerlink" title="滑动窗口协议实现流量控制与可靠性传输"></a>滑动窗口协议实现流量控制与可靠性传输</h3><p>本质:在收到一确认帧之前，对发送方可发送的帧的数目加以限制(是由发送方调整保留在重发表中的待确认帧的数目来实现的)<br>    如果接收方来不及对新到的帧进行处理，则停发确认信息，此时发送方的重发表就会增长，当达到重发表限度是，发送方就不再发送新的帧，知道再一次收到确认信息为止。<br><img src="https://img-blog.csdnimg.cn/06edd6690d224c5997f3414d6cd44727.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAY2FjaGVmaXNo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="image"></p>
-<hr>
-<h2 id="关于MAC地址："><a href="#关于MAC地址：" class="headerlink" title="关于MAC地址："></a>关于MAC地址：</h2><p>MAC地址是用来识别数据链路层中相连的结点<br>MAC地址长度为48位, 6个字节，一般用16进制数字加上冒号的形式来表示(例如: 08:00:27:03:fb:19)<br>MAC地址在网卡出厂时就确定了, 不能修改。 MAC地址通常是唯一的(虚拟机中的MAC地址不是真实的MAC地址可 能会冲突，也有些网卡支持用户配置MAC地址)<br>为什么存在MAC地址还需要IP地址去标识互联网中的一台主机呢？</p>
-<p>在数据链路层，存在多种异构的网络，比如以太网、令牌环网等，也就是数据链路层存在多种MTU，既多种不同的传输信道，如果只有MAC地址，在不同的网络之间是每有办法传输的，只能在MAC地址上封装一次抽象的IP地址来封装底层各种不同的网络。</p>
-<h2 id="MAC地址和IP地址的对比："><a href="#MAC地址和IP地址的对比：" class="headerlink" title="MAC地址和IP地址的对比："></a>MAC地址和IP地址的对比：</h2><p>一个数据报中的源IP地址和目的IP地址是为了标识这个数据的起点和终点<br>源MAC地址和目的MAC地址是为了标识上一站的地址和下一站的地址<br>在一个数据报的传输过程中，IP一直不变，而MAC地址是一直在变的<br>关于MTU(最大传输单元)： MTU相当于在发寄快递的时候对包裹的限制，这个限制是不同的链路层对应的物理层的限制。</p>
-<p>MAC帧中的数据长度规定为46-1500字节,ARP(地址解析协议)数据包的长度不够46字节要在后面补填充位，如果大于1500字节，必须要求网络层进行分片。<br>最大值1500称为以太网的最大传输单元(MTU)不同的网络类型有不同的MTU<br>如果一个数据包从以太网路由到拨号链路上，数据包长度大于拨号链路的MTU,则需要对数据包进行分片。<br>MTU对IP协议的影响： 由于链路层存在MTU的限制，导致网络层的报文如果超过1500字节，就必须要对齐进行分片发送。</p>
-<p>将较大的IP包分成多个小包, 并给每个小包打上标签，每个小包IP协议头的 16位标识(id) 都是相同的，这样在重组的时候就知道这个小包来自于哪个报文。<br>每个小包的IP协议头的3位标志字段中, 第2位MF置为0, 表示允许分片, 第3位DF来表示结束标记(当前是否是后一个小包, 是的话置为1, 否则置为0)。<br>到达对端时再将这些小包按顺序重组, 拼装到一起返回给传输层。一旦这些小包中任意一个小包丢失，接收端的重组就会失败，但是IP层不会负责重新传输数据。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/24/%E7%89%A9%E7%90%86%E5%B1%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="来世做春风，浪漫且自由">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cachecatのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/24/%E7%89%A9%E7%90%86%E5%B1%82/" class="post-title-link" itemprop="url">物理层</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-24 19:30:00" itemprop="dateCreated datePublished" datetime="2022-02-24T19:30:00+08:00">2022-02-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-02 10:30:13" itemprop="dateModified" datetime="2022-03-02T10:30:13+08:00">2022-03-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/base-network/" itemprop="url" rel="index"><span itemprop="name">base network</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="物理层的基本概念-是什么？"><a href="#物理层的基本概念-是什么？" class="headerlink" title="物理层的基本概念(是什么？)"></a>物理层的基本概念(是什么？)</h2><hr>
-<p>物理层是网络基础的&#x3D;&#x3D;传输通道&#x3D;&#x3D;，解决了&#x3D;&#x3D;如何在连接各种计算机的传输媒体上传输数据比特流&#x3D;&#x3D;。该层中定义了&#x3D;&#x3D;为建立、维护和拆除物理链路所需的机械的、电气的、功能的和规程&#x3D;&#x3D;的特性，其作用是&#x3D;&#x3D;使原始的数据比特流能在物理媒体上传输。&#x3D;&#x3D;</p>
-<p>物理层利用传输介质为通信的两端建立、管理和释放物理链接，实现比特流的透明传输，保证比特流正确的传输到对端。物理层中承载的是比特流,单位是比特（bit）。</p>
-<hr>
-<h2 id="网络物理层要解决的主要问题-干什么-："><a href="#网络物理层要解决的主要问题-干什么-：" class="headerlink" title="网络物理层要解决的主要问题(干什么)："></a>网络物理层要解决的主要问题(干什么)：</h2><hr>
-<ol>
-<li>物理层尽可能地屏蔽掉物理设备和传输媒体，通信手段的不同，使数据链路层感觉不到这些差异，只考虑完成本层的协议和服务。</li>
-<li>给其服务用户(数据链路层)在一条物理的传输媒体上传送和接收比特流(一般为串行按顺序传输的比特流)的能力，为此，物理层应该解决物理连接的建立、维持和释放问题。 </li>
-<li>在两个相邻系统之间唯一地标识数据电路。物理层主要功能:为数据端设备提供传送数据通路、传输数据。</li>
-</ol>
-<hr>
-<h2 id="扮演的角色与功能-什么用"><a href="#扮演的角色与功能-什么用" class="headerlink" title="扮演的角色与功能(什么用)"></a>扮演的角色与功能(什么用)</h2><hr>
-<p>物理层定义了通过连接网络节点的物理数据链路传输原始比特流的方式。<br>比特流可以被分组为码字或符号，并被转换为在传输介质上传输的物理信号。<br>物理层由网络的电子电路传输技术组成。它是网络中高级功能的基础层，可以通过具有广泛不同特性的大量不同硬件技术来实现。<br>在 OSI 模型的语义中，物理层将来自数据链路层的逻辑通信请求转换为特定于硬件的操作，以引起电子（或其他）信号的传输或接收。 物理层支持负责生成逻辑数据包的更高层。</p>
-<p>物理层在物理传输介质上执行逐位或逐符号的数据传递。它为传输介质提供标准化接口，包括电气连接器和电缆的机械规格，例如最大电缆长度、传输线信号电平和阻抗的电气规格。物理层负责电磁兼容性，包括电磁频谱 信号强度、模拟带宽等的频率分配和规范。传输介质可以是电的或光纤上的光或无线通信链路，例如自由空间光通信或无线电。</p>
-<p>线路编码用于将数据转换为可调制到载波或红外光上的电波动模式。数据流通过同步串行通信中的位同步或异步串行通信中的启停信号和流控制来管理。多个网络参与者之间传输介质的共享可以通过简单的电路交换或多路复用来处理。用于共享传输介质的更复杂的介质访问控制协议可以使用载波侦听和冲突检测，例如以太网的载波侦听多路访问和冲突检测(CSMA&#x2F;CD)。</p>
-<p>为了优化可靠性和效率，可以使用信号处理技术，例如均衡、训练序列和脉冲整形。可以应用包括前向纠错的纠错码和技术来进一步提高可靠性。<br>物理层相关的其他主题包括：比特率；点对点、多点或点对多点线路配置；物理网络拓扑，例如总线、环形、网状或星形网络；串行或并行通信；单工、半双工或全双工传输模式；和自动协商</p>
-<hr>
-<h2 id="数据通信系统的模型："><a href="#数据通信系统的模型：" class="headerlink" title="数据通信系统的模型："></a>数据通信系统的模型：</h2><hr>
-<ul>
-<li>信道 —— 一般用来表示向某一个方向传送信息的媒体。</li>
-<li></li>
-<li>单向通信（单工通信）——只能有一个方向的通信而没有反方向的交互。</li>
-<li></li>
-<li>双向交替通信（半双工通信）——通信的双方都可以发送信息，但不能双方同时发送(当然也就不能同时接收)。</li>
-<li></li>
-<li>双向同时通信（全双工通信）——通信的双方可以同时发送和接收信息。</li>
-</ul>
-<hr>
-<h2 id="传输媒体的接口的特性。"><a href="#传输媒体的接口的特性。" class="headerlink" title="传输媒体的接口的特性。"></a>传输媒体的接口的特性。</h2><hr>
-<ul>
-<li>机械特性 ：指明接口所用接线器的形状和尺寸、引线数目和排列、固定和锁定装置等。</li>
-<li></li>
-<li>电气特性：指明在接口电缆的各条线上出现的电压的范围。4V— 6V表示二进制“0”,用-4V—-6V表示二进制“1”</li>
-<li></li>
-<li>功能特性：指明某条线上出现的某一电平的电压表示何种意义。</li>
-<li></li>
-<li>过程特性 ：指明对于不同功能的各种可能事件的出现顺序。</li>
-</ul>
-<hr>
-<h2 id="曼切斯特编码与差分曼切斯特编码"><a href="#曼切斯特编码与差分曼切斯特编码" class="headerlink" title="曼切斯特编码与差分曼切斯特编码"></a>曼切斯特编码与差分曼切斯特编码</h2><hr>
-<p>首先，来自信源的信号常称基带信号。</p>
-<p>基带信号往往包含有较多的低频成分，甚至有直流成分，而许多信道并不能传输这种低频分量或直流分量。因此必须对基带信号进行调制</p>
-<h2 id="调制又分为两大类：基带调制、带通调制"><a href="#调制又分为两大类：基带调制、带通调制" class="headerlink" title="调制又分为两大类：基带调制、带通调制"></a>调制又分为两大类：基带调制、带通调制</h2><h3 id="基带调制"><a href="#基带调制" class="headerlink" title="基带调制"></a>基带调制</h3><hr>
-<p>基带调制：变换后的信号仍然是基带信号，调制的过程称为编码。常用编码方式:</p>
-<p>不归零制：正电平代表 1，负电平代表 0。</p>
-<p>归零制：正脉冲代表 1，负脉冲代表 0。</p>
-<p>曼彻斯特编码：位周期中心的向上跳变代表 0，位周期中心的向下跳变代表 1。但也可反过来定义。</p>
-<p>差分曼彻斯特编码：在每一位的中心处始终都有跳变。位开始边界有跳变代表 0，而位开始边界没有跳变代表 1。</p>
-<hr>
-<h3 id="带通调制"><a href="#带通调制" class="headerlink" title="带通调制"></a>带通调制</h3><hr>
-<p>带通调制：把基带信号的频率范围搬移到较高的频段，并转换为模拟信号,调制的过程称之为载波。远距离</p>
-<p>调幅(AM)：载波的振幅随基带数字信号而变化。</p>
-<p>调频(FM)：载波的频率随基带数字信号而变化。</p>
-<p>调相(PM) ：载波的初始相位随基带数字信号而变化。</p>
-<hr>
-<h2 id="信噪比与香农公式"><a href="#信噪比与香农公式" class="headerlink" title="信噪比与香农公式"></a>信噪比与香农公式</h2><h3 id="信噪比"><a href="#信噪比" class="headerlink" title="信噪比"></a>信噪比</h3><hr>
-<p>任何实际的信道都不是理想的，在传输信号时会产生各种失真以及带来多种干扰。</p>
-<p>码元传输的速率越高，或信号传输的距离越远，或传输媒体质量越差，在信道的输出端的波形的失真就越严重。</p>
-<p>从概念上讲，限制码元在信道上的传输速率的因素有以下两个：</p>
-<ul>
-<li>信道能够通过的频率范围</li>
-</ul>
-<p>如果信道的频带越宽，也就是能够通过的信号高频分量越多，那么就可以用更高的速率传送码元而不出现码间串扰。</p>
-<ul>
-<li>信噪比</li>
-</ul>
-<p>噪声是随机产生的，它的瞬时值有时会很大。因此噪声会使接收端对码元的判决产生错误。但是如果信号相对较强，那么噪声的影响就相对较小。</p>
-<p>所以，信噪比就是信号的平均功率和噪声的平均功率之比。</p>
-<p>公式：</p>
-<p>信噪比(dB) &#x3D; 10 log10(S&#x2F;N)(dB)</p>
-<p>例子：当 S&#x2F;N &#x3D; 10 时，信噪比为 10 dB，而当 S&#x2F;N &#x3D; 1000时，信噪比为 30 dB。</p>
-<hr>
-<h3 id="香农公式"><a href="#香农公式" class="headerlink" title="香农公式"></a>香农公式</h3><hr>
-<p>1984年，香农 (Shannon) 用信息论的理论推导出了带宽受限且有高斯白噪声干扰的信道的极限、无差错的信息传输速率（香农公式）。</p>
-<p>香农公式表明：</p>
-<p>信道的带宽或信道中的信噪比越大，则信息的极限传输速率就越高。</p>
-<p>只要信息传输速率低于信道的极限信息传输速率，就一定可以找到某种办法来实现无差错的传输。</p>
-<p>若信道带宽 W 或信噪比 S&#x2F;N 没有上限（当然实际信道不可能是这样的），则信道的极限信息传输速率 C 也就没有上限。</p>
-<p>实际信道上能够达到的信息传输速率要比香农的极限传输速率低不少。</p>
-<p>对于频带宽度已确定的信道，如果信噪比不能再提高了，并且码元传输速率也达到了上限值，那么还有办法提高信息的传输速率。</p>
-<p>&#x3D;&#x3D;用编码的方法让每一个码元携带更多比特的信息量。&#x3D;&#x3D;</p>
-<hr>
-<h3 id="常见的传输介质"><a href="#常见的传输介质" class="headerlink" title="常见的传输介质"></a>常见的传输介质</h3><hr>
-<p>传输媒体也称为传输介质或传输媒介，可分为两大类，即导引型传输媒体和非导引型传输媒体</p>
-<p>在导引型传输媒体中，电磁波被导引沿着固体媒体（铜线或光纤）传播。</p>
-<p>非导引型传输媒体就是指自由空间。在非导引型传输媒体中，电磁波的传输常称为无线传输</p>
-<hr>
-<h3 id="导引型传输媒体"><a href="#导引型传输媒体" class="headerlink" title="导引型传输媒体"></a>导引型传输媒体</h3><h5 id="双绞线"><a href="#双绞线" class="headerlink" title="双绞线"></a>双绞线</h5><hr>
-<p>我们常用的网线，模拟传输和数字传输都可以使用双绞线，其通信距离一般为几到十几公里</p>
-<p>对传送数据来说，现在最常用的 UTP 是5类线（Category 5 或 CAT5）。</p>
-<hr>
-<h5 id="同轴电缆"><a href="#同轴电缆" class="headerlink" title="同轴电缆"></a>同轴电缆</h5><hr>
-<p>同轴电缆具有很好的抗干扰特性，被广泛用于传输较高速率的数据。</p>
-<p>同轴电缆的带宽取决于电缆的质量。</p>
-<p>50欧姆 同轴电缆 —— LAN &#x2F; 数字传输常用</p>
-<p>75欧姆 同轴电缆 —— 有线电视 &#x2F; 模拟传输常用</p>
-<hr>
-<h5 id="光缆"><a href="#光缆" class="headerlink" title="光缆"></a>光缆</h5><hr>
-<p>光纤是光缆通信的传输媒体，由于可见光的频率非常高，约为 108 MHz 的量级，因此一个光纤通信系统的传输带宽远远大于目前其他各种传输媒体的带宽。</p>
-<p>光纤优点：</p>
-<p>(1) 通信容量非常大。</p>
-<p>(2) 传输损耗小，中继距离长。</p>
-<p>(2) 抗雷电和电磁干扰性能好。</p>
-<p>(3) 无串音干扰，保密性好。</p>
-<p>(4) 体积小，重量轻。</p>
-<hr>
-<h4 id="非导引型传输媒体"><a href="#非导引型传输媒体" class="headerlink" title="非导引型传输媒体"></a>非导引型传输媒体</h4><hr>
-<p>短波通信（即高频通信）主要是靠电离层的反射，但短波信道的通信质量较差，传输速率低。</p>
-<p>微波在空间主要是直线传播。</p>
-<p>传统微波通信有两种方式：</p>
-<p>地面微波接力通信</p>
-<p>卫星通信</p>
-<hr>
-<h2 id="频分复用技术与时分复用技术"><a href="#频分复用技术与时分复用技术" class="headerlink" title="频分复用技术与时分复用技术"></a>频分复用技术与时分复用技术</h2><p>复用 (multiplexing) 是通信技术中的基本概念。它允许用户使用一个共享信道进行通信，降低成本，提高利用率。</p>
-<h3 id="频分复用-FDM"><a href="#频分复用-FDM" class="headerlink" title="频分复用 FDM"></a>频分复用 FDM</h3><hr>
-<p>将整个带宽分为多份，用户在分配到一定的频带后，在通信过程中自始至终都占用这个频带。</p>
-<p>频分复用的所有用户在同样的时间占用不同的带宽资源（请注意，这里的“带宽”是频率带宽而不是数据的发送速率）。</p>
-<hr>
-<h3 id="时分复用TDM"><a href="#时分复用TDM" class="headerlink" title="时分复用TDM"></a>时分复用TDM</h3><hr>
-<p>时分复用则是将时间划分为一段段等长的时分复用帧（TDM 帧）。每一个时分复用的用户在每一个 TDM 帧中占用固定序号的时隙。</p>
-<p>每一个用户所占用的时隙是周期性地出现（其周期就是 TDM  帧的长度）。</p>
-<p>时分复用的所有用户是在不同的时间占用同样的频带宽度。</p>
-<p>时分复用的不足：用户对分配到的子信道的利用率一般是不高的。</p>
-<hr>
-<h2 id="常见的宽带接入技术"><a href="#常见的宽带接入技术" class="headerlink" title="常见的宽带接入技术"></a>常见的宽带接入技术</h2><hr>
-<p>ADSL 技术    数字用户线</p>
-<p>光纤同轴混合网（HFC网）</p>
-<p>FTTH 技术  光纤到户 Fiber to the home</p>
-<p>从宽带接入的媒体来看，可以划分为两大类：</p>
-<p>有线宽带接入</p>
-<p>无线宽带接入</p>
-<hr>
-<h3 id="ADSL-技术"><a href="#ADSL-技术" class="headerlink" title="ADSL 技术"></a>ADSL 技术</h3><hr>
-<p>非对称数字用户线 ADSL (Asymmetric Digital Subscriber Line) 技术就是用数字技术对现有的模拟电话用户线进行改造，使它能够承载宽带业务</p>
-<p>ADSL 技术就把 0~4 kHz 低端频谱留给传统电话使用，而把原来没有被利用的高端频谱留给用户上网使用</p>
-<p>ADSL 所能得到的最高数据传输速率与实际的用户线上的信噪比密切相关。</p>
-<p>ADSL 的特点：</p>
-<p>上行和下行带宽做成不对称的。</p>
-<p>ADSL 在用户线（铜线）的两端各安装一个 ADSL 调制解调器。</p>
-<p>我国目前采用的方案是离散多音调 DMT，DMT 调制技术采用频分复用的方法</p>
-<p>ADSL 采用自适应调制技术使用户线能够传送尽可能高的数据率</p>
-<hr>
-<h3 id="光纤同轴混合网（HFC网）"><a href="#光纤同轴混合网（HFC网）" class="headerlink" title="光纤同轴混合网（HFC网）"></a>光纤同轴混合网（HFC网）</h3><hr>
-<p>HFC (Hybrid Fiber Coax) 网是在目前覆盖面很广的有线电视网 CATV 的基础上开发的一种居民宽带接入网。</p>
-<p>现有的 CATV 网是树形拓扑结构的同轴电缆网络，它采用模拟技术的频分复用对电视节目进行单向传输。</p>
-<p>HFC 网对 CATV 网进行了改造。</p>
-<p>HFC 网将原 CATV 网中的同轴电缆主干部分改换为光纤，并使用模拟光纤技术。</p>
-<p>用户接口盒 UIB (User Interface Box) 要提供三种连接，即：</p>
-<p>使用同轴电缆连接到机顶盒 (set-top box)，然后再连接到用户的电视机。</p>
-<p>使用双绞线连接到用户的电话机。</p>
-<p>使用电缆调制解调器连接到用户的计算机。</p>
-<p>电缆调制解调器是为 HFC 网而使用的调制解调器。最大的特点就是传输速率高</p>
-<hr>
-<h3 id="FTTx-技术"><a href="#FTTx-技术" class="headerlink" title="FTTx 技术"></a>FTTx 技术</h3><hr>
-<p>FTTx 表示 Fiber To The…（光纤到…），例如：</p>
-<p>光纤到户 FTTH (Fiber To The Home)：光纤一直铺设到用户家庭，可能是居民接入网最后的解决方法。</p>
-<p>光纤到大楼 FTTB (Fiber To The Building)：光纤进入大楼后就转换为电信号，然后用电缆或双绞线分配到各用户。</p>
-<p>光纤到路边 FTTC (Fiber To The Curb)：光纤铺到路边，从路边到各用户可使用星形结构双绞线作为传输媒体。</p>
-<hr>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -514,10 +199,9 @@
       <meta itemprop="name" content="cachecatのBlog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/23/%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86%E5%8F%91%E5%B8%83%E7%89%88/" class="post-title-link" itemprop="url">基础汇总</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          基础汇总
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -556,7 +240,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="1-语言基础-C-x2F-C"><a href="#1-语言基础-C-x2F-C" class="headerlink" title="1. 语言基础 (C&#x2F;C++)"></a>1. 语言基础 (C&#x2F;C++)</h1><h4 id="（0）-指针和引用的区别"><a href="#（0）-指针和引用的区别" class="headerlink" title="（0） 指针和引用的区别"></a>（0） 指针和引用的区别</h4><ul>
+        <h1 id="1-语言基础-C-x2F-C"><a href="#1-语言基础-C-x2F-C" class="headerlink" title="1. 语言基础 (C&#x2F;C++)"></a>1. 语言基础 (C&#x2F;C++)</h1><h4 id="（0）-指针和引用的区别"><a href="#（0）-指针和引用的区别" class="headerlink" title="（0） 指针和引用的区别"></a>（0） 指针和引用的区别</h4><ul>
 <li>指针是一个新的变量，指向另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；而引用是一个别名，对引用的操作就是对变量的本身进行操作</li>
 <li>指针可以有多级，引用只有一级</li>
 <li>传参的时候，使用指针的话需要解引用才能对参数进行修改，而使用引用可以直接对参数进行修改</li>
@@ -1802,575 +1486,36 @@ close(), shutdown() 关闭套接字
 <li>保研夏令营拿到了四个学校的offer<h4 id="20-在实验室中担任什么角色，参加的XXX能聊聊吗"><a href="#20-在实验室中担任什么角色，参加的XXX能聊聊吗" class="headerlink" title="20. 在实验室中担任什么角色，参加的XXX能聊聊吗"></a>20. 在实验室中担任什么角色，参加的XXX能聊聊吗</h4><h4 id="22-用两个词来形容自己"><a href="#22-用两个词来形容自己" class="headerlink" title="22. 用两个词来形容自己"></a>22. 用两个词来形容自己</h4>踏实 认真</li>
 </ul>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E7%BB%8F/" rel="tag"># 面经</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/22/tcp%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="来世做春风，浪漫且自由">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cachecatのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/22/tcp%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">tcp正向代理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-22 19:30:00" itemprop="dateCreated datePublished" datetime="2022-02-22T19:30:00+08:00">2022-02-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-23 17:53:56" itemprop="dateModified" datetime="2022-02-23T17:53:56+08:00">2022-02-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>代理服务器可谓是无处不在。许多爬虫需要大量的 TCP 代理来伪造自己的 IP 地址，从而防止因为访问过快而被网站拉入黑名单。这里主要介绍代理服务器原理以及服务器端的基础。</p>
-<h2 id="2-简单的代理模型介绍"><a href="#2-简单的代理模型介绍" class="headerlink" title="2.简单的代理模型介绍"></a>2.简单的代理模型介绍</h2><h3 id="2-1-使用-Socks5-协议的架构"><a href="#2-1-使用-Socks5-协议的架构" class="headerlink" title="2.1 使用 Socks5 协议的架构"></a>2.1 使用 Socks5 协议的架构</h3><p>Chrome 可以安装一个 SwitchyOmega 插件来更好地支持 Socks5 协议的代理。他的架构如下：</p>
-<p>浏览器&lt;—&gt;代理服务器&lt;—&gt;饿了么网站</p>
-<hr>
-<p>浏览器在开启代理模式下，当打开一个网站时，会先连上代理服务器，并进行必要的握手步骤。 Socks5 的握手分两步。</p>
-<ol>
-<li><p>第一步握手是无聊且几乎固定的问答，俗称「对暗号」。</p>
-</li>
-<li><p>第二步握手, 浏览器发给代理服务器的报文中会包含需要代访问的 IP 地址（或者域名）。代理服务器连接（connect）上饿了么网站服务器后，会发送响应报文给浏览器，告诉他成功了 。</p>
-</li>
-</ol>
-<p>到现在，握手完成。浏览器会发送数据给代理服务器，代理服务器将 TCP 报文原封不动发送给饿了么网站， 再将饿了么网站返回的数据也原封不动返回给浏览器。浏览器最终将页面渲染并显示在屏幕上。代理服务器甚至感知不到 HTTP 协议的存在，因为它只做 TCP 字节流的转发。</p>
-<hr>
-<h2 id="2-2-使用-Shadowsocks-协议的架构"><a href="#2-2-使用-Shadowsocks-协议的架构" class="headerlink" title="2.2 使用 Shadowsocks 协议的架构"></a>2.2 使用 Shadowsocks 协议的架构</h2><p>Shadowsocks 将 2.2 的代理服务器拆分成两部分，一部分依然在本机，我们称之为 SSlocal ，一部分设在远程，我们称它为 SSServer 。由于 2.2 的协议传输的都是明文，Shadowsocks 对数据的转发进行了加密混淆处理。他虽然不能保证绝对安全，但至少能尽量混淆数据。</p>
-<hr>
-<p>浏览器&lt;—&gt;SSlocal&lt;—&gt;SSServer&lt;—&gt;网站<br>Shadowsocks 也有握手过程，和 Socks5 的协议比较像，这节不做重点介绍。在握手成功后，代理会执行转发任务。SSlocal 会将浏览器发来的数据加密，发送给 SSServer ， SSServer 把数据解密后发给网站。返回来的数据也是同理，都会有个加密解密的过程。一般来说比较建议用 AES-256-CFB 这种比较安全的加密方式。</p>
-<hr>
-<h2 id="3-TCP-服务端程序并发模型"><a href="#3-TCP-服务端程序并发模型" class="headerlink" title="3. TCP 服务端程序并发模型"></a>3. TCP 服务端程序并发模型</h2><p>代理服务器如果用的人多，那么并发压力就会很大。不同的语言有不同的最佳模型。</p>
-<h3 id="3-1-多线程同步阻塞式"><a href="#3-1-多线程同步阻塞式" class="headerlink" title="3.1 多线程同步阻塞式"></a>3.1 多线程同步阻塞式</h3><p>多线程同步式通常用一个线程处理一个 TCP 连接。现如今的多线程同步，很少再用 pthread 里的线程去写并发，因为一个线程栈可能 8Mib，线程一多内存就撑不住了。再加上线程切换的开销，使得这种传统的并发方式连 10k 都够呛。一般来说，线程数等于 CPU 核心数的时候，线程切换的开销最小。</p>
-<p>好在 Golang 里有轻量级的 Goroutine 替代传统线程，使得这种同步模型实现高并发成为可能。通常这种同步阻塞式写法如下：</p>
-<p>&#x2F;&#x2F; go 伪代码<br>func main() {<br>    while (true) {<br>        conn &#x3D; acceptor.accept()<br>        go handleConn(conn)<br>    }<br>}<br>func handleConn(conn) {<br>    &#x2F;&#x2F; 第一次握手<br>    err &#x3D; handshake(conn)<br>    checkError(err)<br>    addr, port &#x3D; getAddr(conn)<br>    &#x2F;&#x2F; 尝试连接客户端发来的 IP 地址<br>    server, err &#x3D; connect(addr, port)<br>    checkError(err)<br>    &#x2F;&#x2F; 成功连上要通知客户端，这里省略代码<br>    …<br>    &#x2F;&#x2F; 将客户端发来的消息发送至远程服务器<br>    go io.Copy(server, conn)<br>    &#x2F;&#x2F; 将服务端发来的消息转发至客户端<br>    io.Copy(conn, server)<br>}</p>
-<hr>
-<p>说明：通常主函数就是一个大循环，有新连接就开个 Goroutine 处理这个客户端连接。客户端连接先进行握手后会发送想要访问的目的服务器地址，代理服务器先尝试 connect ，成功连接上则通知客户端，客户端开始发送真正的数据。这时候做一下数据的转发就可以了。由于 TCP 是全双工的协议，收发独立，再加上 Goroutine 已经相当廉价了，所以可以开启两个 Goroutine， 一个负责收，一个负责发，互相不影响。不可以开启多个线程（Goroutine）去对同一个 TCP 连接并行地发送数据，因为这样发送的数据是交错在一起的，是错误的。</p>
-<hr>
-<h2 id="3-2-Reactor-同步非阻塞"><a href="#3-2-Reactor-同步非阻塞" class="headerlink" title="3.2 Reactor 同步非阻塞"></a>3.2 Reactor 同步非阻塞</h2><p>一般来说，在 Linux 下，C&#x2F;C++，Python 这种比较多使用 Reactor 模式。 Reactor 通常是一个主线程大循环，由于使用了 I&#x2F;O 多路复用技术，使得单线程也能有很好的 I&#x2F;O 性能。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//c++伪代码</span><br><span class="line">int main() &#123;</span><br><span class="line">    while (true) &#123;</span><br><span class="line">        err, events = poller.wait(interval)</span><br><span class="line">        processTimerTask() //处理定时器任务</span><br><span class="line">        if (err) &#123;</span><br><span class="line">            //处理错误</span><br><span class="line">            continue</span><br><span class="line">        &#125; </span><br><span class="line">        for (event : events) &#123;</span><br><span class="line">            if (event.isReadable()) &#123;</span><br><span class="line">                //处理读事件</span><br><span class="line">                handleRead(event)</span><br><span class="line">            &#125;</span><br><span class="line">            if (event.isWriteable()) &#123;</span><br><span class="line">                //处理写事件</span><br><span class="line">            &#125;</span><br><span class="line">            if (event.isClosed()) &#123;</span><br><span class="line">                //处理关闭套接字事件</span><br><span class="line">            &#125;</span><br><span class="line">            if (event.hasError()) &#123;</span><br><span class="line">                //处理错误事件</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>poller 底层一般有 select，epoll 等。通常情况下使用 epoll 性能最好。单线程可以很容易支撑好几万并发。</p>
-<h2 id="3-2-1-「异步」代码的「保存上下文」"><a href="#3-2-1-「异步」代码的「保存上下文」" class="headerlink" title="3.2.1 「异步」代码的「保存上下文」"></a>3.2.1 「异步」代码的「保存上下文」</h2><p>无论是 Proactor 还是 Reactor ，凡是接近 Node.js 那种异步的写法，都需要主动保存「上下文」在自己的内存中。「上下文」通常包含没收完整的数据 buffer ，目前的状态 state。</p>
-<p>&#x2F;&#x2F;c++伪代码<br>struct ConnContext {<br>    Buffer buffer; &#x2F;&#x2F; 接收的消息（可能还不是一个完整的消息）<br>    State state;   &#x2F;&#x2F; 状态<br>}</p>
-<hr>
-<p>read 函数一次性读的字节数也是不确定的，有时需要多次调用 read 才能接受完完整的数据。由于数据不完整，并不能执行接下来的流程，所以要先把数据缓存在一个地方，然后无奈返回。等数据接收完整了，才能进入下一个处理程序。一般每个连接都有一个上下文，由 map 保存对应关系。有些协议实现起来状态比较多，比如有好几次握手，必要时还需要使用状态机保存状态。每次有读事件的时候，都会调用 handleRead 函数，这时候根据之前保存的状态，很容易恢复到之前执行的函数的位置（通过switch case分发）。</p>
-<hr>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// c++ 伪代码</span><br><span class="line">void handleRead(conn) &#123;</span><br><span class="line">    context = contexts[conn]</span><br><span class="line">    switch (context.state) &#123;</span><br><span class="line">        case eSTATE_HANDSHAKE1:</span><br><span class="line">            handshake1(conn, context)</span><br><span class="line">            break</span><br><span class="line">        case eSTATE_HANDSHAKE2:</span><br><span class="line">            handshake2(conn, context)</span><br><span class="line">            break</span><br><span class="line">        // 省略</span><br><span class="line">        // ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void handshake1(conn, context) &#123;</span><br><span class="line">    data = read_some(conn)</span><br><span class="line">    append(context.buffer, data)</span><br><span class="line">    if (context.buffer 不是一个完整的数据) &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    //发送一些东西</span><br><span class="line">    send_some(...)</span><br><span class="line">    // 将 context.buffer 处理过的数据清理掉</span><br><span class="line">    // 现在handleshake1状态结束了，更改为下一个状态</span><br><span class="line">    context.state = eSTATE_HANDSHAKE2</span><br><span class="line">    // 下一次读事件将会调用 handshake2 函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3-2-2-gethostbyname-是阻塞的"><a href="#3-2-2-gethostbyname-是阻塞的" class="headerlink" title="3.2.2 gethostbyname 是阻塞的"></a>3.2.2 gethostbyname 是阻塞的</h2><p>由于用到了域名，所以需要 DNS 服务将域名转换成为 IP 地址。</p>
-<p>Linux 下 gethostbyname 似乎是阻塞的。这与同步非阻塞式的代码可谓格格不入。可以换一个非阻塞的实现。除此之外，Golang的 DNS 函数库并没有做缓存处理，这就意味着可能会频繁访问 DNS 服务器，速度没有优势，可能对 DNS 服务器也是个不小的负担。所以可以自行设计一个 DNS 缓存，是个不错的主意。</p>
-<h2 id="4-TCP协议"><a href="#4-TCP协议" class="headerlink" title="4. TCP协议"></a>4. TCP协议</h2><p>假设读者对 TCP 协议有了基本了解，知道滑动窗口，知道拥塞控制。</p>
-<h3 id="4-1-滑动窗口与数据转发"><a href="#4-1-滑动窗口与数据转发" class="headerlink" title="4.1 滑动窗口与数据转发"></a>4.1 滑动窗口与数据转发</h3><p>我们再看一下这个结构：</p>
-<p>浏览器&lt;—&gt;代理服务器&lt;—&gt;饿了么网站<br>考虑一下这个情况，浏览器和代理服务器连通速度很好，收发很快；而代理服务器和饿了么站点收发很慢。这样一个收发速度不相等的情况，会出现怎样的问题？</p>
-<hr>
-<ol>
-<li><p>对于阻塞同步模型，基本上不用考虑这个问题。因为他的收和发是串行的，这意味着它会自动调整滑动窗口大小。当代理服务器收到了浏览器的10Kib数据，代理服务器就会慢慢发送这10Kib数据给饿了么网站，这时候如果浏览器还想发数据给代理服务器，只会保存在代理服务器的内核缓冲区里，由于代理服务器程序在执行发送的任务（顾不上收数据），并没有从缓冲区取数据，缓冲区的数据会越来越多，剩余空间越来越小，在TCP层面，就会通知调整滑动窗口大小。当读缓冲区满了以后，通知滑动窗口为0，客户端就会停止发送数据。等代理服务器发送完数据，开始从缓冲区取浏览器的数据，浏览器到代理服务器的发送窗口又会从0变大，浏览器又可以发送数据了。</p>
-</li>
-<li><p>对于非阻塞模型，这是一个大问题。由于没有阻塞功能，代理服务器会一个劲儿的收下浏览器的所有数据，读取内核缓冲区的数据，再转发数据，并保存在自己的某个缓冲区中（sendBuffer）。有点类似于生产者消费者模型，生产得快，消费得慢，内存会一直膨胀下去。其实我们很容易做1情况的模拟，只要发现 sendBuffer 过大就停止读缓冲区的数据，等 sendBuffer 消下去了再开始读就行了。</p>
-</li>
-</ol>
-<hr>
-<h2 id="4-2-TCP-可靠性"><a href="#4-2-TCP-可靠性" class="headerlink" title="4.2 TCP 可靠性"></a>4.2 TCP 可靠性</h2><p>TCP 可靠性体现在不乱，不重，不漏。他能很好地防止报文意外丢失，但不能100%防止人为篡改报文，当报文+校验和一起被替换，还是很难被察觉的。TCP 可靠传输并不等于他有数据安全，这是两个概念。但事实上，TCP 在不断发展。 它的 29 号选项 TCP Authentication Option 使用了 SHA 哈希大大提高了篡改数据的难度。对于一个代理服务器来说，只需要单纯转发数据就可以，可以不用过于关心数据的篡改问题。</p>
-<h2 id="tcp代理服务"><a href="#tcp代理服务" class="headerlink" title="tcp代理服务"></a>tcp代理服务</h2><p>proxy server接收client的tcp链接请求，并把client端的数据发送给代理服务器，代理服务器把数据发送给后端的被代理服务器server1…serverN，并把server1…serverN的执行结果再返回给client。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">              |-----------------|            |---------------| </span><br><span class="line">client &lt;-----&gt;  | proxy server    | &lt;-----&gt;    |     server 1  |</span><br><span class="line">                |-----------------|            |---------------|</span><br><span class="line">                            /|\                   ... ...</span><br><span class="line">                             |                 |---------------|</span><br><span class="line">                             |----------------&gt;|     server N  |</span><br><span class="line">                                               |---------------|</span><br></pre></td></tr></table></figure>
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/22/tcp%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/" rel="prev" title="tcp正向代理">
+      <i class="fa fa-chevron-left"></i> tcp正向代理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/24/%E7%89%A9%E7%90%86%E5%B1%82/" rel="next" title="物理层">
+      物理层 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/22/%E4%BB%A3%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="来世做春风，浪漫且自由">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cachecatのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/22/%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">网络代理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-22 19:30:00" itemprop="dateCreated datePublished" datetime="2022-02-22T19:30:00+08:00">2022-02-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-23 17:53:44" itemprop="dateModified" datetime="2022-02-23T17:53:44+08:00">2022-02-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="两种代理"><a href="#两种代理" class="headerlink" title="两种代理"></a>两种代理</h2><p>正向代理（Forward Proxy）<br>一般来说都是直接叫做『代理』，代理是什么呢？</p>
-<blockquote>
-<p>正向代理是指用户利用代理服务器访问目标服务器。</p>
-</blockquote>
-<hr>
-<p>正向代理的用处主要有以下几种：</p>
-<p>访问『404』网站<br>这种情况下，就类似饿了么『跑腿代购』，我们并不能直接在网上购买香烟这类禁止网上销售或者没有在外卖平台上架的商品（404），但是我们可以通过骑手（代理服务器），去指定的店铺（目标服务器）购买我们需要的东西（目标资源），送到我们面前。</p>
-<p>加速访问<br>比较常见的便是『网游加速器』，比如《吃鸡》这种国外游戏产商的游戏服务器一般部署在国外，我们家里的网络环境如果直接进行游戏，『延迟』『卡顿』会伴随着我们整个游戏过程。<br>通过连接游戏加速器提供的代理服务器，利用代理服务器和目标游戏服务器之间优化过、甚至是专线的网络，我们便能愉快『吃鸡』了。</p>
-<hr>
-<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><blockquote>
-<p>正向代理代理的是用户，而反向代理则相反，代理对象是目标服务器，是指服务端利用代理服务器给用户提供服务。</p>
-</blockquote>
-<hr>
-<p>和正向代理相比，二者都是利用代理服务器实现的，不过反向代理的主语是服务端，所以说反向代理对于用户来说是透明的，在用户的视野里，代理服务器便是目标服务器。</p>
-<p>类似饿了么『专星送』服务，我们（用户）在想喝咖啡的时候，并不需要知道我们附近哪个广场哪个角落有家星巴克（目标服务器），我们只需要打开专星送（代理服务器），直接下单就是，其会自动分配合适的门店为我们提供咖啡。</p>
-<p>从上面的例子可以想到，反向代理在实际应用可以起到保护和隐藏真正提供服务的那个星巴克门店，也可以在区域分店爆单或者停业时，对用户的需要提供负载均衡，自动派单给相近的门店。</p>
-<hr>
-<h3 id="四层代理（L4-Switch-四层交换）"><a href="#四层代理（L4-Switch-四层交换）" class="headerlink" title="四层代理（L4 Switch 四层交换）"></a>四层代理（L4 Switch 四层交换）</h3><p>这个四层指的便是『运输层』，我们的四层代理服务器在接收到数据报文后会进行拆包工作，且只做到第4层运输层。</p>
-<p>在运输层拆包拿到的数据报文，除了包括应用层需要的数据报文，在标头信息中包括了端口信息，再结合网络层拆包所得的 IP，通常是根据这个 IP+PORT 得到实际的目标服务器信息，再修改报文的 IP 地址为目标服务器的 IP 地址信息。</p>
-<p>所以说，如果数据报文是个 TCP 连接，客户端最终将与真实的目标服务器建立连接。</p>
-<h3 id="七层代理（L7-Switch-七层交换）"><a href="#七层代理（L7-Switch-七层交换）" class="headerlink" title="七层代理（L7 Switch 七层交换）"></a>七层代理（L7 Switch 七层交换）</h3><p>七层代理便是指拆包到应用层后，再根据应用层数据特征来判断目标服务器。举个栗子，Nginx 便是我们经常用来搭建七层代理的服务器软件，我们在访问一个 URL 里，Nginx 会根据 URL 进行判断，分配请求到目标服务器</p>
-<p>因为七层代理依赖应用层信息，所以用户在访问网站的时候，会先与七层代理服务器三次握手建立连接，再发送具体的请求报文给代理服务器，代理服务器再跟目标服务器三次握手建立连接，然后由代理服务器来访问目标服务器。</p>
-<h3 id="其他层代理"><a href="#其他层代理" class="headerlink" title="其他层代理"></a>其他层代理</h3><p>既然有四层、七层代理，那么当然是有二层和三层代理<br>二层代理是根据数据链路层报文的 MAC 地址完成代理（一般称为二层转发）<br>三层代理则根据网络层报文的 IP 地址完成数据交换</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/22/%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E4%BF%A1%E6%81%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="来世做春风，浪漫且自由">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cachecatのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/22/%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E4%BF%A1%E6%81%AF/" class="post-title-link" itemprop="url">网络端口占用信息</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-22 19:30:00" itemprop="dateCreated datePublished" datetime="2022-02-22T19:30:00+08:00">2022-02-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-23 17:52:06" itemprop="dateModified" datetime="2022-02-23T17:52:06+08:00">2022-02-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li><input checked="" disabled="" type="checkbox"> 1端口  -  tcpmux</li>
-<li><input checked="" disabled="" type="checkbox"> 7端口  -  echo</li>
-<li><input checked="" disabled="" type="checkbox"> 9端口  -  discard</li>
-<li><input checked="" disabled="" type="checkbox"> 11端口  -  systat</li>
-<li><input checked="" disabled="" type="checkbox"> 13端口  -  daytime</li>
-<li><input checked="" disabled="" type="checkbox"> 15端口  -  netstat</li>
-<li><input checked="" disabled="" type="checkbox"> 17端口  -  qotd</li>
-<li><input checked="" disabled="" type="checkbox"> 19端口  -  chargen</li>
-<li><input checked="" disabled="" type="checkbox"> 20端口  -  ftp data</li>
-<li><input checked="" disabled="" type="checkbox"> 21端口  -  ftp access</li>
-<li><input checked="" disabled="" type="checkbox"> 22端口  -  ssh</li>
-<li><input checked="" disabled="" type="checkbox"> 23端口  -  telnet</li>
-<li><input checked="" disabled="" type="checkbox"> 25端口  -  smtp</li>
-<li><input checked="" disabled="" type="checkbox"> 37端口  -  time</li>
-<li><input checked="" disabled="" type="checkbox"> 42端口  -  name</li>
-<li><input checked="" disabled="" type="checkbox"> 43端口  -  nicname</li>
-<li><input checked="" disabled="" type="checkbox"> 53端口  -  domain</li>
-<li><input checked="" disabled="" type="checkbox"> 69端口  -  tftp</li>
-<li><input checked="" disabled="" type="checkbox"> 77端口  -  priv-rjs</li>
-<li><input checked="" disabled="" type="checkbox"> 79端口  -  finger</li>
-<li><input checked="" disabled="" type="checkbox"> 87端口  -  ttylink</li>
-<li><input checked="" disabled="" type="checkbox"> 95端口  -  supdup</li>
-<li><input checked="" disabled="" type="checkbox"> 101端口  -  hostriame</li>
-<li><input checked="" disabled="" type="checkbox"> 102端口  -  iso-tsap</li>
-<li><input checked="" disabled="" type="checkbox"> 103端口  -  gppitnp</li>
-<li><input checked="" disabled="" type="checkbox"> 104端口  -  acr-nema</li>
-<li><input checked="" disabled="" type="checkbox"> 109端口  -  pop2</li>
-<li><input checked="" disabled="" type="checkbox"> 110端口  -  pop3</li>
-<li><input checked="" disabled="" type="checkbox"> 111端口  -  sunrpc</li>
-<li><input checked="" disabled="" type="checkbox"> 113端口  -  auth</li>
-<li><input checked="" disabled="" type="checkbox"> 115端口  -  sftp</li>
-<li><input checked="" disabled="" type="checkbox"> 117端口  -  uucp-path</li>
-<li><input checked="" disabled="" type="checkbox"> 119端口  -  nntp</li>
-<li><input checked="" disabled="" type="checkbox"> 123端口  -  NTP</li>
-<li><input checked="" disabled="" type="checkbox"> 135端口  -  loc-srv &#x2F;epmap</li>
-<li><input checked="" disabled="" type="checkbox"> 137端口  -  netbios</li>
-<li><input checked="" disabled="" type="checkbox"> 139端口  -  netbios</li>
-<li><input checked="" disabled="" type="checkbox"> 143端口  -  imap2</li>
-<li><input checked="" disabled="" type="checkbox"> 161端口  -  snmp</li>
-<li><input checked="" disabled="" type="checkbox"> 179端口  -  BGP</li>
-<li><input checked="" disabled="" type="checkbox"> 389端口  -  ldap</li>
-<li><input checked="" disabled="" type="checkbox"> 427端口  -  SLP (Also used by Apple Filing Protocol)</li>
-<li><input checked="" disabled="" type="checkbox"> 465端口  -  smtp+ssl</li>
-<li><input checked="" disabled="" type="checkbox"> 512端口  -  print &#x2F; exec</li>
-<li><input checked="" disabled="" type="checkbox"> 513端口  -  login</li>
-<li><input checked="" disabled="" type="checkbox"> 514端口  -  shell</li>
-<li><input checked="" disabled="" type="checkbox"> 515端口  -  printer</li>
-<li><input checked="" disabled="" type="checkbox"> 526端口  -  tempo</li>
-<li><input checked="" disabled="" type="checkbox"> 530端口  -  courier</li>
-<li><input checked="" disabled="" type="checkbox"> 531端口  -  chat</li>
-<li><input checked="" disabled="" type="checkbox"> 532端口  -  netnews</li>
-<li><input checked="" disabled="" type="checkbox"> 540端口  -  uucp</li>
-<li><input checked="" disabled="" type="checkbox"> 548端口  -  AFP (Apple Filing Protocol)</li>
-<li><input checked="" disabled="" type="checkbox"> 554端口  -  rtsp</li>
-<li><input checked="" disabled="" type="checkbox"> 556端口  -  remotefs</li>
-<li><input checked="" disabled="" type="checkbox"> 563端口  -  nntp+ssl</li>
-<li><input checked="" disabled="" type="checkbox"> 587端口  -  smtp (rfc6409)</li>
-<li><input checked="" disabled="" type="checkbox"> 601端口  -  syslog-conn (rfc3195)</li>
-<li><input checked="" disabled="" type="checkbox"> 636端口  -  ldap+ssl</li>
-<li><input checked="" disabled="" type="checkbox"> 993端口  -  ldap+ssl</li>
-<li><input checked="" disabled="" type="checkbox"> 995端口  -  pop3+ssl</li>
-<li><input checked="" disabled="" type="checkbox"> 1719端口  -  h323gatestat</li>
-<li><input checked="" disabled="" type="checkbox"> 1720端口  -  h323hostcall</li>
-<li><input checked="" disabled="" type="checkbox"> 1723端口  -  pptp</li>
-<li><input checked="" disabled="" type="checkbox"> 2049端口  -  nfs</li>
-<li><input checked="" disabled="" type="checkbox"> 3659端口  -  apple-sasl &#x2F; PasswordServer</li>
-<li><input checked="" disabled="" type="checkbox"> 4045端口  -  lockd</li>
-<li><input checked="" disabled="" type="checkbox"> 5060端口  -  sip</li>
-<li><input checked="" disabled="" type="checkbox"> 5061端口  -  sips</li>
-<li><input checked="" disabled="" type="checkbox"> 6000端口  -  X11</li>
-<li><input checked="" disabled="" type="checkbox"> 6566端口  -  sane-port</li>
-<li><input checked="" disabled="" type="checkbox"> 6665端口  -  Alternate IRC [Apple addition]</li>
-<li><input checked="" disabled="" type="checkbox"> 6666端口  -  Alternate IRC [Apple addition]</li>
-<li><input checked="" disabled="" type="checkbox"> 6667端口  -  Standard IRC [Apple addition]</li>
-<li><input checked="" disabled="" type="checkbox"> 6668端口  -  Alternate IRC [Apple addition]</li>
-<li><input checked="" disabled="" type="checkbox"> 6669端口  -  Alternate IRC [Apple addition]</li>
-<li><input checked="" disabled="" type="checkbox"> 6697端口  -  IRC + TLS</li>
-<li><input checked="" disabled="" type="checkbox"> 10080端口  -  Amanda</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/21/markdown%E8%AF%AD%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="来世做春风，浪漫且自由">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cachecatのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/21/markdown%E8%AF%AD%E6%B3%95/" class="post-title-link" itemprop="url">初学markdown语法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-21 19:30:00" itemprop="dateCreated datePublished" datetime="2022-02-21T19:30:00+08:00">2022-02-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-22 09:40:37" itemprop="dateModified" datetime="2022-02-22T09:40:37+08:00">2022-02-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>Markdown 中，你只需要在文本前面加上 # 即可，同理、你还可以增加二级标题、三级标题、四级标题、五级标题和六级标题，总共六级，只需要增加 # 即可，标题字号相应降低。例如：</p>
-<pre><code># 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题 
-</code></pre>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>在 Markdown 中，在文字前面加上 -  ，例如：</p>
-<pre><code>- 文本1
-- 文本2
-- 文本3
-</code></pre>
-<p>如果你希望有序列表，<br>也可以在文字前面加上 1. 2. 3. 就可以了，例如:</p>
-<pre><code>1. 文本1
-2. 文本2
-3. 文本3
-</code></pre>
-<h2 id="链接与图片"><a href="#链接与图片" class="headerlink" title="链接与图片"></a>链接与图片</h2><hr>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h2 id=&quot;picture&quot;&gt; 链接和图片&lt;/h2&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>在 Markdown 中，插入链接不需要其他按钮，你只需要使用 <a href="%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80">显示文本</a> 这样的语法即可，例如：<code>[简书](http://www.jianshu.com)</code><br>在 Markdown 中，插入图片不需要其他按钮，你只需要使用 <img src="/%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80"> 这样的语法即可，例如：<code> ![](http://upload-images.jianshu.io/upload_images/259-0ad0d0bfc1c608b6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</code></p>
-<p>注：插入图片的语法和链接的语法很像，只是前面多了一个 ！</p>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>在我们写作的时候经常需要引用他人的文字，这个时候引用这个格式就很有必要了，在 Markdown 中，你只需要在你希望引用的文字前面加上 &gt; 就好了，例如：</p>
-<pre><code>&gt; 一盏灯， 一片昏黄； 一简书， 一杯淡茶。 守着那一份淡定， 品读属于自己的寂寞。 保持淡定， 才能欣赏到最美丽的风景！ 保持淡定， 人生从此不再寂寞。
-注：&gt; 和文本之间要保留一个字符的空格 **
-</code></pre>
-<h2 id="粗体和斜体"><a href="#粗体和斜体" class="headerlink" title="粗体和斜体"></a>粗体和斜体</h2><p>用两个 * 包含一段文本就是粗体的语法，用一个 * 包含一段文本就是斜体的语法。例如：</p>
-<pre><code>*一盏灯*， 一片昏黄；
-**一简书**，
-一杯淡茶。 
-守着那一份淡定， 品读属于自己的寂寞。
-保持淡定， 才能欣赏到最美丽的风景！
-保持淡定， 人生从此不再寂寞。
-</code></pre>
-<h2 id="代码引用"><a href="#代码引用" class="headerlink" title="代码引用"></a>代码引用</h2><p>需要引用代码时，如果引用的语句只有一段，不分行，可以用 &#96; 将语句包起来。<br>如果引用的语句为多行，可以将&#96;&#96;&#96;置于这段代码的首行和末行。</p>
-<p><code>hello world</code></p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>相关代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">| Tables        | Are           | Cool  |</span><br><span class="line">| ------------- |:-------------:| -----:|</span><br><span class="line">| col 3 is      | right-aligned | $1600 |</span><br><span class="line">| col 2 is      | centered      |   $12 |</span><br><span class="line">| zebra stripes | are neat      |    $1 |</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>表头</th>
-<th>表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-<tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-</tbody></table>
-<h2 id="显示链接中带括号的图片"><a href="#显示链接中带括号的图片" class="headerlink" title="显示链接中带括号的图片"></a>显示链接中带括号的图片</h2><p>![][1]<br>[1]: <a target="_blank" rel="noopener" href="http://latex.codecogs.com/gif.latex?%5Cprod%20(n_%7Bi%7D)+1">http://latex.codecogs.com/gif.latex?\prod%20(n_{i})+1</a></p>
-<p>![][1]<br>[1]: <a target="_blank" rel="noopener" href="http://latex.codecogs.com/gif.latex?%5Cprod%20%5C(n_%7Bi%7D%5C)+1">http://latex.codecogs.com/gif.latex?\prod%20\(n_{i}\)+1</a></p>
-<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*斜体文本*</span><br><span class="line">_斜体文本_</span><br><span class="line">**粗体文本**</span><br><span class="line">__粗体文本__</span><br><span class="line">***粗斜体文本***</span><br><span class="line">___粗斜体文本___</span><br></pre></td></tr></table></figure>
-
-<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">***</span><br><span class="line">* * *</span><br><span class="line">*****</span><br><span class="line">- - - </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><p>下划线可以通过 HTML 的<code> &lt;u&gt;</code> 标签来实现：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;u&gt;带下划线文本&lt;/u&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="列表嵌套"><a href="#列表嵌套" class="headerlink" title="列表嵌套"></a>列表嵌套</h2><p>列表嵌套只需在子列表中的选项前面添加四个空格即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 第一项：</span><br><span class="line">    - 第一项嵌套的第一个元素</span><br><span class="line">    - 第一项嵌套的第二个元素</span><br><span class="line">2. 第二项：</span><br><span class="line">    - 第二项嵌套的第一个元素</span><br><span class="line">    - 第二项嵌套的第二个元素</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-<ol>
-<li>第一项：<ul>
-<li>第一项嵌套的第一个元素</li>
-<li>第一项嵌套的第二个元素</li>
-</ul>
-</li>
-<li>第二项：<ul>
-<li>第二项嵌套的第一个元素</li>
-<li>第二项嵌套的第二个元素</li>
-</ul>
-</li>
-</ol>
-<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><p>另外区块是可以嵌套的，一个 &gt; 符号是最外层，两个 &gt; 符号是第一层嵌套，以此类推：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; 最外层</span><br><span class="line">&gt; &gt; 第一层嵌套</span><br><span class="line">&gt; &gt; &gt; 第二层嵌套</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>最外层</p>
-<blockquote>
-<p>第一层嵌套</p>
-<blockquote>
-<p>第二层嵌套</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h3 id="区块中使用列表"><a href="#区块中使用列表" class="headerlink" title="区块中使用列表"></a>区块中使用列表</h3><p>区块中使用列表实例如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; 区块中使用列表</span><br><span class="line">&gt; 1. 第一项</span><br><span class="line">&gt; 2. 第二项</span><br><span class="line">&gt; + 第一项</span><br><span class="line">&gt; + 第二项</span><br><span class="line">&gt; + 第三项</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>区块中使用列表</p>
-<ol>
-<li>第一项</li>
-<li>第二项</li>
-</ol>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -2423,6 +1568,7 @@ close(), shutdown() 关闭套接字
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80-C-x2F-C"><span class="nav-number">1.</span> <span class="nav-text">1. 语言基础 (C&#x2F;C++)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%880%EF%BC%89-%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">（0） 指针和引用的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%9C%A8%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">（1）在函数参数传递的时候，什么时候使用指针，什么时候使用引用？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89-%E5%A0%86%E5%92%8C%E6%A0%88%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">（2） 堆和栈有什么区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%A0%86%E5%BF%AB%E4%B8%80%E7%82%B9%E8%BF%98%E6%98%AF%E6%A0%88%E5%BF%AB%E4%B8%80%E7%82%B9%EF%BC%9F%EF%BC%88%E5%AD%97%E8%8A%82%E6%8F%90%E5%89%8D%E6%89%B9%E4%B8%80%E9%9D%A2%EF%BC%89"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">（3）堆快一点还是栈快一点？（字节提前批一面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89-new%E5%92%8Cdelete%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%8Cnew-%E4%B8%8E-malloc%E7%9A%84%E5%BC%82%E5%90%8C%E5%A4%84"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">（4） new和delete是如何实现的，new 与 malloc的异同处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E6%97%A2%E7%84%B6%E6%9C%89%E4%BA%86malloc-x2F-free%EF%BC%8CC-%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81new-x2F-delete%E5%91%A2%EF%BC%9F"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">（5）既然有了malloc&#x2F;free，C++中为什么还需要new&#x2F;delete呢？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-C%E5%92%8CC-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">（6） C和C++的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89delete%E5%92%8Cdelete-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">（7）delete和delete[]的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-C-%E3%80%81Java%E7%9A%84%E8%81%94%E7%B3%BB%E4%B8%8E%E5%8C%BA%E5%88%AB%EF%BC%8C%E5%8C%85%E6%8B%AC%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7%E3%80%81%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E3%80%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E7%AD%89%EF%BC%88java%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%EF%BC%89"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">（8） C++、Java的联系与区别，包括语言特性、垃圾回收、应用场景等（java的垃圾回收机制）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%889%EF%BC%89C-%E5%92%8Cpython%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.10.</span> <span class="nav-text">（9）C++和python的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89-Struct%E5%92%8Cclass%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.11.</span> <span class="nav-text">（10） Struct和class的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8811%EF%BC%89-define-%E5%92%8Cconst%E7%9A%84%E8%81%94%E7%B3%BB%E4%B8%8E%E5%8C%BA%E5%88%AB%EF%BC%88%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5%E3%80%81%E5%AE%89%E5%85%A8%E6%80%A7%E3%80%81%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%AD%89%EF%BC%89"><span class="nav-number">1.0.0.12.</span> <span class="nav-text">（11） define 和const的联系与区别（编译阶段、安全性、内存占用等）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8812%EF%BC%89-%E5%9C%A8C-%E4%B8%ADconst%E7%9A%84%E7%94%A8%E6%B3%95%EF%BC%88%E5%AE%9A%E4%B9%89%EF%BC%8C%E7%94%A8%E9%80%94%EF%BC%89"><span class="nav-number">1.0.0.13.</span> <span class="nav-text">（12） 在C++中const的用法（定义，用途）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8813%EF%BC%89-C-%E4%B8%AD%E7%9A%84static%E7%94%A8%E6%B3%95%E5%92%8C%E6%84%8F%E4%B9%89"><span class="nav-number">1.0.0.14.</span> <span class="nav-text">（13） C++中的static用法和意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8814%EF%BC%89-%E8%AE%A1%E7%AE%97%E4%B8%8B%E9%9D%A2%E5%87%A0%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%9A"><span class="nav-number">1.0.0.15.</span> <span class="nav-text">（14） 计算下面几个类的大小：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8815%EF%BC%89-C-%E7%9A%84STL%E4%BB%8B%E7%BB%8D%EF%BC%88%E8%BF%99%E4%B8%AA%E7%B3%BB%E5%88%97%E4%B9%9F%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%8C%E5%BB%BA%E8%AE%AE%E4%BE%AF%E6%8D%B7%E8%80%81%E5%B8%88%E7%9A%84%E8%BF%99%E6%96%B9%E9%9D%A2%E7%9A%84%E4%B9%A6%E7%B1%8D%E4%B8%8E%E8%A7%86%E9%A2%91%EF%BC%89%EF%BC%8C%E5%85%B6%E4%B8%AD%E5%8C%85%E6%8B%AC%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86allocator%EF%BC%8C%E5%87%BD%E6%95%B0%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9C%BA%E7%90%86%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%AD%89"><span class="nav-number">1.0.0.16.</span> <span class="nav-text">（15） C++的STL介绍（这个系列也很重要，建议侯捷老师的这方面的书籍与视频），其中包括内存管理allocator，函数，实现机理，多线程实现等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8816%EF%BC%89-STL%E6%BA%90%E7%A0%81%E4%B8%AD%E7%9A%84hash%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.0.0.17.</span> <span class="nav-text">（16） STL源码中的hash表的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8817%EF%BC%89%E8%A7%A3%E5%86%B3%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.0.0.18.</span> <span class="nav-text">（17）解决哈希冲突的方式？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8818%EF%BC%89-STL%E4%B8%ADunordered-map%E5%92%8Cmap%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.19.</span> <span class="nav-text">（18） STL中unordered_map和map的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8819%EF%BC%89-STL%E4%B8%ADvector%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.0.0.20.</span> <span class="nav-text">（19） STL中vector的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8820%EF%BC%89-vector%E4%BD%BF%E7%94%A8%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9%E5%8F%8A%E5%85%B6%E5%8E%9F%E5%9B%A0%EF%BC%8C%E9%A2%91%E7%B9%81%E5%AF%B9vector%E8%B0%83%E7%94%A8push-back-%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D%E5%92%8C%E5%8E%9F%E5%9B%A0%E3%80%82"><span class="nav-number">1.0.0.21.</span> <span class="nav-text">（20） vector使用的注意点及其原因，频繁对vector调用push_back()对性能的影响和原因。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8821%EF%BC%89C-%E4%B8%ADvector%E5%92%8Clist%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.22.</span> <span class="nav-text">（21）C++中vector和list的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8822%EF%BC%89-C-%E4%B8%AD%E7%9A%84%E9%87%8D%E8%BD%BD%E5%92%8C%E9%87%8D%E5%86%99%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-number">1.0.0.23.</span> <span class="nav-text">（22） C++中的重载和重写的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8823%EF%BC%89-C-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%88%E7%83%AD%E9%97%A8%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">1.0.0.24.</span> <span class="nav-text">（23） C ++内存管理（热门问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8824%EF%BC%89-%E4%BB%8B%E7%BB%8D%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E%E6%AF%8F%E4%B8%80%E4%B8%AA%E3%80%82"><span class="nav-number">1.0.0.25.</span> <span class="nav-text">（24） 介绍面向对象的三大特性，并且举例说明每一个。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8825%EF%BC%89-%E5%A4%9A%E6%80%81%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%92%8C%E4%B8%8B%E4%B8%AA%E9%97%AE%E9%A2%98%E4%B8%80%E8%B5%B7%E5%9B%9E%E7%AD%94%EF%BC%89"><span class="nav-number">1.0.0.26.</span> <span class="nav-text">（25） 多态的实现（和下个问题一起回答）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8826%EF%BC%89-C-%E8%99%9A%E5%87%BD%E6%95%B0%E7%9B%B8%E5%85%B3%EF%BC%88%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8%EF%BC%8C%E8%99%9A%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%89%EF%BC%8C%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%88%E7%83%AD%E9%97%A8%EF%BC%8C%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-number">1.0.0.27.</span> <span class="nav-text">（26） C++虚函数相关（虚函数表，虚函数指针），虚函数的实现原理（热门，重要）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8827%EF%BC%89-%E5%AE%9E%E7%8E%B0%E7%BC%96%E8%AF%91%E5%99%A8%E5%A4%84%E7%90%86%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="nav-number">1.0.0.28.</span> <span class="nav-text">（27） 实现编译器处理虚函数表应该如何处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8828%EF%BC%89-%E5%9F%BA%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E4%B8%80%E8%88%AC%E5%86%99%E6%88%90%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.0.0.29.</span> <span class="nav-text">（28） 基类的析构函数一般写成虚函数的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8829%EF%BC%89-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E8%88%AC%E4%B8%8D%E5%AE%9A%E4%B9%89%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.0.30.</span> <span class="nav-text">（29） 构造函数为什么一般不定义为虚函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8830%EF%BC%89-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%88%96%E8%80%85%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E4%B8%AD%E8%B0%83%E7%94%A8%E8%99%9A%E5%87%BD%E6%95%B0%E4%BC%9A%E6%80%8E%E6%A0%B7"><span class="nav-number">1.0.0.31.</span> <span class="nav-text">（30） 构造函数或者析构函数中调用虚函数会怎样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8831%EF%BC%89-%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.0.32.</span> <span class="nav-text">（31） 纯虚函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8832%EF%BC%89-%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E5%92%8C%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.0.0.33.</span> <span class="nav-text">（32） 静态绑定和动态绑定的介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8833%EF%BC%89-%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%89"><span class="nav-number">1.0.0.34.</span> <span class="nav-text">（33） 深拷贝和浅拷贝的区别（举例说明深拷贝的安全性）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8834%EF%BC%89-%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E7%9A%84%E4%BA%86%E8%A7%A3%EF%BC%8C%E9%9B%B6%E6%8B%B7%E8%B4%9D%E7%9A%84%E4%BA%86%E8%A7%A3"><span class="nav-number">1.0.0.35.</span> <span class="nav-text">（34） 对象复用的了解，零拷贝的了解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8835%EF%BC%89-%E4%BB%8B%E7%BB%8DC-%E6%89%80%E6%9C%89%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.0.36.</span> <span class="nav-text">（35） 介绍C++所有的构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8836%EF%BC%89-%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E8%B0%83%E7%94%A8%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%88%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5%EF%BC%89"><span class="nav-number">1.0.0.37.</span> <span class="nav-text">（36） 什么情况下会调用拷贝构造函数（三种情况）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8837%EF%BC%89-%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F%E5%92%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%9B%E8%A1%8C%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%EF%BC%9F"><span class="nav-number">1.0.0.38.</span> <span class="nav-text">（37） 结构体内存对齐方式和为什么要进行内存对齐？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8838%EF%BC%89-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E7%9A%84%E5%AE%9A%E4%B9%89%EF%BC%8C%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E4%B8%8E%E9%81%BF%E5%85%8D%EF%BC%9F"><span class="nav-number">1.0.0.39.</span> <span class="nav-text">（38） 内存泄露的定义，如何检测与避免？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8839%EF%BC%89-C-%E7%9A%84%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">1.0.0.40.</span> <span class="nav-text">（39） C++的智能指针有哪些</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8840%EF%BC%89-%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.0.41.</span> <span class="nav-text">（40） 调试程序的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8841%EF%BC%89-%E9%81%87%E5%88%B0coredump%E8%A6%81%E6%80%8E%E4%B9%88%E8%B0%83%E8%AF%95"><span class="nav-number">1.0.0.42.</span> <span class="nav-text">（41） 遇到coredump要怎么调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8842%EF%BC%89-inline%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%B4%E4%B8%80%E4%B8%8B-%E5%92%8C%E5%AE%8F%E5%AE%9A%E4%B9%89%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.43.</span> <span class="nav-text">（42） inline关键字说一下 和宏定义有什么区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8843%EF%BC%89-%E6%A8%A1%E6%9D%BF%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.0.44.</span> <span class="nav-text">（43） 模板的用法与适用场景 实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8844%EF%BC%89-%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8%E4%BC%9A%E5%BF%AB%E4%B8%80%E4%BA%9B%EF%BC%88%E6%80%A7%E8%83%BD%E4%BC%98%E5%8A%BF%EF%BC%89%EF%BC%9F"><span class="nav-number">1.0.0.45.</span> <span class="nav-text">（44） 成员初始化列表的概念，为什么用成员初始化列表会快一些（性能优势）？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8845%EF%BC%89-%E7%94%A8%E8%BF%87C11%E5%90%97%EF%BC%8C%E7%9F%A5%E9%81%93C11%E6%96%B0%E7%89%B9%E6%80%A7%E5%90%97%EF%BC%9F%EF%BC%88%E6%9C%89%E9%9D%A2%E8%AF%95%E5%AE%98%E5%BB%BA%E8%AE%AE%E7%86%9F%E6%82%89C11%EF%BC%89"><span class="nav-number">1.0.0.46.</span> <span class="nav-text">（45） 用过C11吗，知道C11新特性吗？（有面试官建议熟悉C11）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8846%EF%BC%89-C-%E7%9A%84%E8%B0%83%E7%94%A8%E6%83%AF%E4%BE%8B%EF%BC%88%E7%AE%80%E5%8D%95%E4%B8%80%E7%82%B9C-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%9A%84%E5%8E%8B%E6%A0%88%E8%BF%87%E7%A8%8B%EF%BC%89"><span class="nav-number">1.0.0.47.</span> <span class="nav-text">（46） C++的调用惯例（简单一点C++函数调用的压栈过程）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8847%EF%BC%89-C-%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.0.0.48.</span> <span class="nav-text">（47） C++的四种强制转换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8848%EF%BC%89string%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.0.0.49.</span> <span class="nav-text">（48）string的底层实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8849%EF%BC%89%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E6%88%96%E8%80%85%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B%E6%88%96%E8%80%85%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84"><span class="nav-number">1.0.0.50.</span> <span class="nav-text">（49）一个函数或者可执行文件的生成过程或者编译过程是怎样的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8850%EF%BC%89set%EF%BC%8Cmap%E5%92%8Cvector%E7%9A%84%E6%8F%92%E5%85%A5%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">1.0.0.51.</span> <span class="nav-text">（50）set，map和vector的插入复杂度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8851%EF%BC%89%E5%AE%9A%E4%B9%89%E5%92%8C%E5%A3%B0%E6%98%8E%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.52.</span> <span class="nav-text">（51）定义和声明的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8852%EF%BC%89typdef%E5%92%8Cdefine%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.53.</span> <span class="nav-text">（52）typdef和define区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8853%EF%BC%89%E8%A2%ABfree%E5%9B%9E%E6%94%B6%E7%9A%84%E5%86%85%E5%AD%98%E6%98%AF%E7%AB%8B%E5%8D%B3%E8%BF%94%E8%BF%98%E7%BB%99%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">1.0.0.54.</span> <span class="nav-text">（53）被free回收的内存是立即返还给操作系统吗？为什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8854%EF%BC%89%E5%BC%95%E7%94%A8%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">1.0.0.55.</span> <span class="nav-text">（54）引用作为函数参数以及返回值的好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8855%EF%BC%89%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%8B%E5%85%83%E7%B1%BB"><span class="nav-number">1.0.0.56.</span> <span class="nav-text">（55）友元函数和友元类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%8856%EF%BC%89-%E8%AF%B4%E4%B8%80%E4%B8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.0.0.56.1.</span> <span class="nav-text">（56） 说一下volatile关键字的作用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8857%EF%BC%89-STL%E4%B8%AD%E7%9A%84sort-%E7%AE%97%E6%B3%95%E6%98%AF%E7%94%A8%E4%BB%80%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%8Cstable-sort-%E5%91%A2"><span class="nav-number">1.0.0.57.</span> <span class="nav-text">（57） STL中的sort()算法是用什么实现的，stable_sort()呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8858%EF%BC%89vector%E4%BC%9A%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%E5%90%97%EF%BC%9F%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%EF%BC%9F"><span class="nav-number">1.0.0.58.</span> <span class="nav-text">（58）vector会迭代器失效吗？什么情况下会迭代器失效？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8858%EF%BC%89%E4%B8%BA%E4%BB%80%E4%B9%88C-%E6%B2%A1%E6%9C%89%E5%AE%9E%E7%8E%B0%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%EF%BC%9F"><span class="nav-number">1.0.0.59.</span> <span class="nav-text">（58）为什么C++没有实现垃圾回收？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E8%AE%A1%E7%BD%91%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">2. 计网相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89-%E5%BB%BA%E7%AB%8BTCP%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%90%84%E4%B8%AA%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">（1） 建立TCP服务器的各个系统调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89-%E7%BB%A7%E4%B8%8A%E4%B8%80%E9%A2%98%EF%BC%8C%E8%AF%B4%E6%98%8Esocket%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E6%9C%89%E5%93%AA%E4%BA%9B%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%EF%BC%9F%E5%85%B6%E4%B8%ADclose%E6%98%AF%E4%B8%80%E6%AC%A1%E5%B0%B1%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%85%B3%E9%97%AD%E7%9A%84%E5%90%97%EF%BC%8C%E5%8D%8A%E5%85%B3%E9%97%AD%E7%8A%B6%E6%80%81%E6%98%AF%E6%80%8E%E4%B9%88%E4%BA%A7%E7%94%9F%E7%9A%84%EF%BC%9F"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">（2） 继上一题，说明socket网络编程有哪些系统调用？其中close是一次就能直接关闭的吗，半关闭状态是怎么产生的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89-%E5%AF%B9%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BA%86%E8%A7%A3%E4%B8%8E%E4%BB%8B%E7%BB%8D%E3%80%82%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AEIGP%E5%8C%85%E6%8B%ACRIP%EF%BC%8COSPF%EF%BC%8C%E5%92%8C%E5%A4%96%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AEEGP%E5%92%8CBGP"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">（3） 对路由协议的了解与介绍。内部网关协议IGP包括RIP，OSPF，和外部网关协议EGP和BGP.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89-UDP%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">（4） UDP如何实现可靠传输</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-TCP%E5%92%8CUDP%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.0.0.5.</span> <span class="nav-text">（5） TCP和UDP的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-TCP%E5%92%8CUDP%E7%9B%B8%E5%85%B3%E7%9A%84%E5%8D%8F%E8%AE%AE%E4%B8%8E%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="nav-number">2.0.0.6.</span> <span class="nav-text">（6） TCP和UDP相关的协议与端口号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89-TCP%EF%BC%88UDP%EF%BC%8CIP%EF%BC%89%E7%AD%89%E9%A6%96%E9%83%A8%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88http%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E6%9E%84%E6%88%90%EF%BC%89"><span class="nav-number">2.0.0.7.</span> <span class="nav-text">（7） TCP（UDP，IP）等首部的认识（http请求报文构成）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-%E7%BD%91%E9%A1%B5%E8%A7%A3%E6%9E%90%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8E%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="nav-number">2.0.0.8.</span> <span class="nav-text">（8） 网页解析的过程与实现方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%889%EF%BC%89-%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BE%93%E5%85%A5URL%E5%90%8E%E6%89%A7%E8%A1%8C%E7%9A%84%E5%85%A8%E9%83%A8%E8%BF%87%E7%A8%8B%EF%BC%88%E5%A6%82www-baidu-com%EF%BC%89"><span class="nav-number">2.0.0.9.</span> <span class="nav-text">（9）    在浏览器中输入URL后执行的全部过程（如www.baidu.com）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89-%E7%BD%91%E7%BB%9C%E5%B1%82%E5%88%86%E7%89%87%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%B8%8E%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.0.0.10.</span> <span class="nav-text">（10） 网络层分片的原因与具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8811%EF%BC%89-TCP%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%8E%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D%EF%BC%88TCP%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E4%B8%8E%E6%96%AD%E5%BC%80%E6%98%AF%E7%83%AD%E9%97%A8%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">2.0.0.11.</span> <span class="nav-text">（11） TCP的三次握手与四次挥手的详细介绍（TCP连接建立与断开是热门问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8812%EF%BC%89-TCP%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8A%E6%AF%8F%E4%B8%80%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%A4%84%E4%BA%8E%E5%93%AA%E4%B8%AA%E7%8A%B6%E6%80%81"><span class="nav-number">2.0.0.12.</span> <span class="nav-text">（12） TCP握手以及每一次握手客户端和服务器端处于哪个状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8813%EF%BC%89-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%8C%E4%B8%A4%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%8F%AF%E4%B8%8D%E5%8F%AF%E4%BB%A5%EF%BC%9F"><span class="nav-number">2.0.0.13.</span> <span class="nav-text">（13） 为什么使用三次握手，两次握手可不可以？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8814%EF%BC%89-TIME-WAIT%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%88%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%AD%89%E4%BA%8E2MSL%EF%BC%89"><span class="nav-number">2.0.0.14.</span> <span class="nav-text">（14） TIME_WAIT的意义（为什么要等于2MSL）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8815%EF%BC%89-%E8%B6%85%E6%97%B6%E9%87%8D%E4%BC%A0%E6%9C%BA%E5%88%B6%EF%BC%88%E4%B8%8D%E5%A4%AA%E9%AB%98%E9%A2%91%EF%BC%89"><span class="nav-number">2.0.0.15.</span> <span class="nav-text">（15） 超时重传机制（不太高频）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8816%EF%BC%89-TCP%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E5%8F%AF%E9%9D%A0%E6%80%A7%EF%BC%9F"><span class="nav-number">2.0.0.16.</span> <span class="nav-text">（16） TCP怎么保证可靠性？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8817%EF%BC%89-%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E7%9A%84%E4%BB%8B%E7%BB%8D%EF%BC%8C%E9%87%87%E7%94%A8%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%88%E6%AD%BB%E9%94%81%E5%8F%AF%E8%83%BD%EF%BC%8C%E7%B3%8A%E6%B6%82%E7%AA%97%E5%8F%A3%E7%BB%BC%E5%90%88%E5%BE%81%EF%BC%89%EF%BC%9F"><span class="nav-number">2.0.0.17.</span> <span class="nav-text">（17） 流量控制的介绍，采用滑动窗口会有什么问题（死锁可能，糊涂窗口综合征）？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8818%EF%BC%89-tcp%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.0.0.18.</span> <span class="nav-text">（18） tcp滑动窗口协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8819%EF%BC%89-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E5%92%8C%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.0.0.19.</span> <span class="nav-text">（19） 拥塞控制和流量控制的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8820%EF%BC%89-TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%EF%BC%8C%E7%AE%97%E6%B3%95%E5%90%8D%E5%AD%97%EF%BC%9F%EF%BC%88%E6%9E%81%E5%85%B6%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-number">2.0.0.20.</span> <span class="nav-text">（20） TCP拥塞控制，算法名字？（极其重要）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8821%EF%BC%89-http%E5%8D%8F%E8%AE%AE%E4%B8%8ETCP%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="nav-number">2.0.0.21.</span> <span class="nav-text">（21） http协议与TCP的区别与联系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8822%EF%BC%89-http-x2F-1-0%E5%92%8Chttp-x2F-1-1%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.0.0.22.</span> <span class="nav-text">（22） http&#x2F;1.0和http&#x2F;1.1的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8823%EF%BC%89-http%E7%9A%84%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9Fget%E5%92%8Cpost%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%82"><span class="nav-number">2.0.0.23.</span> <span class="nav-text">（23） http的请求方法有哪些？get和post的区别。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8824%EF%BC%89-http%E7%9A%84%E7%8A%B6%E6%80%81%E7%A0%81-403-201%E7%AD%89%E7%AD%89%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D"><span class="nav-number">2.0.0.24.</span> <span class="nav-text">（24） http的状态码 403 201等等是什么意思</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8825%EF%BC%89-http%E5%92%8Chttps%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C%E7%94%B1http%E5%8D%87%E7%BA%A7%E4%B8%BAhttps%E9%9C%80%E8%A6%81%E5%81%9A%E5%93%AA%E4%BA%9B%E6%93%8D%E4%BD%9C"><span class="nav-number">2.0.0.25.</span> <span class="nav-text">（25） http和https的区别，由http升级为https需要做哪些操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8826%EF%BC%89-https%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%EF%BC%8C%E6%80%8E%E4%B9%88%E7%A1%AE%E4%BF%9D%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">2.0.0.26.</span> <span class="nav-text">（26） https的具体实现，怎么确保安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8827%EF%BC%89-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E6%97%B6%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9A%84seq%E5%BA%8F%E5%8F%B7%E6%98%AF%E6%80%8E%E6%A0%B7%E4%BA%A7%E7%94%9F%E7%9A%84"><span class="nav-number">2.0.0.27.</span> <span class="nav-text">（27） TCP三次握手时的第一次的seq序号是怎样产生的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8828%EF%BC%89-%E4%B8%80%E4%B8%AA%E6%9C%BA%E5%99%A8%E8%83%BD%E5%A4%9F%E4%BD%BF%E7%94%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7%E4%B8%8A%E9%99%90%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F%E5%8F%AF%E4%BB%A5%E6%94%B9%E5%8F%98%E5%90%97%EF%BC%9F%E9%82%A3%E5%A6%82%E6%9E%9C%E6%83%B3%E8%A6%81%E7%94%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E8%B6%85%E8%BF%87%E8%BF%99%E4%B8%AA%E9%99%90%E5%88%B6%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">2.0.0.28.</span> <span class="nav-text">（28） 一个机器能够使用的端口号上限是多少，为什么？可以改变吗？那如果想要用的端口超过这个限制怎么办？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8829%EF%BC%89-%E5%AF%B9%E7%A7%B0%E5%AF%86%E7%A0%81%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%AF%86%E7%A0%81%E4%BD%93%E7%B3%BB"><span class="nav-number">2.0.0.29.</span> <span class="nav-text">（29） 对称密码和非对称密码体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8830%EF%BC%89-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E7%9A%84%E4%BA%86%E8%A7%A3%EF%BC%88%E9%AB%98%E9%A2%91%EF%BC%89"><span class="nav-number">2.0.0.30.</span> <span class="nav-text">（30） 数字证书的了解（高频）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8831%EF%BC%89-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%87%BA%E7%8E%B0%E5%A4%A7%E9%87%8Fclose-wait%E7%9A%84%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.0.0.31.</span> <span class="nav-text">（31） 服务器出现大量close_wait的连接的原因以及解决方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8832%EF%BC%89-%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95%E5%88%97%E4%B8%BE%E4%B8%80%E4%B8%8B%EF%BC%8C%E4%BB%8B%E7%BB%8DMD5%E7%AE%97%E6%B3%95%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88MD5%E6%98%AF%E4%B8%8D%E5%8F%AF%E9%80%86%E7%9A%84%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E5%8A%9E%E6%B3%95%E5%8F%AF%E4%BB%A5%E5%8A%A0%E5%BC%BA%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E8%AE%A9%E5%AE%83%E4%B8%8D%E9%82%A3%E4%B9%88%E5%AE%B9%E6%98%93%E8%A2%AB%E7%A0%B4%E8%A7%A3%E5%91%A2%EF%BC%9F%EF%BC%88%E7%99%BE%E5%BA%A6%E5%AE%89%E5%85%A8%E4%B8%80%E9%9D%A2%EF%BC%89"><span class="nav-number">2.0.0.32.</span> <span class="nav-text">（32） 消息摘要算法列举一下，介绍MD5算法，为什么MD5是不可逆的，有什么办法可以加强消息摘要算法的安全性让它不那么容易被破解呢？（百度安全一面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8833%EF%BC%89-%E5%8D%95%E6%9D%A1%E8%AE%B0%E5%BD%95%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">2.0.0.33.</span> <span class="nav-text">（33） 单条记录高并发访问的优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8834%EF%BC%89-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bping%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%8C%E5%88%86%E5%88%AB%E7%94%A8%E5%88%B0%E4%BA%86%E5%93%AA%E4%BA%9B%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.0.0.34.</span> <span class="nav-text">（34） 介绍一下ping的过程，分别用到了哪些协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8835%EF%BC%89-TCP-x2F-IP%E7%9A%84%E7%B2%98%E5%8C%85%E4%B8%8E%E9%81%BF%E5%85%8D%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B"><span class="nav-number">2.0.0.35.</span> <span class="nav-text">（35） TCP&#x2F;IP的粘包与避免介绍一下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8836%EF%BC%89-%E8%AF%B4%E4%B8%80%E4%B8%8BTCP%E7%9A%84%E5%B0%81%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85"><span class="nav-number">2.0.0.36.</span> <span class="nav-text">（36） 说一下TCP的封包和拆包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8837%EF%BC%89-%E4%B8%80%E4%B8%AAip%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E5%9F%9F%E5%90%8D%EF%BC%8C%E9%9D%A0%E4%BB%80%E4%B9%88%E8%AF%86%E5%88%AB%EF%BC%9F"><span class="nav-number">2.0.0.37.</span> <span class="nav-text">（37） 一个ip配置多个域名，靠什么识别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8838%EF%BC%89-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%94%BB%E5%87%BB%EF%BC%88DDos%E6%94%BB%E5%87%BB%EF%BC%89"><span class="nav-number">2.0.0.38.</span> <span class="nav-text">（38） 服务器攻击（DDos攻击）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8839%EF%BC%89DNS%E7%9A%84%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B%E5%92%8C%E5%8E%9F%E7%90%86"><span class="nav-number">2.0.0.39.</span> <span class="nav-text">（39）DNS的工作过程和原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8841%EF%BC%89OSA%E4%B8%83%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%92%8C%E4%BA%94%E5%B1%82%E5%8D%8F%E8%AE%AE%EF%BC%8C%E5%88%86%E5%88%AB%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">2.0.0.40.</span> <span class="nav-text">（41）OSA七层协议和五层协议，分别有哪些</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8842%EF%BC%89IP%E5%AF%BB%E5%9D%80%E5%92%8CMAC%E5%AF%BB%E5%9D%80%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%EF%BC%8C%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84"><span class="nav-number">2.0.0.41.</span> <span class="nav-text">（42）IP寻址和MAC寻址有什么不同，怎么实现的</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">3. 数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89-%E5%85%B3%E7%B3%BB%E5%9E%8B%E5%92%8C%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BD%8E%E9%A2%91%EF%BC%89"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">（1） 关系型和非关系型数据库的区别（低频）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89-%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E4%BD%8E%E9%A2%91%EF%BC%89"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">（2） 什么是非关系型数据库（低频）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89-%E8%AF%B4%E4%B8%80%E4%B8%8B-MySQL-%E6%89%A7%E8%A1%8C%E4%B8%80%E6%9D%A1%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%86%85%E9%83%A8%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%EF%BC%9F"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">（3） 说一下 MySQL 执行一条查询语句的内部执行过程？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">（4） 数据库的索引类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-%E8%AF%B4%E4%B8%80%E4%B8%8B%E4%BA%8B%E5%8A%A1%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84"><span class="nav-number">3.0.0.5.</span> <span class="nav-text">（5） 说一下事务是怎么实现的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-MySQL%E6%80%8E%E4%B9%88%E5%BB%BA%E7%AB%8B%E7%B4%A2%E5%BC%95%EF%BC%8C%E6%80%8E%E4%B9%88%E5%BB%BA%E7%AB%8B%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95%EF%BC%8C%E6%80%8E%E4%B9%88%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95%EF%BC%9F"><span class="nav-number">3.0.0.6.</span> <span class="nav-text">（6） MySQL怎么建立索引，怎么建立主键索引，怎么删除索引？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89-%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">3.0.0.7.</span> <span class="nav-text">（7） 索引的优缺点，什么时候使用索引，什么时候不能使用索引（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-%E7%B4%A2%E5%BC%95%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">3.0.0.8.</span> <span class="nav-text">（8） 索引的底层实现（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%889%EF%BC%89-B%E6%A0%91%E5%92%8CB-%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">3.0.0.9.</span> <span class="nav-text">（9） B树和B+树的区别（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89-%E7%B4%A2%E5%BC%95%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80-x2F-%E6%9C%80%E5%B7%A6%E5%8C%B9%E9%85%8D"><span class="nav-number">3.0.0.10.</span> <span class="nav-text">（10） 索引最左前缀&#x2F;最左匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8811%EF%BC%89-Mysql%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%88%E9%AB%98%E9%A2%91%EF%BC%8C%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%EF%BC%8C%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%89"><span class="nav-number">3.0.0.11.</span> <span class="nav-text">（11） Mysql的优化（高频，索引优化，性能优化）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8812%EF%BC%89-MYSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D%EF%BC%8Cinnodb%E5%92%8Cmyisam%E7%9A%84%E7%89%B9%E7%82%B9%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="nav-number">3.0.0.12.</span> <span class="nav-text">（12） MYSQL数据库引擎介绍，innodb和myisam的特点与区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8813%EF%BC%89-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E4%BA%8B%E5%8A%A1%E7%9A%84ACID%EF%BC%88%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7%E9%83%BD%E8%A6%81%E8%83%BD%E5%A4%9F%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E%EF%BC%8C%E7%90%86%E8%A7%A3%E9%80%8F%E5%BD%BB%EF%BC%8C%E6%AF%94%E5%A6%82%E5%8E%9F%E5%AD%90%E6%80%A7%E5%92%8C%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E5%85%B3%E8%81%94%EF%BC%8C%E9%9A%94%E7%A6%BB%E6%80%A7%E4%B8%8D%E5%A5%BD%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">3.0.0.13.</span> <span class="nav-text">（13） 数据库中事务的ACID（四大特性都要能够举例说明，理解透彻，比如原子性和一致性的关联，隔离性不好会出现的问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8814%EF%BC%89%E4%BB%80%E4%B9%88%E6%98%AF%E8%84%8F%E8%AF%BB%EF%BC%8C%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB%E5%92%8C%E5%B9%BB%E8%AF%BB%EF%BC%9F"><span class="nav-number">3.0.0.14.</span> <span class="nav-text">（14）什么是脏读，不可重复读和幻读？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8815%EF%BC%89-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%EF%BC%8Cmysql%E5%92%8COracle%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">3.0.0.15.</span> <span class="nav-text">（15） 数据库的隔离级别，mysql和Oracle的隔离级别分别是什么（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8816%EF%BC%89-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.0.0.16.</span> <span class="nav-text">（16） 数据库连接池的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8817%EF%BC%89-Mysql%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4%E6%96%B9%E5%BC%8F%EF%BC%8C%E5%90%84%E8%87%AA%E7%89%B9%E7%82%B9"><span class="nav-number">3.0.0.17.</span> <span class="nav-text">（17） Mysql的表空间方式，各自特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8818%EF%BC%89-%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.0.0.18.</span> <span class="nav-text">（18） 分布式事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8819%EF%BC%89-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E8%8C%83%E5%BC%8F"><span class="nav-number">3.0.0.19.</span> <span class="nav-text">（19） 数据库的范式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8820%EF%BC%89-%E6%95%B0%E6%8D%AE%E7%9A%84%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB%EF%BC%8C%E5%8A%A0%E9%94%81%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.0.0.20.</span> <span class="nav-text">（20） 数据的锁的种类，加锁的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8821%EF%BC%89-%E4%BB%80%E4%B9%88%E6%98%AF%E5%85%B1%E4%BA%AB%E9%94%81%E5%92%8C%E6%8E%92%E4%BB%96%E9%94%81"><span class="nav-number">3.0.0.21.</span> <span class="nav-text">（21） 什么是共享锁和排他锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8822%EF%BC%89-%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E7%AE%80%E4%BB%8B"><span class="nav-number">3.0.0.22.</span> <span class="nav-text">（22） 分库分表的理解和简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8823%EF%BC%89"><span class="nav-number">3.0.0.23.</span> <span class="nav-text">（23）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8824%EF%BC%89%E6%95%B0%E6%8D%AE%E5%BA%93%E9%AB%98%E5%B9%B6%E5%8F%91%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.0.0.24.</span> <span class="nav-text">（24）数据库高并发的解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8825%EF%BC%89%E4%B9%90%E8%A7%82%E9%94%81%E4%B8%8E%E6%82%B2%E8%A7%82%E9%94%81%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8B"><span class="nav-number">3.0.0.25.</span> <span class="nav-text">（25）乐观锁与悲观锁解释一下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8826%EF%BC%89%E4%B9%90%E8%A7%82%E9%94%81%E4%B8%8E%E6%82%B2%E8%A7%82%E9%94%81%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84"><span class="nav-number">3.0.0.26.</span> <span class="nav-text">（26）乐观锁与悲观锁是怎么实现的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8827%EF%BC%89%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E6%8A%80%E6%9C%AF%E6%9C%89%E4%BB%80%E4%B9%88%E4%BA%86%E8%A7%A3%E5%90%97"><span class="nav-number">3.0.0.27.</span> <span class="nav-text">（27）对数据库目前最新技术有什么了解吗</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Linux"><span class="nav-number">4.</span> <span class="nav-text">4. Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89-Linux%E7%9A%84I-x2F-O%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D%E4%BB%A5%E5%8F%8A%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E8%B6%85%E7%BA%A7%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">（1） Linux的I&#x2F;O模型介绍以及同步异步阻塞非阻塞的区别（超级重要）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%88EXT4%EF%BC%8CXFS%EF%BC%8CBTRFS%EF%BC%89"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">（2） 文件系统的理解（EXT4，XFS，BTRFS）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89-EPOLL%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8C%E4%BA%86%E8%A7%A3"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">（3） EPOLL的介绍和了解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89-IO%E5%A4%8D%E7%94%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88select-poll-epoll%EF%BC%89%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%EF%BC%8C%E5%8C%85%E6%8B%AC%E4%B8%89%E8%80%85%E5%8C%BA%E5%88%AB%EF%BC%8C%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0%EF%BC%9F"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">（4） IO复用的三种方法（select,poll,epoll）深入理解，包括三者区别，内部原理实现？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-Epoll%E7%9A%84ET%E6%A8%A1%E5%BC%8F%E5%92%8CLT%E6%A8%A1%E5%BC%8F%EF%BC%88ET%E7%9A%84%E9%9D%9E%E9%98%BB%E5%A1%9E%EF%BC%89"><span class="nav-number">4.0.0.5.</span> <span class="nav-text">（5） Epoll的ET模式和LT模式（ET的非阻塞）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E5%8D%A0%E7%94%A8CPU%E7%9A%84%E5%91%BD%E4%BB%A4%EF%BC%88%E6%B3%A8%E6%84%8F%E8%A6%81%E4%BA%86%E8%A7%A3%E5%88%B0used%EF%BC%8Cbuf%EF%BC%8C%E4%BB%A3%E8%A1%A8%E6%84%8F%E4%B9%89%EF%BC%89"><span class="nav-number">4.0.0.6.</span> <span class="nav-text">（6） 查询进程占用CPU的命令（注意要了解到used，buf，代表意义）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89-linux%E7%9A%84%E5%85%B6%E4%BB%96%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4%EF%BC%88kill%EF%BC%8Cfind%EF%BC%8Ccp%E7%AD%89%E7%AD%89%EF%BC%89"><span class="nav-number">4.0.0.7.</span> <span class="nav-text">（7） linux的其他常见命令（kill，find，cp等等）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-shell%E8%84%9A%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">4.0.0.8.</span> <span class="nav-text">（8） shell脚本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%889%EF%BC%89-%E7%A1%AC%E8%BF%9E%E6%8E%A5%E5%92%8C%E8%BD%AF%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.0.0.9.</span> <span class="nav-text">（9） 硬连接和软连接的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%88rwx%EF%BC%89"><span class="nav-number">4.0.0.10.</span> <span class="nav-text">（10） 文件权限怎么看（rwx）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8811%EF%BC%89-%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%89%E7%A7%8D%E6%97%B6%E9%97%B4%EF%BC%88mtime-atime%EF%BC%8Cctime%EF%BC%89%EF%BC%8C%E5%88%86%E5%88%AB%E5%9C%A8%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E6%94%B9%E5%8F%98"><span class="nav-number">4.0.0.11.</span> <span class="nav-text">（11） 文件的三种时间（mtime, atime，ctime），分别在什么时候会改变</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8812%EF%BC%89-Linux%E7%9B%91%E6%8E%A7%E7%BD%91%E7%BB%9C%E5%B8%A6%E5%AE%BD%E7%9A%84%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%9F%A5%E7%9C%8B%E7%89%B9%E5%AE%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%8D%A0%E7%94%A8%E7%BD%91%E7%BB%9C%E8%B5%84%E6%BA%90%E6%83%85%E5%86%B5%E5%91%BD%E4%BB%A4"><span class="nav-number">4.0.0.12.</span> <span class="nav-text">（12） Linux监控网络带宽的命令，查看特定进程的占用网络资源情况命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8813%EF%BC%89Linux%E4%B8%AD%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">4.0.0.13.</span> <span class="nav-text">（13）Linux中线程的同步方式有哪些？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8814%EF%BC%89%E6%80%8E%E4%B9%88%E4%BF%AE%E6%94%B9%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">4.0.0.14.</span> <span class="nav-text">（14）怎么修改一个文件的权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8815%EF%BC%89%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.0.0.15.</span> <span class="nav-text">（15）查看文件内容常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8816%EF%BC%89%E6%80%8E%E4%B9%88%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%89%8D%E5%90%8E4%E8%A1%8C"><span class="nav-number">4.0.0.16.</span> <span class="nav-text">（16）怎么找出含有关键字的前后4行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8817%EF%BC%89Linux%E7%9A%84GDB%E8%B0%83%E8%AF%95"><span class="nav-number">4.0.0.17.</span> <span class="nav-text">（17）Linux的GDB调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8818%EF%BC%89coredump%E6%98%AF%E4%BB%80%E4%B9%88-%E6%80%8E%E4%B9%88%E6%89%8D%E8%83%BDcoredump"><span class="nav-number">4.0.0.18.</span> <span class="nav-text">（18）coredump是什么 怎么才能coredump</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8819%EF%BC%89tcpdump%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.0.0.19.</span> <span class="nav-text">（19）tcpdump常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8820%EF%BC%89-crontab%E5%91%BD%E4%BB%A4"><span class="nav-number">4.0.0.20.</span> <span class="nav-text">（20） crontab命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8821%EF%BC%89-%E6%9F%A5%E7%9C%8B%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="nav-number">4.0.0.21.</span> <span class="nav-text">（21） 查看后台进程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">5. 操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">（1） 进程与线程的区别和联系（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89-Linux%E7%90%86%E8%AE%BA%E4%B8%8A%E6%9C%80%E5%A4%9A%E5%8F%AF%E4%BB%A5%E5%88%9B%E5%BB%BA%E5%A4%9A%E5%B0%91%E4%B8%AA%E8%BF%9B%E7%A8%8B%EF%BC%9F%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B%E5%8F%AF%E4%BB%A5%E5%88%9B%E5%BB%BA%E5%A4%9A%E5%B0%91%E7%BA%BF%E7%A8%8B%EF%BC%8C%E5%92%8C%E4%BB%80%E4%B9%88%E6%9C%89%E5%85%B3"><span class="nav-number">5.0.0.2.</span> <span class="nav-text">（2） Linux理论上最多可以创建多少个进程？一个进程可以创建多少线程，和什么有关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89-%E5%86%AF%E8%AF%BA%E4%BE%9D%E6%9B%BC%E7%BB%93%E6%9E%84%E6%9C%89%E5%93%AA%E5%87%A0%E4%B8%AA%E6%A8%A1%E5%9D%97%EF%BC%9F%E5%88%86%E5%88%AB%E5%AF%B9%E5%BA%94%E7%8E%B0%E4%BB%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%93%AA%E5%87%A0%E4%B8%AA%E9%83%A8%E5%88%86%EF%BC%9F%EF%BC%88%E7%99%BE%E5%BA%A6%E5%AE%89%E5%85%A8%E4%B8%80%E9%9D%A2%EF%BC%89"><span class="nav-number">5.0.0.3.</span> <span class="nav-text">（3） 冯诺依曼结构有哪几个模块？分别对应现代计算机的哪几个部分？（百度安全一面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89-%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D-%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">5.0.0.4.</span> <span class="nav-text">（4） 进程之间的通信方法有哪几种 （重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%96%B9%E6%B3%95%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.0.0.5.</span> <span class="nav-text">（5） 进程调度方法详细介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%EF%BC%8C%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B%E9%9C%80%E8%A6%81%E5%81%9A%E5%93%AA%E4%BA%9B%E5%B7%A5%E4%BD%9C%EF%BC%9F"><span class="nav-number">5.0.0.6.</span> <span class="nav-text">（6） 进程的执行过程是什么样的，执行一个进程需要做哪些工作？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E8%AF%B4%E4%B8%80%E4%B8%8B"><span class="nav-number">5.0.0.7.</span> <span class="nav-text">（6） 操作系统的内存管理说一下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AALRU%E7%AE%97%E6%B3%95"><span class="nav-number">5.0.0.8.</span> <span class="nav-text">（7） 实现一个LRU算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%88%E6%80%8E%E4%B9%88%E6%A3%80%E6%B5%8B%E6%AD%BB%E9%94%81%EF%BC%8C%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">5.0.0.9.</span> <span class="nav-text">（8） 死锁产生的必要条件（怎么检测死锁，解决死锁问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-%E6%AD%BB%E9%94%81%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="nav-number">5.0.0.10.</span> <span class="nav-text">（8） 死锁的恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89%E4%BB%80%E4%B9%88%E6%98%AF%E9%A5%A5%E9%A5%BF"><span class="nav-number">5.0.0.11.</span> <span class="nav-text">（8）什么是饥饿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%889%EF%BC%89-%E5%A6%82%E6%9E%9C%E8%A6%81%E4%BD%A0%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAmutex%E4%BA%92%E6%96%A5%E9%94%81%E4%BD%A0%E8%A6%81%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%EF%BC%9F"><span class="nav-number">5.0.0.12.</span> <span class="nav-text">（9） 如果要你实现一个mutex互斥锁你要怎么实现？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F-%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%90%8C%E6%AD%A5%E6%96%B9%E5%BC%8F%E5%8F%88%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">5.0.0.13.</span> <span class="nav-text">（10）线程之间的通信方式有哪些？ 进程之间的同步方式又哪些？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8813%EF%BC%89-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">5.0.0.14.</span> <span class="nav-text">（13） 什么时候用多进程，什么时候用多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8814%EF%BC%89-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E4%BD%BF%E7%94%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">5.0.0.15.</span> <span class="nav-text">（14） 文件读写使用的系统调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8815%EF%BC%89-%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E5%BD%A2%E6%88%90%E7%9A%84%EF%BC%9F"><span class="nav-number">5.0.0.16.</span> <span class="nav-text">（15） 孤儿进程和僵尸进程分别是什么，怎么形成的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8816%EF%BC%89-%E8%AF%B4%E4%B8%80%E4%B8%8BPCB-x2F-%E8%AF%B4%E4%B8%80%E4%B8%8B%E8%BF%9B%E7%A8%8B%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4-x2F"><span class="nav-number">5.0.0.17.</span> <span class="nav-text">（16） 说一下PCB&#x2F;说一下进程地址空间&#x2F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8817%EF%BC%89-%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%E5%92%8C%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E6%98%AF%E6%80%8E%E6%A0%B7%E5%8C%BA%E5%88%86%E7%9A%84"><span class="nav-number">5.0.0.18.</span> <span class="nav-text">（17） 内核空间和用户空间是怎样区分的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8818%EF%BC%89-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%98%AF%E5%A6%82%E4%BD%95%E5%90%8C%E6%AD%A5%E7%9A%84%EF%BC%88%E5%B0%A4%E5%85%B6%E6%98%AF%E5%A6%82%E6%9E%9C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%94%A8%E5%88%B0%E4%BA%86%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E5%BE%88%E5%A4%A7%E5%8F%AF%E8%83%BD%E4%BC%9A%E7%BB%93%E5%90%88%E8%AE%A8%E8%AE%BA%EF%BC%89"><span class="nav-number">5.0.0.19.</span> <span class="nav-text">（18） 多线程是如何同步的（尤其是如果项目中用到了多线程，很大可能会结合讨论）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8819%EF%BC%89-%E5%90%8C%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B%E5%86%85%E7%9A%84%E7%BA%BF%E7%A8%8B%E4%BC%9A%E5%85%B1%E4%BA%AB%E4%BB%80%E4%B9%88%E8%B5%84%E6%BA%90%EF%BC%9F"><span class="nav-number">5.0.0.20.</span> <span class="nav-text">（19） 同一个进程内的线程会共享什么资源？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8820%EF%BC%89-%E5%BC%82%E5%B8%B8%E5%92%8C%E4%B8%AD%E6%96%AD%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.0.0.21.</span> <span class="nav-text">（20） 异常和中断的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8821%EF%BC%89-%E4%B8%80%E8%88%AC%E6%83%85%E5%86%B5%E4%B8%8B%E5%9C%A8Linux-x2F-windows%E5%B9%B3%E5%8F%B0%E4%B8%8B%E6%A0%88%E7%A9%BA%E9%97%B4%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.0.0.22.</span> <span class="nav-text">（21） 一般情况下在Linux&#x2F;windows平台下栈空间的大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8822%EF%BC%89%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E4%BA%86%E8%A7%A3"><span class="nav-number">5.0.0.23.</span> <span class="nav-text">（22）虚拟内存的了解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8823%EF%BC%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%AB%98%E5%B9%B6%E5%8F%91%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">5.0.0.24.</span> <span class="nav-text">（23）服务器高并发的解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8824%EF%BC%89%E5%8D%8F%E7%A8%8B%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%88%E9%AB%98%E9%A2%91%EF%BC%89"><span class="nav-number">5.0.0.25.</span> <span class="nav-text">（24）协程了解吗（高频）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8825%EF%BC%89%E9%82%A3%E5%8D%8F%E7%A8%8B%E7%9A%84%E5%BA%95%E5%B1%82%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%8C%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8%E5%8D%8F%E7%A8%8B%EF%BC%9F"><span class="nav-number">5.0.0.26.</span> <span class="nav-text">（25）那协程的底层是怎么实现的，怎么使用协程？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8823%EF%BC%89%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%BB%A5%E5%8F%8A%E8%BD%AC%E6%8D%A2%E5%9B%BE"><span class="nav-number">5.0.0.27.</span> <span class="nav-text">（23）进程的状态以及转换图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8824%EF%BC%89%E5%9C%A8%E6%89%A7%E8%A1%8Cmalloc%E7%94%B3%E8%AF%B7%E5%86%85%E5%AD%98%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84%EF%BC%9F-x2F-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E5%8E%9F%E7%90%86%E8%AF%B4%E4%B8%80%E4%B8%8B-x2F-malloc%E5%87%BD%E6%95%B0%E5%BA%95%E5%B1%82%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F-x2F-%E8%BF%9B%E7%A8%8B%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98%E7%9A%84%EF%BC%9F"><span class="nav-number">5.0.0.28.</span> <span class="nav-text">（24）在执行malloc申请内存的时候，操作系统是怎么做的？&#x2F;内存分配的原理说一下&#x2F;malloc函数底层是怎么实现的？&#x2F;进程是怎么分配内存的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8825%EF%BC%89%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%97%E8%8A%82%E5%BA%8F%EF%BC%9F%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%E6%98%AF%E5%A4%A7%E7%AB%AF%E8%BF%98%E6%98%AF%E5%B0%8F%E7%AB%AF%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F"><span class="nav-number">5.0.0.29.</span> <span class="nav-text">（25）什么是字节序？怎么判断是大端还是小端？有什么用？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%9C%BA%E6%99%AF%E9%A2%98-x2F-%E7%AE%97%E6%B3%95%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">6. 场景题&#x2F;算法题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%880%EF%BC%89-leetcode-hot100%E8%87%B3%E5%B0%91%E5%88%B7%E4%B8%A4%E9%81%8D%EF%BC%8C%E5%89%91%E6%8C%87offer%E8%87%B3%E5%B0%91%E5%88%B7%E4%B8%A4%E9%81%8D-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D%EF%BC%81%EF%BC%81"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">（0） leetcode hot100至少刷两遍，剑指offer至少刷两遍 重中之重！！</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89-%E4%BB%8B%E7%BB%8D%E7%86%9F%E6%82%89%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%95%E4%BE%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">（1） 介绍熟悉的设计模式（单例，简单工厂模式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89-%E5%86%99%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%89%88%E6%9C%AC"><span class="nav-number">6.0.0.3.</span> <span class="nav-text">（2） 写单例模式，线程安全版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89-%E5%86%99%E4%B8%89%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%A4%E6%9B%BF%E6%89%93%E5%8D%B0ABC"><span class="nav-number">6.0.0.4.</span> <span class="nav-text">（3） 写三个线程交替打印ABC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%99%BB%E5%BD%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B-%E5%9C%BA%E6%99%AF%E9%A2%98"><span class="nav-number">6.0.0.5.</span> <span class="nav-text">（4） 二维码登录的实现过程 场景题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-%E4%B8%8D%E4%BD%BF%E7%94%A8%E4%B8%B4%E6%97%B6%E5%8F%98%E9%87%8F%E5%AE%9E%E7%8E%B0swap%E5%87%BD%E6%95%B0"><span class="nav-number">6.0.0.6.</span> <span class="nav-text">（5） 不使用临时变量实现swap函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAstrcpy%E5%87%BD%E6%95%B0%EF%BC%88%E6%88%96%E8%80%85memcpy%EF%BC%89%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%86%85%E5%AD%98%E5%8F%AF%E8%83%BD%E9%87%8D%E5%8F%A0%E5%91%A2"><span class="nav-number">6.0.0.7.</span> <span class="nav-text">（6） 实现一个strcpy函数（或者memcpy），如果内存可能重叠呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89-%E5%AE%9E%E7%8E%B0%E5%BF%AB%E6%8E%92"><span class="nav-number">6.0.0.8.</span> <span class="nav-text">（7） 实现快排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="nav-number">6.0.0.9.</span> <span class="nav-text">（8） 实现一个堆排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="nav-number">6.0.0.10.</span> <span class="nav-text">（8） 实现一个插入排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%889%EF%BC%89-%E5%BF%AB%E6%8E%92%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">6.0.0.11.</span> <span class="nav-text">（9） 快排存在的问题，如何优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89-%E5%8F%8D%E8%BD%AC%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%EF%BC%88%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%BA%8C%E9%9D%A2%EF%BC%89"><span class="nav-number">6.0.0.12.</span> <span class="nav-text">（10） 反转一个链表（招银网络二面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8811%EF%BC%89-Top-K%E9%97%AE%E9%A2%98%EF%BC%88%E5%8F%AF%E4%BB%A5%E9%87%87%E5%8F%96%E7%9A%84%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E5%90%84%E8%87%AA%E4%BC%98%E7%82%B9%EF%BC%9F%EF%BC%89%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">6.0.0.13.</span> <span class="nav-text">（11） Top K问题（可以采取的方法有哪些，各自优点？）（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8812%EF%BC%89-8G%E7%9A%84int%E5%9E%8B%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%86%85%E5%AD%98%E5%8F%AA%E6%9C%892G%EF%BC%8C%E6%80%8E%E4%B9%88%E5%AF%B9%E5%AE%83%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F%EF%BC%9F%EF%BC%88%E5%A4%96%E9%83%A8%E6%8E%92%E5%BA%8F%EF%BC%89%EF%BC%88%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2%EF%BC%89"><span class="nav-number">6.0.0.14.</span> <span class="nav-text">（12） 8G的int型数据，计算机的内存只有2G，怎么对它进行排序？（外部排序）（百度一面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8813%EF%BC%89-%E8%87%AA%E5%B7%B1%E6%9E%84%E5%BB%BA%E4%B8%80%E6%A3%B5%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%8C%E4%BD%BF%E7%94%A8%E5%B8%A6%E6%9C%89null%E6%A0%87%E8%AE%B0%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97"><span class="nav-number">6.0.0.15.</span> <span class="nav-text">（13） 自己构建一棵二叉树，使用带有null标记的前序遍历序列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8814%EF%BC%89-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bb%E6%A0%91%E5%92%8C%E5%AE%83%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">6.0.0.16.</span> <span class="nav-text">（14） 介绍一下b树和它的应用场景有哪些</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8815%EF%BC%89-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bb-%E6%A0%91%E5%92%8C%E5%AE%83%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">6.0.0.17.</span> <span class="nav-text">（15） 介绍一下b+树和它的应用场景有哪些</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8816%EF%BC%89-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E7%BA%A2%E9%BB%91%E6%A0%91%E5%92%8C%E5%AE%83%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">6.0.0.18.</span> <span class="nav-text">（16） 介绍一下红黑树和它的应用场景有哪些</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8817%EF%BC%89-%E6%80%8E%E4%B9%88%E5%86%99sql%E5%8F%96%E8%A1%A8%E7%9A%84%E5%89%8D1000%E8%A1%8C%E6%95%B0%E6%8D%AE%EF%BC%88%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%BA%8C%E9%9D%A2%EF%BC%89"><span class="nav-number">6.0.0.19.</span> <span class="nav-text">（17） 怎么写sql取表的前1000行数据（招银网络二面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8818%EF%BC%89-N%E4%B8%AA%E9%AA%B0%E5%AD%90%E5%87%BA%E7%8E%B0%E5%92%8C%E4%B8%BAm%E7%9A%84%E6%A6%82%E7%8E%87"><span class="nav-number">6.0.0.20.</span> <span class="nav-text">（18） N个骰子出现和为m的概率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8819%EF%BC%89-%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E9%97%AE%E9%A2%98%EF%BC%88%E5%8F%AF%E5%8F%82%E8%80%83%E5%B7%A6%E7%A5%9E%E7%9A%84%E4%B9%A6%EF%BC%89"><span class="nav-number">6.0.0.21.</span> <span class="nav-text">（19） 海量数据问题（可参考左神的书）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8820%EF%BC%89-%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C"><span class="nav-number">6.0.0.22.</span> <span class="nav-text">（20） 一致性哈希</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8821%EF%BC%89%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E8%AF%B4%E4%B8%80%E4%B8%8B-x2F-%E6%89%8B%E6%92%95"><span class="nav-number">6.0.0.23.</span> <span class="nav-text">（21）希尔排序说一下&#x2F;手撕</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8822%EF%BC%89Dijkstra%E7%AE%97%E6%B3%95%E8%AF%B4%E4%B8%80%E4%B8%8B"><span class="nav-number">6.0.0.24.</span> <span class="nav-text">（22）Dijkstra算法说一下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8823%EF%BC%89%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%E8%A6%81%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%EF%BC%8C%E8%AF%B4%E6%80%9D%E8%B7%AF%EF%BC%88%E8%85%BE%E8%AE%AFteg%E4%B8%80%E9%9D%A2%EF%BC%89"><span class="nav-number">6.0.0.25.</span> <span class="nav-text">（23）实现一个动态数组要怎么实现，说思路（腾讯teg一面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8824%EF%BC%89%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E8%AF%B4%E4%B8%80%E4%B8%8B"><span class="nav-number">6.0.0.26.</span> <span class="nav-text">（24）最小生成树算法说一下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8825%EF%BC%89-%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9A%84bitmap%E4%BD%BF%E7%94%A8%E5%8E%9F%E7%90%86"><span class="nav-number">6.0.0.27.</span> <span class="nav-text">（25） 海量数据的bitmap使用原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8826%EF%BC%89-%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BC%98%E7%82%B9"><span class="nav-number">6.0.0.28.</span> <span class="nav-text">（26） 布隆过滤器原理与优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8827%EF%BC%89-%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E5%A4%84%E7%90%86%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E6%97%B6%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%EF%BC%8C%E5%8C%85%E6%8B%AC%E5%86%85%E5%AD%98%E5%A4%A7%E5%B0%8F%E5%8F%97%E9%99%90%E3%80%81%E7%A3%81%E7%9B%98%E6%8D%A2%E5%85%A5%E6%8D%A2%E5%87%BA%E9%97%AE%E9%A2%98"><span class="nav-number">6.0.0.29.</span> <span class="nav-text">（27） 布隆过滤器处理大规模问题时的持久化，包括内存大小受限、磁盘换入换出问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8828%EF%BC%89%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%BD%BF%E5%AE%83%E6%94%AF%E6%8C%81%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E9%98%9F%E5%88%97%E6%9C%89%E4%BB%80%E4%B9%88%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%88%E9%98%BF%E9%87%8C%E4%B8%89%E9%9D%A2%EF%BC%89"><span class="nav-number">6.0.0.30.</span> <span class="nav-text">（28）实现一个队列，并且使它支持多线程，队列有什么应用场景（阿里三面）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E6%99%BA%E5%8A%9B%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">7. 智力题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89-100%E5%B1%82%E6%A5%BC%EF%BC%8C%E5%8F%AA%E6%9C%892%E4%B8%AA%E9%B8%A1%E8%9B%8B%EF%BC%8C%E6%83%B3%E8%A6%81%E5%88%A4%E6%96%AD%E5%87%BA%E9%82%A3%E4%B8%80%E5%B1%82%E5%88%9A%E5%A5%BD%E8%AE%A9%E9%B8%A1%E8%9B%8B%E7%A2%8E%E6%8E%89%EF%BC%8C%E7%BB%99%E5%87%BA%E7%AD%96%E7%95%A5%EF%BC%88%E6%BB%B4%E6%BB%B4%E7%AC%94%E8%AF%95%E4%B8%AD%E4%B8%A4%E4%B8%AA%E9%93%81%E7%90%83%E8%B7%9F%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E7%B1%BB%E9%A2%98%EF%BC%89"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">（1） 100层楼，只有2个鸡蛋，想要判断出那一层刚好让鸡蛋碎掉，给出策略（滴滴笔试中两个铁球跟这个是一类题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89-%E6%AF%92%E8%8D%AF%E9%97%AE%E9%A2%98%EF%BC%8C1000%E7%93%B6%E6%B0%B4%EF%BC%8C%E5%85%B6%E4%B8%AD%E6%9C%89%E4%B8%80%E7%93%B6%E5%8F%AF%E4%BB%A5%E6%97%A0%E9%99%90%E7%A8%80%E9%87%8A%E7%9A%84%E6%AF%92%E8%8D%AF%EF%BC%8C%E8%A6%81%E5%BF%AB%E9%80%9F%E6%89%BE%E5%87%BA%E5%93%AA%E4%B8%80%E7%93%B6%E6%9C%89%E6%AF%92%EF%BC%8C%E9%9C%80%E8%A6%81%E5%87%A0%E5%8F%AA%E5%B0%8F%E7%99%BD%E9%BC%A0"><span class="nav-number">7.0.0.2.</span> <span class="nav-text">（2） 毒药问题，1000瓶水，其中有一瓶可以无限稀释的毒药，要快速找出哪一瓶有毒，需要几只小白鼠</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89"><span class="nav-number">7.0.0.3.</span> <span class="nav-text">（3）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89-%E5%85%88%E6%89%8B%E5%BF%85%E8%83%9C%E7%AD%96%E7%95%A5%E9%97%AE%E9%A2%98%EF%BC%9A100%E6%9C%AC%E4%B9%A6%EF%BC%8C%E6%AF%8F%E6%AC%A1%E8%83%BD%E5%A4%9F%E6%8B%BF1-5%E6%9C%AC%EF%BC%8C%E6%80%8E%E4%B9%88%E6%8B%BF%E8%83%BD%E4%BF%9D%E8%AF%81%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E6%98%AF%E4%BD%A0%E6%8B%BF"><span class="nav-number">7.0.0.4.</span> <span class="nav-text">（4） 先手必胜策略问题：100本书，每次能够拿1-5本，怎么拿能保证最后一次是你拿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-%E6%94%BEn%E5%8F%AA%E8%9A%82%E8%9A%81%E5%9C%A8%E4%B8%80%E6%9D%A1%E6%A0%91%E6%9E%9D%E4%B8%8A%EF%BC%8C%E8%9A%82%E8%9A%81%E4%B8%8E%E8%9A%82%E8%9A%81%E4%B9%8B%E9%97%B4%E7%A2%B0%E5%88%B0%E5%B0%B1%E5%90%84%E8%87%AA%E5%BE%80%E5%8F%8D%E6%96%B9%E5%90%91%E8%B5%B0%EF%BC%8C%E9%97%AE%E6%80%BB%E8%B7%9D%E7%A6%BB%E6%88%96%E8%80%85%E6%97%B6%E9%97%B4%E3%80%82"><span class="nav-number">7.0.0.5.</span> <span class="nav-text">（5） 放n只蚂蚁在一条树枝上，蚂蚁与蚂蚁之间碰到就各自往反方向走，问总距离或者时间。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89-%E7%93%B6%E5%AD%90%E6%8D%A2%E9%A5%AE%E6%96%99%E9%97%AE%E9%A2%98%EF%BC%9A1000%E7%93%B6%E9%A5%AE%E6%96%99%EF%BC%8C3%E4%B8%AA%E7%A9%BA%E7%93%B6%E5%AD%90%E8%83%BD%E5%A4%9F%E6%8D%A21%E7%93%B6%E9%A5%AE%E6%96%99%EF%BC%8C%E9%97%AE%E6%9C%80%E5%A4%9A%E8%83%BD%E5%96%9D%E5%87%A0%E7%93%B6"><span class="nav-number">7.0.0.6.</span> <span class="nav-text">（6） 瓶子换饮料问题：1000瓶饮料，3个空瓶子能够换1瓶饮料，问最多能喝几瓶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89%E5%9C%A824%E5%B0%8F%E6%97%B6%E9%87%8C%E9%9D%A2%E6%97%B6%E9%92%88%E5%88%86%E9%92%88%E7%A7%92%E9%92%88%E5%8F%AF%E4%BB%A5%E9%87%8D%E5%90%88%E5%87%A0%E6%AC%A1"><span class="nav-number">7.0.0.7.</span> <span class="nav-text">（7）在24小时里面时针分针秒针可以重合几次</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%888%EF%BC%89-%E6%9C%89%E4%B8%80%E4%B8%AA%E5%A4%A9%E5%B9%B3%EF%BC%8C%E4%B9%9D%E4%B8%AA%E7%A0%9D%E7%A0%81%EF%BC%8C%E4%B8%80%E4%B8%AA%E8%BD%BB%E4%B8%80%E4%BA%9B%EF%BC%8C%E7%94%A8%E5%A4%A9%E5%B9%B3%E8%87%B3%E5%B0%91%E5%87%A0%E6%AC%A1%E8%83%BD%E6%89%BE%E5%88%B0%E8%BD%BB%E7%9A%84%EF%BC%9F"><span class="nav-number">7.0.0.8.</span> <span class="nav-text">（8） 有一个天平，九个砝码，一个轻一些，用天平至少几次能找到轻的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%889%EF%BC%89-%E6%9C%89%E5%8D%81%E7%BB%84%E7%A0%9D%E7%A0%81%E6%AF%8F%E7%BB%84%E5%8D%81%E4%B8%AA%EF%BC%8C%E6%AF%8F%E4%B8%AA%E7%A0%9D%E7%A0%81%E9%87%8D10g%EF%BC%8C%E5%85%B6%E4%B8%AD%E4%B8%80%E7%BB%84%E6%AF%8F%E4%B8%AA%E5%8F%AA%E6%9C%899g%EF%BC%8C%E6%9C%89%E8%83%BD%E6%98%BE%E7%A4%BA%E5%85%8B%E6%95%B0%E7%9A%84%E7%A7%A4%E6%9C%80%E5%B0%91%E5%87%A0%E6%AC%A1%E8%83%BD%E6%89%BE%E5%88%B0%E8%BD%BB%E7%9A%84%E9%82%A3%E4%B8%80%E7%BB%84%E7%A0%9D%E7%A0%81%EF%BC%9F"><span class="nav-number">7.0.0.9.</span> <span class="nav-text">（9） 有十组砝码每组十个，每个砝码重10g，其中一组每个只有9g，有能显示克数的秤最少几次能找到轻的那一组砝码？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%97%AE%E9%A2%98%EF%BC%9A%E7%BB%99%E5%AE%9A%E7%94%9F%E6%88%901%E5%88%B05%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0Rand5-%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BE%97%E5%88%B0%E7%94%9F%E6%88%901%E5%88%B07%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%87%BD%E6%95%B0Rand7-%EF%BC%9F"><span class="nav-number">7.0.0.10.</span> <span class="nav-text">（10）生成随机数问题：给定生成1到5的随机数Rand5()，如何得到生成1到7的随机数函数Rand7()？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%9B%E9%A9%AC%EF%BC%9A%E6%9C%8925%E5%8C%B9%E9%A9%AC%EF%BC%8C%E6%AF%8F%E5%9C%BA%E6%AF%94%E8%B5%9B%E5%8F%AA%E8%83%BD%E8%B5%9B5%E5%8C%B9%EF%BC%8C%E8%87%B3%E5%B0%91%E8%A6%81%E8%B5%9B%E5%A4%9A%E5%B0%91%E5%9C%BA%E6%89%8D%E8%83%BD%E6%89%BE%E5%88%B0%E6%9C%80%E5%BF%AB%E7%9A%843%E5%8C%B9%E9%A9%AC%EF%BC%9F"><span class="nav-number">7.0.0.11.</span> <span class="nav-text">赛马：有25匹马，每场比赛只能赛5匹，至少要赛多少场才能找到最快的3匹马？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%83%A7-%E9%A6%99-x2F-%E7%BB%B3%E5%AD%90-x2F-%E5%85%B6%E4%BB%96-%E7%A1%AE%E5%AE%9A%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%EF%BC%9A%E6%9C%89%E4%B8%A4%E6%A0%B9%E4%B8%8D%E5%9D%87%E5%8C%80%E7%9A%84%E9%A6%99%EF%BC%8C%E7%87%83%E7%83%A7%E5%AE%8C%E9%83%BD%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%97%B6%EF%BC%8C%E9%97%AE%E6%80%8E%E4%B9%88%E7%A1%AE%E5%AE%9A15%E5%88%86%E9%92%9F%E7%9A%84%E6%97%B6%E9%95%BF%EF%BC%9F"><span class="nav-number">7.0.0.12.</span> <span class="nav-text">烧 香&#x2F;绳子&#x2F;其他 确定时间问题：有两根不均匀的香，燃烧完都需要一个小时，问怎么确定15分钟的时长？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%B0%E5%B7%A7%E5%85%8B%E5%8A%9B%E9%97%AE%E9%A2%98-NM%E5%9D%97%E5%B7%A7%E5%85%8B%E5%8A%9B%EF%BC%8C%E6%AF%8F%E6%AC%A1%E6%8E%B0%E4%B8%80%E5%9D%97%E7%9A%84%E4%B8%80%E8%A1%8C%E6%88%96%E4%B8%80%E5%88%97%EF%BC%8C%E6%8E%B0%E6%88%9011%E7%9A%84%E5%B7%A7%E5%85%8B%E5%8A%9B%E9%9C%80%E8%A6%81%E5%A4%9A%E5%B0%91%E6%AC%A1%EF%BC%9F%EF%BC%881000%E4%B8%AA%E4%BA%BA%E5%8F%82%E5%8A%A0%E8%BE%A9%E8%AE%BA%E8%B5%9B%EF%BC%8C1V1%EF%BC%8C%E8%BE%93%E4%BA%86%E5%B0%B1%E9%80%80%E5%87%BA%EF%BC%8C%E9%9C%80%E8%A6%81%E5%AE%89%E6%8E%92%E5%A4%9A%E5%B0%91%E5%9C%BA%E6%AF%94%E8%B5%9B%EF%BC%89"><span class="nav-number">7.0.0.13.</span> <span class="nav-text">掰巧克力问题 NM块巧克力，每次掰一块的一行或一列，掰成11的巧克力需要多少次？（1000个人参加辩论赛，1V1，输了就退出，需要安排多少场比赛）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E5%A4%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">8.</span> <span class="nav-text">8. 大数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BHadoop"><span class="nav-number">8.0.0.1.</span> <span class="nav-text">1. 介绍一下Hadoop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AF%B4%E4%B8%80%E4%B8%8BMapReduce%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">8.0.0.2.</span> <span class="nav-text">2. 说一下MapReduce的运行机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bkafka"><span class="nav-number">8.0.0.3.</span> <span class="nav-text">3. 介绍一下kafka</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%B8%BA%E4%BB%80%E4%B9%88kafka%E5%90%9E%E5%90%90%E9%87%8F%E9%AB%98%EF%BC%9F-x2F-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">8.0.0.4.</span> <span class="nav-text">4. 为什么kafka吞吐量高？&#x2F;介绍一下零拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bspark"><span class="nav-number">8.0.0.5.</span> <span class="nav-text">5. 介绍一下spark</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bspark-streaming"><span class="nav-number">8.0.0.6.</span> <span class="nav-text">6. 介绍一下spark-streaming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-spark%E7%9A%84transformation%E5%92%8Caction%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">8.0.0.7.</span> <span class="nav-text">7. spark的transformation和action有什么区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-spark%E5%B8%B8%E7%94%A8%E7%9A%84%E7%AE%97%E5%AD%90%E8%AF%B4%E5%87%A0%E4%B8%AA"><span class="nav-number">8.0.0.8.</span> <span class="nav-text">8. spark常用的算子说几个</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81kafka%E7%9A%84%E6%B6%88%E6%81%AF%E4%B8%8D%E4%B8%A2%E5%A4%B1"><span class="nav-number">8.0.0.9.</span> <span class="nav-text">9. 如何保证kafka的消息不丢失</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-kafka%E5%A6%82%E4%BD%95%E9%80%89%E4%B8%BEleader"><span class="nav-number">8.0.0.10.</span> <span class="nav-text">10. kafka如何选举leader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-%E8%AF%B4%E4%B8%8Bspark%E4%B8%AD%E7%9A%84%E5%AE%BD%E4%BE%9D%E8%B5%96%E5%92%8C%E7%AA%84%E4%BE%9D%E8%B5%96"><span class="nav-number">8.0.0.11.</span> <span class="nav-text">11. 说下spark中的宽依赖和窄依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-%E8%AF%B4%E4%B8%8Bspark%E4%B8%ADstage%E6%98%AF%E4%BE%9D%E7%85%A7%E4%BB%80%E4%B9%88%E5%88%92%E5%88%86%E7%9A%84"><span class="nav-number">8.0.0.12.</span> <span class="nav-text">12. 说下spark中stage是依照什么划分的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-spark%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84"><span class="nav-number">8.0.0.13.</span> <span class="nav-text">13. spark的内存管理是怎样的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-spark%E7%9A%84%E5%AE%B9%E9%94%99%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84"><span class="nav-number">8.0.0.14.</span> <span class="nav-text">14. spark的容错机制是什么样的</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-HR%E9%9D%A2"><span class="nav-number">9.</span> <span class="nav-text">9. HR面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D"><span class="nav-number">9.0.0.1.</span> <span class="nav-text">1. 自我介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E6%9C%80%E5%A4%A7%E9%9A%BE%E7%82%B9"><span class="nav-number">9.0.0.2.</span> <span class="nav-text">2. 项目中遇到的最大难点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%94%B6%E8%8E%B7"><span class="nav-number">9.0.0.3.</span> <span class="nav-text">3. 项目中的收获</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%8F%AF%E4%BB%A5%E5%AE%9E%E4%B9%A0%E7%9A%84%E6%97%B6%E9%97%B4%EF%BC%8C%E5%AE%9E%E4%B9%A0%E6%97%B6%E9%95%BF"><span class="nav-number">9.0.0.4.</span> <span class="nav-text">4. 可以实习的时间，实习时长</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%93%AA%E9%87%8C%E4%BA%BA"><span class="nav-number">9.0.0.5.</span> <span class="nav-text">5. 哪里人</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E8%AF%B4%E4%B8%80%E4%B8%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E6%80%A7%E6%A0%BC"><span class="nav-number">9.0.0.6.</span> <span class="nav-text">6. 说一下自己的性格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E4%BD%A0%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">9.0.0.7.</span> <span class="nav-text">7. 你的优缺点是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD%EF%BC%8C%E7%94%BB%E7%9A%84%E6%80%8E%E4%B9%88%E6%A0%B7-x2F-%E7%90%83%E6%89%93%E7%9A%84%E5%A6%82%E4%BD%95-x2F-%E6%B8%B8%E6%88%8F%E6%89%93%E7%9A%84%E6%80%8E%E4%B9%88%E6%A0%B7"><span class="nav-number">9.0.0.8.</span> <span class="nav-text">8. 有什么兴趣爱好，画的怎么样&#x2F;球打的如何&#x2F;游戏打的怎么样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E7%9C%8B%E8%BF%87%E6%9C%80%E5%A5%BD%E7%9A%84%E4%B8%80%E6%9C%AC%E4%B9%A6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">9.0.0.9.</span> <span class="nav-text">9. 看过最好的一本书是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E9%9A%BE%E7%82%B9"><span class="nav-number">9.0.0.10.</span> <span class="nav-text">10. 学习技术中有什么难点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-%E6%80%8E%E4%B9%88%E7%9C%8B%E5%BE%85%E5%8A%A0%E7%8F%AD"><span class="nav-number">9.0.0.11.</span> <span class="nav-text">11. 怎么看待加班</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-%E8%A7%89%E5%BE%97%E6%B7%B1%E5%9C%B3%E6%80%8E%E4%B9%88%E6%A0%B7%EF%BC%88%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E5%9C%B0%E7%82%B9%EF%BC%89"><span class="nav-number">9.0.0.12.</span> <span class="nav-text">12. 觉得深圳怎么样（或者其他地点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-%E9%81%87%E8%A7%81%E8%BF%87%E6%9C%80%E5%A4%A7%E7%9A%84%E6%8C%AB%E6%8A%98%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E7%9A%84"><span class="nav-number">9.0.0.13.</span> <span class="nav-text">13. 遇见过最大的挫折是什么，怎么解决的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-%E8%81%8C%E4%B8%9A%E8%A7%84%E5%88%92"><span class="nav-number">9.0.0.14.</span> <span class="nav-text">14. 职业规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-%E7%9B%AE%E5%89%8D%E7%9A%84offer%E6%83%85%E5%86%B5"><span class="nav-number">9.0.0.15.</span> <span class="nav-text">15. 目前的offer情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-%E4%BD%A0%E6%9C%80%E5%A4%A7%E7%9A%84%E4%BC%98%E5%8A%BF%E5%92%8C%E5%8A%A3%E5%8A%BF%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">9.0.0.16.</span> <span class="nav-text">16. 你最大的优势和劣势是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-%E4%BB%8B%E7%BB%8D%E5%9C%A8%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E5%85%85%E5%BD%93%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">9.0.0.17.</span> <span class="nav-text">17. 介绍在项目里面充当的角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#18-%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E6%9C%AC%E7%A7%91%E8%8E%B7%E5%BE%97%E7%9A%84%E5%85%A8%E5%9B%BD%E8%B5%9B%E5%A5%96%E9%A1%B9%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">9.0.0.18.</span> <span class="nav-text">18. 介绍一下本科获得的全国赛奖项的情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#19-%E6%9C%80%E6%9C%89%E6%88%90%E5%B0%B1%E6%84%9F%E7%9A%84%E4%BA%8B%E6%83%85-x2F-%E6%9C%80%E9%AA%84%E5%82%B2%E7%9A%84%E4%B8%80%E4%BB%B6%E4%BA%8B%E6%83%85"><span class="nav-number">9.0.0.19.</span> <span class="nav-text">19. 最有成就感的事情&#x2F;最骄傲的一件事情</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-%E5%9C%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E4%B8%AD%E6%8B%85%E4%BB%BB%E4%BB%80%E4%B9%88%E8%A7%92%E8%89%B2%EF%BC%8C%E5%8F%82%E5%8A%A0%E7%9A%84XXX%E8%83%BD%E8%81%8A%E8%81%8A%E5%90%97"><span class="nav-number">9.0.0.20.</span> <span class="nav-text">20. 在实验室中担任什么角色，参加的XXX能聊聊吗</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#22-%E7%94%A8%E4%B8%A4%E4%B8%AA%E8%AF%8D%E6%9D%A5%E5%BD%A2%E5%AE%B9%E8%87%AA%E5%B7%B1"><span class="nav-number">9.0.0.21.</span> <span class="nav-text">22. 用两个词来形容自己</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
