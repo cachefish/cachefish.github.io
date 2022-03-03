@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="网络层的必要性网络层建立在数据链路层的两个相邻端点之间的数据帧的传送能力之上，将数据从源端经过若干中间结点传送到目的端，从而向传输层提供最基本的端到端的数据传送服务。  面向无连接的服务在通信子网内以数据报实现(提供源-&gt;目的之间的数据收发) 数据报: 在数据报的操作方式中，每个分组的传送是被单独处理的，每个分组成为数据报。它是完备、独立的数据实体，每个数据报自身携带要从源计算机传递到目的计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络层">
+<meta property="og:url" content="https://cachefish.github.io/2022/03/02/5-%E7%BD%91%E7%BB%9C%E5%B1%82/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="网络层的必要性网络层建立在数据链路层的两个相邻端点之间的数据帧的传送能力之上，将数据从源端经过若干中间结点传送到目的端，从而向传输层提供最基本的端到端的数据传送服务。  面向无连接的服务在通信子网内以数据报实现(提供源-&gt;目的之间的数据收发) 数据报: 在数据报的操作方式中，每个分组的传送是被单独处理的，每个分组成为数据报。它是完备、独立的数据实体，每个数据报自身携带要从源计算机传递到目的计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5895276f74be41859cdd37e3eed437ee.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAY2FjaGVmaXNo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2022-03-02T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-03T01:30:43.621Z">
+<meta property="article:tag" content="base network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/5895276f74be41859cdd37e3eed437ee.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAY2FjaGVmaXNo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/03/02/5-%E7%BD%91%E7%BB%9C%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>网络层 | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/02/5-%E7%BD%91%E7%BB%9C%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-02 19:30:00" itemprop="dateCreated datePublished" datetime="2022-03-02T19:30:00+08:00">2022-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-03 09:30:43" itemprop="dateModified" datetime="2022-03-03T09:30:43+08:00">2022-03-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/base-network/" itemprop="url" rel="index"><span itemprop="name">base network</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="网络层的必要性"><a href="#网络层的必要性" class="headerlink" title="网络层的必要性"></a>网络层的必要性</h2><p>网络层建立在数据链路层的两个相邻端点之间的数据帧的传送能力之上，将数据从源端经过若干中间结点传送到目的端，从而向传输层提供最基本的端到端的数据传送服务。</p>
+<hr>
+<p>面向无连接的服务在通信子网内以数据报实现(提供源-&gt;目的之间的数据收发)</p>
+<p>数据报: 在数据报的操作方式中，每个分组的传送是被单独处理的，每个分组成为数据报。它是完备、独立的数据实体，每个数据报自身携带要从源计算机传递到目的计算机的信息，该信息不依赖于源计算机和目的计算机以及传输网络间交换。一个结点收到一个数据报后根据数据报的地址信息和结点所存储的路由信息，找到下一个合适的出路，将数据报原样的发送到下一个结点。</p>
+<p>面向连接指的是在数据传输之前双方需要建立一种连接，然后在该连接上实现有次序的分组传输，直到数据传输完毕才会释放连接(面向连接的服务采用虚电路(virtual circuit)方式实现。虚电路指的是通信子网为实现面向连接服务而在源与目的之间所建立的逻辑通信链路(每个节点都包含一个虚电路)。</p>
+<h2 id="数据交换方式"><a href="#数据交换方式" class="headerlink" title="数据交换方式"></a>数据交换方式</h2><p>采用交换机或结点机等交换系统，通过路由选择技术在欲进行通信的双方之间建立的物理或者逻辑的交换，形成通路。</p>
+<p>电路交换:在传输任何数据之前，都必须建立端到端(站到站)的线路，即在原节点和目的结点间寄哪里一条由各个中间交换结点的分段连接所组成的通信电路，使用这个专用电路从站点A-&gt;B传输</p>
+<p>报文交换:属于存储交换，它不需要在两个站之间建立一条专用通路。<br>原理:把待存储的信息存储起来，等信道空闲时发出来，只要存储时间足够长，就能够把信道忙碌和空闲的状态均匀化，大大压缩了必须的信道容量和转接设备容量。</p>
+<h3 id="报文分组交换"><a href="#报文分组交换" class="headerlink" title="报文分组交换"></a>报文分组交换</h3><p>把大的数据块分割成小的数据块，并规定了最大的分组长度。</p>
+<h3 id="如何屏蔽异种网络的差异"><a href="#如何屏蔽异种网络的差异" class="headerlink" title="如何屏蔽异种网络的差异"></a>如何屏蔽异种网络的差异</h3><p>统一网络地址()  统一数据格式(ip数据报)</p>
+<h3 id="如何实现全网的数据传输和变换"><a href="#如何实现全网的数据传输和变换" class="headerlink" title="如何实现全网的数据传输和变换"></a>如何实现全网的数据传输和变换</h3><p>网络之间的数据包寻径，转发(路由器、路由表)<br>路由表的产生和动态刷新、差错处理。</p>
+<hr>
+<h2 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h2><p>ip协议定义了用以实现面向无连接服务的网络分组格式。是一个面向无连接的、不可靠的数据报传输协议</p>
+<p>无连接指的是不维护IP分组发送后的状态信息，并且每个数据分组的处理是相对独立的。</p>
+<p>不可靠指的是IP协议不能保证每个ip分组能够成功的到达目的结点，也不能保证分组传输的顺序。</p>
+<h2 id="ip协议格式"><a href="#ip协议格式" class="headerlink" title="ip协议格式"></a>ip协议格式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">版本  首部长度 服务类型 总长度 标识 标志 片偏移 生存时间(TTL) 协议 首部校验和 可选字段 ip地址</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h4><p>以32位二进制位的形式存储于计算机中，32位的ip地址由网络标识和主机号两部分组成(网络标识用于标识该主机所在的网络，而主机号则表示该主机在相应网络中的特定位置)</p>
+<p>A: 0.0.0.0—–127.255.255.255<br>B: 128.0.0.0—–191.255.255.255<br>C: 192.0.0.0—-223.255.255.255<br>D: 224.0.0.0—-255.255.255.255</p>
+<hr>
+<h2 id="ARP地址解析协议"><a href="#ARP地址解析协议" class="headerlink" title="ARP地址解析协议"></a>ARP地址解析协议</h2><p>ARP（Address ResolutionProtocol）地址解析协议，目的是实现IP地址到MAC地址的转换。</p>
+<p>所谓“地址解析”就是主机在发送帧前将目标IP地址转换成目标MAC地址的过程。ARP协议的基本功能就是通过目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行。</p>
+<h2 id="上层（网络层）关心的IP地址，下层-数据链路层-关心的是MAC地址，这个时候就需要映射IP和MAC。"><a href="#上层（网络层）关心的IP地址，下层-数据链路层-关心的是MAC地址，这个时候就需要映射IP和MAC。" class="headerlink" title="上层（网络层）关心的IP地址，下层(数据链路层)关心的是MAC地址，这个时候就需要映射IP和MAC。"></a>上层（网络层）关心的IP地址，下层(数据链路层)关心的是MAC地址，这个时候就需要映射IP和MAC。</h2><h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>主机A的IP地址为192.168.1.1，MAC地址为0A-11-22-33-44-01；<br>主机B的IP地址为192.168.1.2，MAC地址为0A-11-22-33-44-02；<br>当主机A要与主机B通信时，地址解析协议可以将主机B的IP地址（192.168.1.2）解析成主机B的MAC地址，以下为工作流程：</p>
+<ul>
+<li>第1步：根据主机A上的路由表内容，IP确定用于访问主机B的转发IP地址是192.168.1.2。然后A主机在自己的本地ARP缓存中检查主机B的匹配MAC地址。</li>
+<li>第2步：如果主机A在ARP缓存中没有找到映射，它将询问192.168.1.2的硬件地址，从而将ARP请求帧广播到本地网络上的所有主机。源主机A的IP地址和MAC地址都包括在ARP请求中。本地网络上的每台主机都接收到ARP请求并且检查是否与自己的IP地址匹配。如果主机发现请求的IP地址与自己的IP地址不匹配，它将丢弃ARP请求。</li>
+<li>第3步：主机B确定ARP请求中的IP地址与自己的IP地址匹配，则将主机A的IP地址和MAC地址映射添加到本地ARP缓存中。</li>
+<li>第4步：主机B将包含其MAC地址的ARP回复消息直接发送回主机A。</li>
+<li>第5步：当主机A收到从主机B发来的ARP回复消息时，会用主机B的IP和MAC地址映射更新ARP缓存。本机缓存是有生存期的，生存期结束后，将再次重复上面的过程。主机B的MAC地址一旦确定，主机A就能向主机B发送IP通信了。<br><img src="https://img-blog.csdnimg.cn/5895276f74be41859cdd37e3eed437ee.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAY2FjaGVmaXNo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="image"></li>
+</ul>
+<hr>
+<h3 id="ARP报文总长度"><a href="#ARP报文总长度" class="headerlink" title="ARP报文总长度"></a>ARP报文总长度</h3><p>ARP报文的总长度为64字节。</p>
+<p>首先要知道帧的概念 帧是在数据链路层传输的数据格式，比如以太网v2，以太网IEEE802.3和PPP等。</p>
+<p>所以Wireshark抓到的帧是包含帧头的，即包含以太网v2的帧头，长14 bytes；</p>
+<p>而ARP数据包的长度固定为28 bytes；</p>
+<p>帧总长度 &#x3D; 帧头 + 网络层包头 + 传输层报文头 + 应用数据；</p>
+<p>而ARP请求中ARP包已经是最高层，之上没有传输层和应用层，所以总长度为：</p>
+<p>帧总长度 &#x3D; 帧头 + ARP包头 &#x3D; 14 + 28 &#x3D; 42 bytes；</p>
+<p>而真正 发包的时为了保证以太网帧的最小帧长为64 bytes，会在报文里添加一个padding字段，用来填充数据包大小。</p>
+<p>使用wireshark抓包时，抓到的包为60 bytes。比以太网帧的最小帧长扫了4 bytes，原因是因为wireshark抓包时不能抓到数据包最后的CRC字段。</p>
+<p>CRC字段是为了校验以太网帧的正确性。在数据包填充完成后，回去通过算法计算一个值放到数据包的CRC字段中。当接受端收到数据包后，会同样使用算法计算一个值，然后和CRC字段的值进行对比，查看是否相同。如果不同则证明数据包被更改，如果相同则证明数据包并未被更改。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/base-network/" rel="tag"># base network</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/02/8-%E8%A7%89%E6%82%9F/" rel="prev" title="c++基础">
+      <i class="fa fa-chevron-left"></i> c++基础
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">网络层的必要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">数据交换方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E6%96%87%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2"><span class="nav-number">2.1.</span> <span class="nav-text">报文分组交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%B1%8F%E8%94%BD%E5%BC%82%E7%A7%8D%E7%BD%91%E7%BB%9C%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">2.2.</span> <span class="nav-text">如何屏蔽异种网络的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%85%A8%E7%BD%91%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%92%8C%E5%8F%98%E6%8D%A2"><span class="nav-number">2.3.</span> <span class="nav-text">如何实现全网的数据传输和变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">IP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip%E5%8D%8F%E8%AE%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">ip协议格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ip%E5%9C%B0%E5%9D%80"><span class="nav-number">4.0.1.</span> <span class="nav-text">ip地址</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARP%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE"><span class="nav-number">5.</span> <span class="nav-text">ARP地址解析协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E5%B1%82%EF%BC%88%E7%BD%91%E7%BB%9C%E5%B1%82%EF%BC%89%E5%85%B3%E5%BF%83%E7%9A%84IP%E5%9C%B0%E5%9D%80%EF%BC%8C%E4%B8%8B%E5%B1%82-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82-%E5%85%B3%E5%BF%83%E7%9A%84%E6%98%AFMAC%E5%9C%B0%E5%9D%80%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E5%B0%B1%E9%9C%80%E8%A6%81%E6%98%A0%E5%B0%84IP%E5%92%8CMAC%E3%80%82"><span class="nav-number">6.</span> <span class="nav-text">上层（网络层）关心的IP地址，下层(数据链路层)关心的是MAC地址，这个时候就需要映射IP和MAC。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-number">6.1.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP%E6%8A%A5%E6%96%87%E6%80%BB%E9%95%BF%E5%BA%A6"><span class="nav-number">6.2.</span> <span class="nav-text">ARP报文总长度</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
