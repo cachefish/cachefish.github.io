@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="堆破坏原因 缓冲区溢出(写入超出分配的内存) Double free(将指针释放两次) 旧指针重用(在释放后重用指针)。  对堆损坏进行故障排除的困难在于，例如，当线程损坏堆时，进程不会终止或抛出错误！只要不使用损坏的堆，进程就不会崩溃，但一旦线程尝试使用堆中损坏的内存块，进程就会崩溃！进程崩溃时我们所看到的导致崩溃的“罪魁祸首”线程实际上只是一个受害者线程！比如如果你new一个大小正常的内存失败">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++ 堆破坏">
+<meta property="og:url" content="https://cachefish.github.io/2022/03/07/13-%E5%A0%86%E7%A0%B4%E5%9D%8F/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="堆破坏原因 缓冲区溢出(写入超出分配的内存) Double free(将指针释放两次) 旧指针重用(在释放后重用指针)。  对堆损坏进行故障排除的困难在于，例如，当线程损坏堆时，进程不会终止或抛出错误！只要不使用损坏的堆，进程就不会崩溃，但一旦线程尝试使用堆中损坏的内存块，进程就会崩溃！进程崩溃时我们所看到的导致崩溃的“罪魁祸首”线程实际上只是一个受害者线程！比如如果你new一个大小正常的内存失败">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-07T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-07T02:13:19.794Z">
+<meta property="article:tag" content="c++ base">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/03/07/13-%E5%A0%86%E7%A0%B4%E5%9D%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>c++ 堆破坏 | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/07/13-%E5%A0%86%E7%A0%B4%E5%9D%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          c++ 堆破坏
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-07 19:30:00 / 修改时间：10:13:19" itemprop="dateCreated datePublished" datetime="2022-03-07T19:30:00+08:00">2022-03-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-base/" itemprop="url" rel="index"><span itemprop="name">c++ base</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="堆破坏原因"><a href="#堆破坏原因" class="headerlink" title="堆破坏原因"></a>堆破坏原因</h2><ol>
+<li>缓冲区溢出(写入超出分配的内存)</li>
+<li>Double free(将指针释放两次)</li>
+<li>旧指针重用(在释放后重用指针)。</li>
+</ol>
+<p>对堆损坏进行故障排除的困难在于，例如，当线程损坏堆时，进程不会终止或抛出错误！只要不使用损坏的堆，进程就不会崩溃，但一旦线程尝试使用堆中损坏的内存块，进程就会崩溃！进程崩溃时我们所看到的导致崩溃的“罪魁祸首”线程实际上只是一个受害者线程！比如如果你new一个大小正常的内存失败，除非系统内存用完，否则一定是出现了堆破坏。<br>备注：<br>同一个进程的所有内存都是在同一个虚拟地址空间的，理论上任何存储期的变量的越界写都会对其它地址上的数据造成破坏，这些被破坏的数据可能是任何存储期的变量或程序内部数据结构（管理堆的元数据，调用栈的返回地址等）。</p>
+<hr>
+<h3 id="堆的结构"><a href="#堆的结构" class="headerlink" title="堆的结构"></a>堆的结构</h3><p>参考<a target="_blank" rel="noopener" href="https://os.51cto.com/art/202107/675085.htm%E3%80%82">https://os.51cto.com/art/202107/675085.htm。</a><br>以windows下的heap为例，linux下也是类似。<br>Windows Heap概述</p>
+<ul>
+<li>进程默认堆。每个进程启动的时候系统会创建一个默认堆。比如LocalAlloc或者GlobalAlloc也是从进程默认堆上分配内存。你也可以使用GetProcessHeap获取进程默认堆的句柄，然后根据用这个句柄去调用HeapAlloc达到在系统默认堆上分配内存的效果。</li>
+<li>自建堆。这个泛指程序通过HeapCreate去创建的堆，然后利用HeapAlloc等API去操作堆。</li>
+<li>C++编程中常用的是malloc和new去申请内存，这些由CRT库提供方法。而根据查看在VS2010之前(包含)，CRT库会使用HeapCreate去创建一个堆，供CRT库自己使用。在VS2015以后CRT库的实现，并不会再去创建一个单独的堆，而使用进程默认堆。<br>堆管理器是通过调用虚拟管理器的一些方法进行堆管理的实现，比如VirtualAlloc之类的函数。同样应用程序也可以直接使用VirtualAlloc之类的函数对内存进行使用。</li>
+</ul>
+<p>一个堆主要由若干个Segment(段)组成，每个Segment都是一段连续的空间，然后用双向链表串起来。而一般情况下，一开始只有一个Segment，然后在这个Segment上申请空间，叫做Heap Entry(堆块)。</p>
+<p>应用程序申请的内存在Segment上叫做Entry(块)，他们是连续的，可以看到一个块一般具有：<br>·前置的元数据: 这里主要存储有当前块的大小，前一个块的大小，当前块的状态等。<br>·用户数据区: 这段内存才是用户申请并且使用的内存。当然这块数据可能比你申请的内存要大一些，因为32位下面最小的分配粒度是8字节。这也是为什么有时候程序有时候溢出了几个字符，好像也没有导致程序异常或者崩溃的原因。<br>·后置的元数据: 这个一般用于调试所用。一般发布的时候不会占用这块空间。</p>
+<p>如果程序写的数据越界了，修改了元数据区域，会导致后续的分配或则释放内存出现崩溃；如果错误修改了用户数据，则访问这些数据的代码就会出错。由于崩溃在于受害者一方，所以我们需要借助工具在第一现场抓住破坏者。</p>
+<h3 id="AddressSanitizer"><a href="#AddressSanitizer" class="headerlink" title="AddressSanitizer"></a>AddressSanitizer</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p><strong>shadow bytes</strong><br>用1字节的shadow byte来描述 8字节的内存的可访问情况：<br>(1)0 表示所有8字节可以访问。<br>(2)1-7表示1-7字节可以访问<br>(3)负数是asan运行时用于汇报诊断信息的上下文，并且也表示所有字节都不能访问。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Shadow byte legend (one shadow byte represents 8 application bytes):</span><br><span class="line"> Addressable: 00</span><br><span class="line"> Partially addressable: 01 02 03 04 05 06 07 </span><br><span class="line"> Heap left redzone:      fa</span><br><span class="line"> Freed heap region:      fd</span><br><span class="line"> Stack left redzone:      f1</span><br><span class="line"> Stack mid redzone:      f2</span><br><span class="line"> Stack right redzone:     f3</span><br><span class="line"> Stack after return:       f5</span><br><span class="line"> Stack use after scope:    f8</span><br><span class="line"> Global redzone:         f9</span><br><span class="line"> Global init order:        f6</span><br><span class="line"> Poisoned by user:       f7</span><br><span class="line"> Container overflow:     fc</span><br><span class="line"> Array cookie:           ac</span><br><span class="line"> Intra object redzone:    bb</span><br><span class="line"> ASan internal:           fe</span><br><span class="line"> Left alloca redzone:     ca</span><br><span class="line"> Right alloca redzone:    cb</span><br><span class="line"> Shadow gap:            cc</span><br></pre></td></tr></table></figure>
+<h4 id="用户地址和对应的shadow-bytes的映射关系"><a href="#用户地址和对应的shadow-bytes的映射关系" class="headerlink" title="用户地址和对应的shadow bytes的映射关系"></a>用户地址和对应的shadow bytes的映射关系</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">On x86:</span><br><span class="line">char shadow_byte_value = *((Your_Address &gt;&gt; 3) + 0x30000000)</span><br><span class="line"></span><br><span class="line">On x64:</span><br><span class="line">char shadow_byte_value = *((Your_Address &gt;&gt; 3) + _asan_runtime_assigned_offset)</span><br></pre></td></tr></table></figure>
+<h4 id="红色区域-red-zone"><a href="#红色区域-red-zone" class="headerlink" title="红色区域(red zone)"></a>红色区域(red zone)</h4><p>红色区域表示不可以访问的内存，对应的shadow bytes为负数，用于检测非法访问。<br>●动态存储期变量：运行时库替换malloc和free函数，用替换后的malloc分配的内存会在返回给用户的内存前后都添加红色区域(red zones)。替换后的free释放内存时，并没有直接释放内存，而是将这些内存的shadows bytes都设置为负数，并且将这些内存放入隔离区延迟释放，这样就能检测访问销毁内存的代码了。<br>●自动存储期&#x2F;全局存储期&#x2F;线程存储变量：编译器会在这些变量的前后也安插上红色区域。</p>
+<h4 id="检测代码"><a href="#检测代码" class="headerlink" title="检测代码"></a>检测代码</h4><p>使用asan编译的代码，当去读写一个内存时，编译器都产生了一些额外代码来做检测。<br>当访问8个字节时，伪代码如下：<br>ShadowAddr &#x3D; (Addr &gt;&gt; 3) + Offset;<br>if (*ShadowAddr !&#x3D; 0) {<br>ReportAndCrash(Addr);<br>}<br>当访问的字节数少于8时，伪代码如下（This is guaranteed by the fact that malloc returns 8-byte aligned chunks of memory）：<br>ShadowAddr &#x3D; (Addr &gt;&gt; 3) + Offset;<br>k &#x3D; *ShadowAddr;<br>if (k !&#x3D; 0 &amp;&amp; ((Addr &amp; 7) + AccessSize &gt; k)) {<br>    ReportAndCrash(Addr);<br>}</p>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><p>sudo dnf install libasan</p>
+<h4 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h4><p>使用&#x2F;fsanitize&#x3D;address编译选项编译可执行程序，动态库或静态库。正常运行程序，运行时检测到错误就会报告。错误信息可以在调试器或者控制台下展示，也可以存储到dump中用于事后分析。&#x2F;fsanitize&#x3D;address和所有优化级别兼容(例如，&#x2F;Od, &#x2F;O1, &#x2F;O2, &#x2F;O2 &#x2F;GL, and PGO)。</p>
+<p>设置环境变量ASAN_SAVE_DUMPS&#x3D;as.dmp 再运行程序就会生成dump.<br>打开dump后也会看到和直接运行相同的诊断信息。</p>
+<hr>
+<h3 id="Linux-1"><a href="#Linux-1" class="headerlink" title="Linux"></a>Linux</h3><p>需要检测的模块(动态库,静态库,可执行程序）编译时加上编译选项-fsanitize&#x3D;address，<br>如果运行程序出现了如下提示” ASan runtime does not come first in initial library list; you should either link runtime to your application or manually preload it with LD_PRELOAD”，表明该可执行程序没有首先链接asan运行时,或没有通过LD_PRELOAD手动加载asan运行时。 </p>
+<ul>
+<li>首先链接asan运行时是指需要将libasan.so放在可执行程序需要链接的库的列表的第一项。（也就是放在最左边）。<br>比如链接选项如下需要将-lasan放在最左边</li>
+</ul>
+<p>-lasan -ltbb -lgtest -lconcurrencpp -lpthread -ldl</p>
+<ul>
+<li>通过LD_PRELOAD手动加载asan运行时是指按如下方式运行程序<br>LD_PRELOAD&#x3D;&#x2F;usr&#x2F;lib64&#x2F;libasan.so.6  your_exe</li>
+</ul>
+<p><strong>执行rpm -ql libasan 可显示libasan安装的位置</strong><br>[leo@x x86_64r]$ rpm -ql libasan<br>&#x2F;usr&#x2F;lib&#x2F;.build-id<br>&#x2F;usr&#x2F;lib&#x2F;.build-id&#x2F;6d&#x2F;582957f402989d215d83f393d10e2e06ab4eff<br>&#x2F;usr&#x2F;lib64&#x2F;libasan.so.6<br>&#x2F;usr&#x2F;lib64&#x2F;libasan.so.6.0.0</p>
+<p><strong>产生dump</strong><br>在系统中开启core： ulimit -c unlimited<br>cat &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;core_pattern 查看core生成的位置<br>设置环境变量<br>export ASAN_OPTIONS&#x3D;abort_on_error&#x3D;1:disable_coredump&#x3D;0:unmap_shadow_on_exit&#x3D;1<br>然后运行程序</p>
+<h4 id="可执行程序是否必须设置-fsanitize-x3D-address？"><a href="#可执行程序是否必须设置-fsanitize-x3D-address？" class="headerlink" title="可执行程序是否必须设置-fsanitize&#x3D;address？"></a>可执行程序是否必须设置-fsanitize&#x3D;address？</h4><p>下面罗列了待测试的静态库或动态库都设置了-fsanitize&#x3D;address，可执行程序不设置的情况下是否可以检测出内存问题：<br>●vs2019<br>◇运行时加载dll：可以。<br>◇编译时链接dll：可以。<br>◇静态库: 不可以。如果可执行程序如果设置了-fsanitize&#x3D;address，也是可以检测的。<br>●g++ 11<br>◇运行时加载dll：可执行程序可以不指定-fsanitize&#x3D;address，但必须满足”ASan runtime must come first in initial library list; you should either link runtime to your application or manually preload it with LD_PRELOAD”。<br>◇编译时链接dll：同上。<br>◇静态库：可执行程序可以不指定-fsanitize&#x3D;address，但必须首先链接libasan,否则链接错误。<br>在有条件的情况下，建议所有模块都设置-fsanitize&#x3D;address，包括可执行程序。</p>
+<p>检测的错误示例<br>加了-fsanitize&#x3D;address编译选项，vs2019,g++11默认都是可以检测内存泄露问题的</p>
+<p><strong>heap-buffer-overflow</strong></p>
+<ul>
+<li>数组下标越界<ul>
+<li>往前越界</li>
+</ul>
+</li>
+<li>strncat越界<ul>
+<li>错误原因：strncat一定会在目标结尾加0</li>
+</ul>
+</li>
+<li>strncpy越界<ul>
+<li>错误原因：dest未以0结尾，strncpy读取越界。</li>
+</ul>
+</li>
+</ul>
+<p><strong>heap-use-after-free</strong><br><strong>double-free</strong><br><strong>alloc-dealloc-mismatch</strong><br>alloc&#x2F;dealloc mismatch 检测在windows下默认关闭的，linux下默认开启的。windows下需要设置环境变量ASAN_OPTIONS&#x3D;alloc_dealloc_mismatch&#x3D;1来开启。<br>在控制台执行set ASAN_OPTIONS&#x3D;alloc_dealloc_mismatch&#x3D;1 </p>
+<p><strong>new-delete-type-mismatch</strong><br>当释放的指针为基类类型，但基类没有虚析构，就会提示这个错误。<br>这种情况不会调用子类的析构，从而也不会调用子类数据成员的析构，造成内存泄露。如果子类自己和其数据成员都不需要通过析构函数执行内存回收，是不会造成内存泄露的。</p>
+<p><strong>stack-buffer-overflow</strong><br>和堆溢出的例子类似，只是变量是在栈上分配的。<br><strong>stack-buffer-underflow</strong><br>访问了栈变量之前的错误内存地址。</p>
+<p><strong>stack-use-after-return</strong><br>vs2019:<br>默认关闭，需要设置编译选项&#x2F;fsanitize-address-use-after-return打开, 运行时需要设置环境变量 ASAN_OPTIONS&#x3D;detect_stack_use_after_return&#x3D;1.（ msdn上说只要编译时打开了，即使运行时没有设置环境变量，产生的代码都会变慢。）<br>gcc11<br>编译时默认打开，运行时需要设置环境变量 ASAN_OPTIONS&#x3D;detect_stack_use_after_return&#x3D;1。</p>
+<p><strong>stack-use-after-scope</strong></p>
+<p><strong>global-buffer-overflow</strong></p>
+<p><strong>memcpy-param-overlap</strong><br>Memcpy不支持重叠内存。memcpy的另一个支持重叠内存的替代方案:memmove</p>
+<p><strong>strncat-param-overlap</strong><br>strcat， strncat也不支持源和目标重叠。</p>
+<h3 id="协程的栈变量"><a href="#协程的栈变量" class="headerlink" title="协程的栈变量"></a>协程的栈变量</h3><p>栈变量越界访问在g++11和 vc2019下无法检测，不过堆越界可以检测。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">co::result&lt;void&gt; co_fun() &#123;</span><br><span class="line">int v[3];</span><br><span class="line">     v[3] = 1;</span><br><span class="line">     co::result_promise&lt;int&gt; promise;</span><br><span class="line">     auto result = promise.get_result();</span><br><span class="line">     std::cout &lt;&lt; this_thread::get_id() &lt;&lt; endl;</span><br><span class="line">     thread t([p = move(promise)]()mutable&#123;p.set_result(1);&#125;);</span><br><span class="line">     co_await result;</span><br><span class="line">     std::cout &lt;&lt; endl &lt;&lt; this_thread::get_id() &lt;&lt; endl;</span><br><span class="line">     int v2[3];</span><br><span class="line">     v2[3] = 1;</span><br><span class="line">     fun_s_1(&quot;co_fun&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="避免内存错误的防御式编程"><a href="#避免内存错误的防御式编程" class="headerlink" title="避免内存错误的防御式编程"></a>避免内存错误的防御式编程</h3><p><strong>典型错误原因：</strong></p>
+<ol>
+<li>数组越界</li>
+<li>字符串0结尾问题(1.字符串未以0结尾，2.把非字符串当作字符串进行操作）</li>
+<li>内存忘记释放</li>
+<li>内存多次释放</li>
+<li>memcpy, strcat, strcpy等函数的误用</li>
+<li>基类未写虚析构，导致内存泄露 （基类都写上虚析构）</li>
+<li>返回了销毁栈变量的地址或引用(相信理解了栈变量的生命期就不会这样写了)</li>
+</ol>
+<p><strong>数组越界问题</strong></p>
+<ol>
+<li>使用下标访问数组前一定检测下标范围是否越界。</li>
+<li>循环时注意边界<br> const int num &#x3D; 3;<br> int a[num]{};<br> for (size_t i &#x3D; 0; i &lt;&#x3D; num; i++){ &#x2F;&#x2F; 应当 i &lt; num<br>  a[i] &#x3D; i + 2;<br> }</li>
+<li>使用std::array和std::vector<br>std::array 替代编译期已知大小数组<br>std::vector替代运行时指定大小的数组<br>&#x3D;&#x3D;■std::array&#x3D;&#x3D;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">std::array&lt;char, 6&gt; data = &#123; 1, 2, 4, 5, 5, 6 &#125;;</span><br><span class="line">    data.at(1) = 88;// Set element 1</span><br><span class="line">    // Read element 2</span><br><span class="line"> std::cout &lt;&lt; &quot;index 2 has value &quot; &lt;&lt; data.at(2) &lt;&lt; &#x27;\n&#x27;;</span><br><span class="line">    std::cout &lt;&lt; &quot;data size = &quot; &lt;&lt; data.size() &lt;&lt; &#x27;\n&#x27;;</span><br><span class="line">    try &#123;</span><br><span class="line">        // Set element 6</span><br><span class="line">        data.at(6) = 666;</span><br><span class="line">    &#125; catch (std::out_of_range const&amp; exc) &#123;</span><br><span class="line">        std::cout &lt;&lt; exc.what() &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    // Print final values</span><br><span class="line">    std::cout &lt;&lt; &quot;data:&quot;;</span><br><span class="line">    for (auto elem : data) &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot; &quot; &lt;&lt; elem;</span><br><span class="line">    &#125;</span><br><span class="line">std::cout &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">char data2[6];</span><br><span class="line">int len = std::min(data.size(), sizeof(data2));</span><br><span class="line">memcpy(data2, data.data(), len);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这个容器是一个聚合类型，它的语义与一个结构体相同，该结构体将c风格数组T[N]作为其唯一的非静态数据成员。与c风格的数组不同，它不会自动衰减为T*。作为一个聚合类型，它可以通过给定的最多N个初始化式进行初始化，这些初始化式可以转换为T: std::array&lt;int, 3&gt; a =&#123;1,2,3&#125;;。</span><br><span class="line">该结构结合了c风格数组的性能和可访问性，以及标准容器的优点，例如知道自己的大小、支持赋值、随机访问迭代器等。</span><br></pre></td></tr></table></figure>
+■&#x3D;&#x3D;vector&#x3D;&#x3D;<br>用vector<T> 来达到 new T[n]的效果, 需要使用如下构造函数。<br>constexpr explicit vector( size_type count, const Allocator&amp; alloc &#x3D; Allocator() );</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void f(int num) &#123;</span><br><span class="line">    if (num &lt;= 0) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    std::vector&lt;char&gt; d1(num);</span><br><span class="line">    int i = 0;</span><br><span class="line">    for (auto&amp; e : d1)&#123;</span><br><span class="line">        e = i++ + &#x27;a&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">    try&#123;</span><br><span class="line">        // Set element 6</span><br><span class="line">        d1.at(num) = 666;</span><br><span class="line">    &#125; catch (std::out_of_range const&amp; exc)&#123;</span><br><span class="line">        std::cout &lt;&lt; exc.what() &lt;&lt; &#x27;\n&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">    for (auto e : d1)&#123;</span><br><span class="line">        std::cout &lt;&lt; &quot; &quot; &lt;&lt; e;</span><br><span class="line">    &#125;</span><br><span class="line">std::vector&lt;char&gt; d2(4);</span><br><span class="line">int len = std::min(d2.size(), d1.size());</span><br><span class="line">    memcpy(d2.data(), d1.data(), len));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不使用C风格字符串及相关C函数，使用std::string -&gt; 避免问题2<br>如果使用std::string就不用考虑这些问题<br>std::string msg1(“hello string”);<br>std::string msg2 &#x3D; msg1;<br>std::string msg3 &#x3D; msg2;<br>备注：如果非要使用c字符串，请始终确保都以0结尾。<br>不使用裸指针，使用智能指针-&gt;避免问题3,4</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char* argv[])&#123;</span><br><span class="line">auto data1 = make_shared&lt;array&lt;char, 100&gt;&gt;(); //需要传递到其它地方</span><br><span class="line">    for (auto e : *data1)&#123;</span><br><span class="line">        std::cout &lt;&lt; e &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">auto data2 = make_unique&lt;vector&lt;char&gt;&gt;(100);//自己使用</span><br><span class="line">    for (auto e : *data2)&#123;</span><br><span class="line">        std::cout &lt;&lt; e &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&#x3D;&#x3D;memcpy, strcat, strcpy等函数的误用&#x3D;&#x3D;<br>● void *memcpy(void *dest, const void *src, size_t n)<br>1.注意源和目标不能重叠，如果为同一个请用memmove.<br>2.注意源和目标长度都要大于等于n. </p>
+<p>● char * strcat(char *dest, const char *src) (不建议使用）<br>1.注意源和目标不能重叠。<br>2.源必须要以0结尾，否则会访问越界<br>3.总会给目标加上结尾的0,所以要确保目标不小于strlen(dest)+strlen(src)+1</p>
+<p>● char * strncat(char *dest, const char *src, size_t n);<br>1.注意源和目标不能为同一个buffer<br>2.如果源长度大于等于n,可以不以0结尾，否则必须以0结尾不然会访问越界。<br>4.总会给目标加上结尾的0,所以要确保目标不小于strlen(dest)+n+1</p>
+<p>● char *strcpy(char *dest, const char *src);(不建议使用）<br>1.注意源和目标不能重叠<br>2.源必须以0结尾，否则会访问越界<br>3.目标长度必须大于等于strlen(src)+1</p>
+<p>● char *strncpy(char *dest, const char *src, size_t n);<br>1.注意源和目标不能重叠<br>2.如果源的长度大于等于n，那么最终的dest将不会以0结尾。<br> char src[] &#x3D; “hello”;<br> char dest[3];<br> strncpy(dest, src, 3); &#x2F;&#x2F;dest[2]为l，非0<br>3.如果源的长度小于n，源必须以0结尾，否则源会访问越界，并且目标会被写入额外的多个0补足到n个字节。<br>char src[] &#x3D; “hello”;<br> char dest[10];<br> strncpy(dest, src, 10); &#x2F;&#x2F;dest[5] 到 dest[9]都为0<br>4.目标长度不能小于n。<br>所以为了保证dest一定以0结尾，通常按照如下方式编码：<br>strncpy(dest, str, dest_len - 1);<br>dest[dest_len - 1] &#x3D; 0;</p>
+<p>● int snprintf(char *str, size_t size, const char *format, …);<br>The functions snprintf() write at most size bytes (including the terminating null byte (‘\0’)) to str.<br>snprintf总会给目标buffer加上结尾的0的，如下代码b[2]为0.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char b[3];</span><br><span class="line">snprintf(b, 3, &quot;%s&quot;, &quot;hello&quot;);</span><br></pre></td></tr></table></figure>
+<p>&#x3D;&#x3D;总结，字符串c函数一定要明确对结尾0的处理方式，每个函数都不一样， 使用前应当详细阅读函数的使用说明。&#x3D;&#x3D;<br>检测工具对比<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jinzhuojun/article/details/46659155">https://blog.csdn.net/jinzhuojun/article/details/46659155</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c-base/" rel="tag"># c++ base</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/07/18-Object-and-variable/" rel="prev" title="c++ Object">
+      <i class="fa fa-chevron-left"></i> c++ Object
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/07/19-Type-and-Point/" rel="next" title="c++ 类型与指针">
+      c++ 类型与指针 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E7%A0%B4%E5%9D%8F%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">堆破坏原因</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">堆的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AddressSanitizer"><span class="nav-number">1.2.</span> <span class="nav-text">AddressSanitizer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%9C%B0%E5%9D%80%E5%92%8C%E5%AF%B9%E5%BA%94%E7%9A%84shadow-bytes%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.2.</span> <span class="nav-text">用户地址和对应的shadow bytes的映射关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%A2%E8%89%B2%E5%8C%BA%E5%9F%9F-red-zone"><span class="nav-number">1.2.3.</span> <span class="nav-text">红色区域(red zone)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">检测代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-number">1.2.5.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#windows"><span class="nav-number">1.2.6.</span> <span class="nav-text">windows</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-1"><span class="nav-number">1.3.</span> <span class="nav-text">Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F%E6%98%AF%E5%90%A6%E5%BF%85%E9%A1%BB%E8%AE%BE%E7%BD%AE-fsanitize-x3D-address%EF%BC%9F"><span class="nav-number">1.3.1.</span> <span class="nav-text">可执行程序是否必须设置-fsanitize&#x3D;address？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E7%A8%8B%E7%9A%84%E6%A0%88%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.</span> <span class="nav-text">协程的栈变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%86%85%E5%AD%98%E9%94%99%E8%AF%AF%E7%9A%84%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-number">1.5.</span> <span class="nav-text">避免内存错误的防御式编程</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

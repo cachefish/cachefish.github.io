@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="字符编码概述字符集就是一系列用于显示的字符的集合。编码就是这些字符如何用字节流进行表示。一个字符集可能有多种编码方式. ANSI编码世界各国针对ASCII的扩展方案（如欧洲的ISO&#x2F;IEC 8859，中国的GB系列等），这些ASCII扩展编码方案的特点是：他们都兼容ASCII编码，但他们彼此之间是不兼容的。微软将这些编码方案统称为ANSI编码。 代码页在windows操作系统上，默认使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++ 字符编码">
+<meta property="og:url" content="https://cachefish.github.io/2022/03/07/15-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="字符编码概述字符集就是一系列用于显示的字符的集合。编码就是这些字符如何用字节流进行表示。一个字符集可能有多种编码方式. ANSI编码世界各国针对ASCII的扩展方案（如欧洲的ISO&#x2F;IEC 8859，中国的GB系列等），这些ASCII扩展编码方案的特点是：他们都兼容ASCII编码，但他们彼此之间是不兼容的。微软将这些编码方案统称为ANSI编码。 代码页在windows操作系统上，默认使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-07T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-07T02:13:28.428Z">
+<meta property="article:tag" content="c++ base">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/03/07/15-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>c++ 字符编码 | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/07/15-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          c++ 字符编码
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-07 19:30:00 / 修改时间：10:13:28" itemprop="dateCreated datePublished" datetime="2022-03-07T19:30:00+08:00">2022-03-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-base/" itemprop="url" rel="index"><span itemprop="name">c++ base</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="字符编码概述"><a href="#字符编码概述" class="headerlink" title="字符编码概述"></a>字符编码概述</h2><p>字符集就是一系列用于显示的字符的集合。<br>编码就是这些字符如何用字节流进行表示。一个字符集可能有多种编码方式.</p>
+<h3 id="ANSI编码"><a href="#ANSI编码" class="headerlink" title="ANSI编码"></a>ANSI编码</h3><p>世界各国针对ASCII的扩展方案（如欧洲的ISO&#x2F;IEC 8859，中国的GB系列等），这些ASCII扩展编码方案的特点是：他们都兼容ASCII编码，但他们彼此之间是不兼容的。微软将这些编码方案统称为ANSI编码。</p>
+<h3 id="代码页"><a href="#代码页" class="headerlink" title="代码页"></a>代码页</h3><p>在windows操作系统上，默认使用ANSI来保存文件。那么操作系统是如何知道ANSI到底应该表示哪种编码了，是GBK，还是ASCII，或者还是EUC-KR了？ windows通过一个叫”Code Page”（翻译为中文就叫代码页）的东西来判断系统的默认编码。<br>ANSI编码可以理解为非Unicode编码的统称</p>
+<p>各种编码的字符串能强制转换为char类型的字符串来操作？<br>UTF16,UTF32编码不行，因为中间bytes存在大量0。<br>UTF8和其它ANSI编码可以，因为本来就是多字节编码没必要在中间添加0来浪费空间。</p>
+<h2 id="源字符集，执行字符集"><a href="#源字符集，执行字符集" class="headerlink" title="源字符集，执行字符集"></a>源字符集，执行字符集</h2><p>源字符集(source character set)：<br>源字符集中的字符就是源程序的字符，编译器读取源文件时需要理解的编码方式（注意没有编辑器什么关系）。<br>执行字符集(execution character set)：<br>执行字符集表示可出现在已编译程序中的字符，程序运行时字符的编码方式。 这些字符集由源文件中允许的所有字符以及表示警报、退格符、回车符和 null 字符的控制字符组成。</p>
+<h3 id="vc-源字符集"><a href="#vc-源字符集" class="headerlink" title="vc 源字符集"></a>vc 源字符集</h3><p>1.若文件开始处有BOM(EF BB BF)，则判定为UTF-8编码；<br>2.若没有BOM，则试图从文件的前8个字节来判断文件是否像UTF-16编码，如果像，则就判断为UTF-16编码。<br>3.如果既没BOM，也不是UTF-16编码，则使用系统当前的代码页。<br>&#x2F;source-charset or &#x2F;utf-8  </p>
+<h3 id="gcc-源字符集"><a href="#gcc-源字符集" class="headerlink" title="gcc 源字符集"></a>gcc 源字符集</h3><p>默认UTF-8<br>-finput-charset</p>
+<h3 id="vc-执行字符集"><a href="#vc-执行字符集" class="headerlink" title="vc 执行字符集"></a>vc 执行字符集</h3><p>1.对于宽字符串（即C&#x2F;C++中以L标记的串，如L”abc”, L’中’），执行字符集为UTF-16编码。<br>2.u8，u, U前缀字符串，分别UTF8, UTF16, UTF32编码<br>3.对于未带前缀的字符串，执行字符集为系统当前的代码页。<br>&#x2F;execution-charset or &#x2F;utf-8 </p>
+<h3 id="gcc执行字符集"><a href="#gcc执行字符集" class="headerlink" title="gcc执行字符集"></a>gcc执行字符集</h3><p>1.对于宽字符串UTF-32<br>2.u8，u, U前缀字符串，分别UTF8, UTF16, UTF32编码<br>3.对于未带前缀的字符串，默认UTF-8<br>-fexec-charset<br>-fwide-exec-charset</p>
+<h3 id="VC"><a href="#VC" class="headerlink" title="VC"></a>VC</h3><p>VC默认情况下，Visual Studio会检测字节顺序标记，以确定源文件是否是编码过的Unicode格式，例如UTF-16或UTF-8。如果没有找到字节顺序标记，它假定源文件是使用当前用户代码页编码的，除非您通过使用&#x2F;source-charset选项或&#x2F;utf-8选项指定了字符集名称或代码页。Visual Studio允许你通过使用几种字符编码来保存你的c++源代码。有关源代码和执行字符集的信息，请参阅语言文档中的字符集。如果您希望将源字符集和执行字符集都设置为UTF-8，您可以使用&#x2F; UTF-8编译器选项作为快捷方式。它相当于在命令行上指定&#x2F;sourcecharset:utf-8 &#x2F; execute -charset:utf-8。默认情况下，这些选项都启用&#x2F;validate-charset选项。</p>
+<h3 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h3><ul>
+<li>-finput-charset&#x3D;charset<br> 设置输入字符集，用于将输入文件的字符集转换为GCC使用的源字符集。如果区域设置没有指定，或者GCC无法从区域设置获取此信息，则默认为UTF-8。这可以被区域设置或命令行选项覆盖。目前，如果有冲突，命令行选项优先。Charset可以是系统iconv库例程支持的任何编码。</li>
+<li>-fexec-charset&#x3D;charset<br>设置执行字符集，用于字符串和字符常量。默认为UTF-8。Charset可以是系统iconv库例程支持的任何编码。</li>
+<li>-fwide-exec-charset&#x3D;charset<br>设置宽执行字符集，用于宽字符串和字符常量。默认值是UTF-32或UTF-16，两者都对应于wchar_t的宽度。和’-fex -charset’一样，charset可以是系统iconv库例程支持的任何编码;但是，编码不完全适合wchar_t会有问题。</li>
+</ul>
+<h2 id="字符文本"><a href="#字符文本" class="headerlink" title="字符文本"></a>字符文本</h2><p>字符字面值由常量字符组成。它由单引号包围的字符表示。字符字面值有五种:</p>
+<ol>
+<li>char类型的普通字符字面值，例如’a’</li>
+<li>char类型的UTF-8字符字面值(c++20中的char8_t)，例如u8’a’．</li>
+<li>wchar_t类型的宽字符字面值，例如L’a’</li>
+<li>char16_t类型的UTF-16字符字面值，例如u’a’</li>
+<li>char32 t类型的UTF-32字符字面值，例如U’a’</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">auto s3 = u&quot;hello&quot;; const char16_t*</span><br><span class="line">auto s4 = U&quot;heelo&quot;; const char32_t*</span><br><span class="line">const wchar_t wide = L&quot;zyxw&quot;;</span><br><span class="line">const wchar_t newline=L&quot;hello\ngood&quot;;</span><br><span class="line"></span><br><span class="line">//c++20 -&gt;</span><br><span class="line">const char8_t u8str1 = u8&quot;hello world&quot;;</span><br><span class="line">const char8_t u8str2 = u8&quot;\U0001F607 is 0:-&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="std-string-文本"><a href="#std-string-文本" class="headerlink" title="std::string 文本"></a>std::string 文本</h2><p>string字面值是用户定义的字面值(见下文)的标准库实现，表示为“xyz”(带有s后缀)。这种字符串字面值产生一个临时对象，类型为std::string、std::wstring、std::u32string或std::u16string，这取决于所指定的前缀。如果没有使用任何前缀，就会产生一个std::string。L”xyz”生成一个std::wstring。u”xyz”s生成一个std:u16string, u”xyz”s生成一个std:u32string。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">string str&#123;&quot;hello&quot;s&#125;;</span><br><span class="line">string str2&#123;u8&quot;&quot;Hello world&quot;&#125;;</span><br><span class="line">u8string u8str2&#123;u8&quot;Hello World&quot;&#125;;</span><br><span class="line">wstring str3&#123;L&quot;hello&quot;s&#125;;</span><br><span class="line">u16string str4&#123;u&quot;hello&quot;s&#125;;</span><br><span class="line">u32string str5&#123;U&quot;hello&quot;s&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符文本的执行期编码："><a href="#字符文本的执行期编码：" class="headerlink" title="字符文本的执行期编码："></a>字符文本的执行期编码：</h3><p>除了普通字符和宽字符由编译器决定，其余字符文本都给予前缀表示的方式进行编码。可见同一个编译单元中字符的执行期编码可以有多种。</p>
+<p>对于程序运行过程的和外界交互（网络收发，文件读写，数据库读写等）涉及到的字符，则要规定好编码方式，然后进行处理。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c-base/" rel="tag"># c++ base</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/07/17-netfiliter/" rel="prev" title="netfiliter">
+      <i class="fa fa-chevron-left"></i> netfiliter
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/07/14-%E5%A3%B0%E6%98%8E/" rel="next" title="c++ 声明">
+      c++ 声明 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">字符编码概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ANSI%E7%BC%96%E7%A0%81"><span class="nav-number">1.1.</span> <span class="nav-text">ANSI编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%A1%B5"><span class="nav-number">1.2.</span> <span class="nav-text">代码页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E5%AD%97%E7%AC%A6%E9%9B%86%EF%BC%8C%E6%89%A7%E8%A1%8C%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">2.</span> <span class="nav-text">源字符集，执行字符集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vc-%E6%BA%90%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">vc 源字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcc-%E6%BA%90%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">2.2.</span> <span class="nav-text">gcc 源字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vc-%E6%89%A7%E8%A1%8C%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">2.3.</span> <span class="nav-text">vc 执行字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcc%E6%89%A7%E8%A1%8C%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">2.4.</span> <span class="nav-text">gcc执行字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VC"><span class="nav-number">2.5.</span> <span class="nav-text">VC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GCC"><span class="nav-number">2.6.</span> <span class="nav-text">GCC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E6%96%87%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">字符文本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-string-%E6%96%87%E6%9C%AC"><span class="nav-number">4.</span> <span class="nav-text">std::string 文本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E6%96%87%E6%9C%AC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%9F%E7%BC%96%E7%A0%81%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">字符文本的执行期编码：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

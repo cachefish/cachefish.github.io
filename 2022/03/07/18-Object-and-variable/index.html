@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="对象 当隐式更改联合的成员或创建临时对象时，对象由定义、新表达式创建。 物体在其建造期间、整个生命周期和销毁期间都占有存储区域。(函数不是对象，不管它是否像对象那样占用存储空间。) 对象具有影响其生存期的存储持续时间。 对象可以有名称。 对象具有类型。  对象有一个值。 对象有对齐要求  以下实体不是对象值、引用、函数、枚举器、类型、非静态类成员、模板、类或函数模板特化、名称空间、参数包等等。 为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++ Object">
+<meta property="og:url" content="https://cachefish.github.io/2022/03/07/18-Object-and-variable/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="对象 当隐式更改联合的成员或创建临时对象时，对象由定义、新表达式创建。 物体在其建造期间、整个生命周期和销毁期间都占有存储区域。(函数不是对象，不管它是否像对象那样占用存储空间。) 对象具有影响其生存期的存储持续时间。 对象可以有名称。 对象具有类型。  对象有一个值。 对象有对齐要求  以下实体不是对象值、引用、函数、枚举器、类型、非静态类成员、模板、类或函数模板特化、名称空间、参数包等等。 为">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-07T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-07T02:13:46.545Z">
+<meta property="article:tag" content="c++ base">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/03/07/18-Object-and-variable/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>c++ Object | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/07/18-Object-and-variable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          c++ Object
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-07 19:30:00 / 修改时间：10:13:46" itemprop="dateCreated datePublished" datetime="2022-03-07T19:30:00+08:00">2022-03-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-base/" itemprop="url" rel="index"><span itemprop="name">c++ base</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><ol>
+<li>当隐式更改联合的成员或创建临时对象时，对象由定义、新表达式创建。</li>
+<li>物体在其建造期间、整个生命周期和销毁期间都占有存储区域。(函数不是对象，不管它是否像对象那样占用存储空间。)</li>
+<li>对象具有影响其生存期的存储持续时间。</li>
+<li>对象可以有名称。</li>
+<li>对象具有类型。 </li>
+<li>对象有一个值。</li>
+<li>对象有对齐要求</li>
+</ol>
+<h3 id="以下实体不是对象"><a href="#以下实体不是对象" class="headerlink" title="以下实体不是对象"></a>以下实体不是对象</h3><p>值、引用、函数、枚举器、类型、非静态类成员、模板、类或函数模板特化、名称空间、参数包等等。</p>
+<p>为何引用不是对象？<br>例子中引用ra的地址和a的地址一样。</p>
+<p>为何函数不是对象？<br>函数没有生命期，不会被销毁。</p>
+<h2 id="Alignment"><a href="#Alignment" class="headerlink" title="Alignment"></a>Alignment</h2><p>每种对象的类型都有一个对齐量（always a power of 2)，表示这种类型的对象的空间需要在对齐量的倍数的地址上进行分配。<br>为了满足类的非静态成员的对齐要求，成员间可能会插入一些填充空间。整个类的对齐量为非静态数据成员的最大对齐量，并且整个类的大小要为非静态数据成员的最大对齐量的倍数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cout&lt;&lt; sizeof(char) &lt;&lt;&quot; &quot; &lt;&lt; alignof(char) &lt;&lt;endl;  1 1</span><br><span class="line">cout &lt;&lt; sizeof(short)&lt;&lt;&quot; &quot; &lt;&lt;alignof(short)&lt;&lt;endl;  2 2</span><br><span class="line">cout&lt;&lt;sizeof(int) &lt;&lt;&quot; &quot; &lt;&lt;alignof(int) &lt;&lt; endl;     4 4</span><br><span class="line">cout &lt;&lt; sizeof(float) &lt;&lt;&quot; &quot;&lt;&lt;alignof(float) &lt;&lt;endl; 4 4</span><br><span class="line">cout &lt;&lt; sizeof(double) &lt;&lt;&quot; &quot; &lt;&lt; alignof(double) &lt;&lt;endl; 8 8</span><br><span class="line">cout &lt;&lt; sizeof(int*) &lt;&lt;&quot; &quot;&lt;&lt;alignof(int *) &lt;&lt;endl;  8 8</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最大对齐量<br>每个编译环境都有一个最大对齐量，可以通过pragma pack改变这个最大对齐量。<br>每种类型的实际对齐量为自身对齐量和最大对齐量之小值。</p>
+<p>#pragma pack<br>This family of pragmas control the maximum alignment for subsequently defined class and union members.wpragma pack(arg)<br>#pragma pack()<br>#pragma pack(push)<br>#pragma pack(push，arg)<br>pragma pack(pop)        </p>
+<p>其中arg是2的小幂，指定以字节为单位的新对齐方式。<br>1)设置当前对齐为value arg。<br>2)设置当前对齐方式为默认值(由命令行选项指定)。<br>将当前对齐的值推送到内部堆栈上。<br>4)将当前对齐方式的值推送到内部堆栈上，然后将当前对齐方式设置为value arg。<br>5)从内部堆栈弹出顶部条目，然后设置(恢复)当前对齐的值。<br>#pragma pack可能会减少类的对齐，但是，它不能使类overaligned。</p>
+<p>每种类型的实际对齐量为自身对齐量和最大对齐量之小值。</p>
+<p>理解了对齐原理可以合理安排类成员顺序，节省空间，以及理解为何会因为不对齐会在一些架构上性能差或者段错误。</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量是通过引用或者对象的申明引入，非静态数据成员不是变量。变量就是代码中访问对象和引用的一个媒介，变量本身并不暂用任何空间。</p>
+<h3 id="非静态数据成员不是变量-is-data-member"><a href="#非静态数据成员不是变量-is-data-member" class="headerlink" title="非静态数据成员不是变量  is data member"></a>非静态数据成员不是变量  is data member</h3><p>class A{<br>public:<br>    int&amp; a;          &#x2F;&#x2F;不是变量, is data member<br>    int b;               &#x2F;&#x2F;不是变量<br>    static int sa;     &#x2F;&#x2F;变量<br>    static int&amp; sb;   &#x2F;&#x2F;变量<br>};<br>可以A::sa, A::sb访问, 但不可以使用A::a, A::b<br>类的非静态数据成员没有创建新的变量，它只是帮助你定义类的属性，如果它是变量, 就可以使用A::a &#x3D; 3访问，显然这是不可以的。</p>
+<p>定义一个函数变量？<br>下面的例子中虽然可以声明ft f1; 但无法初始化f1，这个”变量”无法代表任何实体。<br>通过上面变量的定义，也可以看出函数不是一个对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void f()&#123;&#125;;</span><br><span class="line">TEST(function,2)&#123;</span><br><span class="line">    using ft = void();</span><br><span class="line">    ft f1 = f;   //error</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>在c++程序中出现的每个名称只在源代码中称为其作用域的一些可能不连续的部分中可见。为啥会出现不连续：比如中间可能会出现嵌套的块，导致外层块中的名字暂时不可见了。</p>
+<h3 id="块范围"><a href="#块范围" class="headerlink" title="块范围"></a>块范围</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在块(复合语句)中声明的名称的潜在作用域从声明点开始，到块的末尾结束。实际作用域与潜在作用域相同，除非在嵌套块中声明了相同的名称</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int i = 0; // scope of outer i begins</span><br><span class="line">    ++i; // outer i is in scope</span><br><span class="line">    &#123;</span><br><span class="line">        int i = 1; // scope of inner i begins,</span><br><span class="line">                   // scope of outer i pauses</span><br><span class="line">        i = 42; // inner i is in scope</span><br><span class="line">    &#125; // block ends, scope of inner i ends,</span><br><span class="line">      // scope of outer i resumes</span><br><span class="line">&#125; // block ends, scope of outer i ends</span><br><span class="line">//int j = i; // error: i is not in scope</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">在异常处理程序中声明的名称的潜在作用域从声明点开始，在异常处理程序的末尾结束，并且不在另一个异常处理程序的作用域或封闭块中。</span><br><span class="line">try &#123;</span><br><span class="line">    f();</span><br><span class="line">&#125; catch (const std::runtime_error&amp; re) &#123;</span><br><span class="line">// scope of re begins</span><br><span class="line">    int n = 1; // scope of n begins</span><br><span class="line">    std::cout &lt;&lt; n &lt;&lt; re.what(); // re is in scope</span><br><span class="line">&#125; // scope of re ends, scope of n ends</span><br><span class="line">catch (std::exception&amp; e) &#123;</span><br><span class="line">//  std::cout &lt;&lt; re.what(); // error: re is not in scope</span><br><span class="line">//  ++n; // error: n is not in scope</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">潜在范围中声明一个名字 for循环,条件的for循环,range_declaration的范围循环,init-statement的if语句或switch语句(c++ 17),在if语句的条件,switch语句,或者while循环从声明点开始，在受控语句的末尾结束。</span><br><span class="line">Base* bp = new Derived;</span><br><span class="line">if (Derived* dp = dynamic_cast&lt;Derived*&gt;(bp)) &#123;</span><br><span class="line">    dp-&gt;f(); // dp is in scope</span><br><span class="line">&#125; // scope of dp ends</span><br><span class="line"></span><br><span class="line">for (int n = 0; // scope of n begins</span><br><span class="line">     n &lt; 10; // n is in scope</span><br><span class="line">     ++n)    // n is in scope</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; n &lt;&lt; &#x27; &#x27;; // n is in scope</span><br><span class="line">&#125; // scope of n ends</span><br></pre></td></tr></table></figure>
+<h2 id="Function-parameter-scope"><a href="#Function-parameter-scope" class="headerlink" title="Function parameter scope"></a>Function parameter scope</h2><p>函数参数(包括lambda表达式的参数)或函数局部预定义变量中声明的名称的潜在作用域从声明点开始。<br>如果封闭的函数声明符不是函数定义的声明符，那么它的潜在作用域将在该函数声明符的末尾结束。<br>否则，它的潜在作用域结束在函数try块的最后一个异常处理程序的末尾，或者如果函数try块没有被使用，则结束在函数体的末尾</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">const int n = 3;</span><br><span class="line"> </span><br><span class="line">int f1(</span><br><span class="line">    int n // scope of function parameter n begins,</span><br><span class="line">          // scope of global n pauses</span><br><span class="line">//int y = n // error: default argument references a function parameter</span><br><span class="line">);</span><br><span class="line"> </span><br><span class="line">int (*(*f2)(int n))[n]; // OK: scope of function parameter n</span><br><span class="line">                        // ends at the end of its function declarator</span><br><span class="line">                        // in the array declarator, global n is in scope</span><br><span class="line">// declares a pointer to function returning a pointer to an array of 3 int</span><br><span class="line"> </span><br><span class="line">//auto (*f3)(int n)-&gt;int (*)[n]; // error: function parameter n as array bound</span><br><span class="line"> </span><br><span class="line">void f(int n = 2) // scope of function parameter n begins</span><br><span class="line">try // function try block</span><br><span class="line">&#123; // function body begins</span><br><span class="line">    ++n; // function parameter n is in scope</span><br><span class="line">    &#123;</span><br><span class="line">        int n = 2; // scope of local n begins</span><br><span class="line">                   // scope of function parameter n pauses</span><br><span class="line">        ++n; // local n is in scope</span><br><span class="line">    &#125; // scope of local n ends</span><br><span class="line">      // scope of function parameter n resumes</span><br><span class="line">&#125; catch (std::exception&amp; e) &#123;</span><br><span class="line">    ++n; // function parameter n is in scope</span><br><span class="line">    throw;</span><br><span class="line">&#125; // last exception handler ends, scope of function parameter n ends</span><br><span class="line"> </span><br><span class="line">int a = n; // global n is in scope</span><br></pre></td></tr></table></figure>
+
+<p>__func__应由编译器隐式声明，就好像紧跟在每个函数定义的大括号之后，声明static const char <strong>func</strong>[] &#x3D; “function-name”;出现，其中function-name是函数的名称。</p>
+<h2 id="Namespace-scope"><a href="#Namespace-scope" class="headerlink" title="Namespace scope"></a>Namespace scope</h2><p>在一个名称空间中声明的名字开始,包括其余的名称空间和名称空间定义一个相同的名称空间的名字,另外,对于任何使用指示介绍这个名称或其整个名称空间到另一个范围,剩下的范围。翻译单元的顶级作用域(“文件作用域”或“全局作用域”)也是一个命名空间，正确地称为“全局命名空间作用域”。在全局命名空间作用域中声明的名称的潜在作用域从声明点开始，到结束点结束</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">namespace N &#123; // scope of N begins (as a member of global namespace)</span><br><span class="line">    int i; // scope of i begins</span><br><span class="line">    int g(int a) &#123; return a; &#125; // scope of g begins</span><br><span class="line">    int j(); // scope of j begins</span><br><span class="line">    void q(); // scope of q begins</span><br><span class="line">    namespace &#123;</span><br><span class="line">        int x; // scope of x begins</span><br><span class="line">    &#125; // scope of x continues (member of unnamed namespace)</span><br><span class="line">    inline namespace inl &#123; // scope of inl begins</span><br><span class="line">        int y; // scope of y begins</span><br><span class="line">    &#125; // scope of y continues (member of inline namespace)</span><br><span class="line">&#125; // scopes of i, g, j, q, inl, x, and y pause</span><br><span class="line"> </span><br><span class="line">namespace &#123;</span><br><span class="line">    int l = 1; // scope of l begins</span><br><span class="line">&#125; // scope of l continues (member of unnamed namespace)</span><br><span class="line"> </span><br><span class="line">namespace N &#123; // scopes of i, g, j, q, inl, x, and y resume</span><br><span class="line">    int g(char a) &#123; // overloads N::g(int)</span><br><span class="line">        return l + a; // l from unnamed namespace is in scope</span><br><span class="line">    &#125;</span><br><span class="line">//  int i; // error: duplicate definition (i is already in scope)</span><br><span class="line">    int j(); // OK: duplicate function declaration is allowed</span><br><span class="line">    int j() &#123; // OK: definition of the earlier-declared N::j()</span><br><span class="line">        return g(i); // calls N::g(int)</span><br><span class="line">    &#125;</span><br><span class="line">//  int q(); // error: q is already in scope with a different return type</span><br><span class="line">&#125; // scopes of i, g, j, q, inl, x, and y pause</span><br><span class="line"> </span><br><span class="line">int main() &#123;</span><br><span class="line">    using namespace N; // scopes of i, g, j, q, inl, x, and y resume</span><br><span class="line">    i = 1; // N::i is in scope</span><br><span class="line">    x = 1; // N::(anonymous)::x is in scope</span><br><span class="line">    y = 1; // N::inl::y is in scope</span><br><span class="line">    inl::y = 2; // N::inl is also in scope</span><br><span class="line">&#125; // scopes of i, g, j, q, inl, x, and y end</span><br></pre></td></tr></table></figure>
+
+<h2 id="Class-scope"><a href="#Class-scope" class="headerlink" title="Class scope"></a>Class scope</h2><p>声明一个类名称开始,包括其他类,所有的派生类,函数体(即使定义在类定义或声明前的名字),默认参数的函数,函数异常规格(异常规格被用于指出一个函数能抛出什么样的异常。),类内的括号或相等的初始化式，以及嵌套类中的所有这些东西，都是递归的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct X &#123;</span><br><span class="line">    int f(int a = n) &#123; // n is in scope in function default argument</span><br><span class="line">         return a * n;  // n is in scope in function body</span><br><span class="line">    &#125;</span><br><span class="line">    using r = int;</span><br><span class="line">    r g();</span><br><span class="line">    int i = n * 2; // n is in scope in initializer</span><br><span class="line">//int x[n]; // error: n is not in scope in class body</span><br><span class="line">    static const int n = 1; // scope of n begins</span><br><span class="line">    int x[n]; // OK: n is now in scope in class body</span><br><span class="line">&#125;; // scope of n pauses</span><br><span class="line"> </span><br><span class="line">struct Y: X &#123; // scope of n resumes</span><br><span class="line">     int y[n]; // n is in scope</span><br><span class="line">&#125;; // scope of n ends</span><br><span class="line"> </span><br><span class="line">//r X::g() &#123;// error: r is not in scope outside</span><br><span class="line">// out-of-class function body</span><br><span class="line">auto X::g()-&gt;r &#123; // OK: trailing return type r is in scope</span><br><span class="line">     return n;// n is in scope in out-of-class function body</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Enumeration-scope"><a href="#Enumeration-scope" class="headerlink" title="Enumeration scope"></a>Enumeration scope</h2><p>未作用域枚举的枚举数的潜在作用域从声明点开始，并在封闭作用域的末尾结束。<br>有作用域的枚举的枚举数的潜在作用域从声明点开始，到枚举说明符的末尾结束。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">enum e1_t &#123; // unscoped enumeration</span><br><span class="line">    A,</span><br><span class="line">    B = A * 2 // A is in scope</span><br><span class="line">&#125;; // scopes of A and B continue</span><br><span class="line"> </span><br><span class="line">enum class e2_t &#123; // scoped enumeration</span><br><span class="line">    SA,</span><br><span class="line">    SB = SA * 2 // SA is in scope</span><br><span class="line">&#125;; // scopes of SA and SB end</span><br><span class="line"> </span><br><span class="line">e1_t e1 = B; // OK: B is in scope</span><br><span class="line">//e2_t e2 = SB; // error: SB is not in scope</span><br><span class="line">e2_t e2 = e2_t::SB; // OK</span><br></pre></td></tr></table></figure>
+<h2 id="Template-parameter-scope"><a href="#Template-parameter-scope" class="headerlink" title="Template parameter scope"></a>Template parameter scope</h2><p>模板形参名的潜在作用域从声明点开始，在引入它的最小模板声明的末尾结束。特别是，模板形参可以用于后续模板形参的声明和基类的规范中，但不能用于前面模板形参的声明中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">template&lt;</span><br><span class="line">    typename T, // scope of T begins</span><br><span class="line">    T* p,       // T is in scope</span><br><span class="line">    class U = T // T is in scope</span><br><span class="line">&gt;</span><br><span class="line">class X: public std::vector&lt;T&gt; // T is in scope</span><br><span class="line">&#123;</span><br><span class="line">    T f(); // T is in scope</span><br><span class="line">&#125;; // scopes of T and U end</span><br></pre></td></tr></table></figure>
+<p>模板模板形参的形参名称的潜在作用域是该名称出现在其中的最小模板形参列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">template&lt;</span><br><span class="line">    template&lt; // template template parameter</span><br><span class="line">        typename Y,    // scope of Y begins</span><br><span class="line">        typename G = Y // Y is in scope</span><br><span class="line">    &gt; // scopes of Y and G end</span><br><span class="line">    class T,</span><br><span class="line">//  typename U = Y // error: Y is not in scope</span><br><span class="line">    typename U</span><br><span class="line">&gt;</span><br><span class="line">class X &#123;</span><br><span class="line">&#125;; // scopes of T and U end</span><br></pre></td></tr></table></figure>
+<p>与其他嵌套作用域类似，模板形参的名称在其自身存在期间将该名称隐藏在封闭作用域之外。typedef int N;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">template&lt;</span><br><span class="line">    N X, // ::N is in scope</span><br><span class="line">    typename N, // scope of N begins, scope of ::N pauses</span><br><span class="line">    template&lt;N Y&gt; class T // N is in scope</span><br><span class="line">&gt;</span><br><span class="line">struct A; // scope of N ends, scope of ::N resumes</span><br></pre></td></tr></table></figure>
+
+<h2 id="Point-of-declaration"><a href="#Point-of-declaration" class="headerlink" title="Point of declaration"></a>Point of declaration</h2><p>一般来说，名称在其第一次声明的所在地之后可见，其位置如下。<br>在简单声明中声明的名称的轨迹紧跟在该名称的声明符之后，如果有的话，则在其初始化式之前。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">unsigned char x = 32; // outer x is in scope</span><br><span class="line">&#123;</span><br><span class="line">    unsigned char x = x; // inner x is in scope before the initializer (= x)</span><br><span class="line">                        // this does not initialize inner x with the value of outer x,</span><br><span class="line">                       // this initializes inner x with its own,indeterminate, value</span><br><span class="line">&#125;</span><br><span class="line">std::function&lt;int(int)&gt; f = [&amp;](int n)&#123; return n &gt; 1 ? n * f(n - 1) : n; &#125;;</span><br><span class="line">// the name of the function f is in scope in the lambda and can</span><br><span class="line">// be correctly captured by reference, giving a recursive function</span><br><span class="line"></span><br><span class="line">const int x = 2; // outer x is in scope</span><br><span class="line">&#123;</span><br><span class="line">    int x[x] = &#123;&#125;; // inner x is in scope before the initializer (= &#123;&#125;),</span><br><span class="line">                   // but after the declarator (x[x])</span><br><span class="line">                   // in the declarator, outer x is still in scope</span><br><span class="line">                   // this declares an array of 2 int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类或类模板声明的轨迹紧跟在类头中命名类的标识符(或命名模板特化的模板id)之后。类或类模板名已经在基类列表的作用域中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">struct S: std::enable_shared_from_this&lt;S&gt; // S is in scope at the colon</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>枚举说明符或不透明枚举声明的位置紧跟在命名枚举的标识符之后。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum E: int &#123; // E is in scope at the colon</span><br><span class="line">        A = sizeof(E)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="存储期-Storage-duration"><a href="#存储期-Storage-duration" class="headerlink" title="存储期(Storage duration)"></a>存储期(Storage duration)</h2><p>程序中的所有对象都具有下列存储期之一（存储期指的是对象的存储空间何时分配和销毁）：</p>
+<ul>
+<li>自动（automatic）存储期。这类对象的存储在代码块（block）开始时分配，并在结束时释放。未声明为 static、extern 或 thread_local 的所有局部对象均拥有此存储期。 </li>
+<li>静态（static）存储期。这类对象的存储在程序开始时分配，并在程序结束时释放。这类对象只存在一个实例。所有声明于命名空间（包含全局命名空间）作用域的对象，加上声明带有 static 或 extern 的对象均拥有此存储期。 </li>
+<li>线程（thread）存储期。这类对象的存储在线程开始时分配，并在线程结束时释放。每个线程拥有其自身的对象实例。只有声明为 thread_local 的对象拥有此存储期。 thread_local 能与 static 或 extern 一同出现，它们用于调整链接。<ul>
+<li>只能对具有静态存储时间的数据项指定thread_local。这包括全局数据对象(静态和extern)、局部静态对象和类的静态数据成员。如果没有提供其他存储类，则任何声明为thread_local的局部变量都是隐式静态的;换句话说，在块作用域中，thread_local等价于thread_local static。</li>
+</ul>
+</li>
+<li>动态（dynamic）存储期。这类对象的存储是通过使用动态内存分配函数来按请求进行分配和释放。</li>
+</ul>
+<h2 id="生命期（Lifetime）"><a href="#生命期（Lifetime）" class="headerlink" title="生命期（Lifetime）"></a>生命期（Lifetime）</h2><ul>
+<li>每个对象和引用都有一个生命期。</li>
+<li>对象的生命期开始：空间分配完成并且初始化完成；</li>
+<li>对象的生命期结束：对于非类对象，空间被回收；对于类对象析构函数被调用或者空间被回收。</li>
+<li>引用的生命期开始于初始化完成，结束同标量对象。</li>
+<li>被引用对象的生命期的结束可能早于引用的生命期。这会形成悬挂引用（ dangling references）</li>
+<li>对象的生命期等于或者嵌套在它的存储期中. <h2 id="翻译单元和链接"><a href="#翻译单元和链接" class="headerlink" title="翻译单元和链接"></a>翻译单元和链接</h2>在C++程序中，一个符号，例如一个变量或函数名，可以在其范围内声明任意次数。但是它只能定义一次。声明向程序中引入（或重新引入）名称，以及足够的信息以便以后将名称与定义相关联。定义引入名称并提供创建它所需的所有信息。如果名称表示变量，则定义会显式创建存储并对其进行初始化。函数定义由签名和函数体组成。类定义由类名后跟列出所有类成员的块组成。（可以选择在另一个文件中单独定义成员函数体。）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">以下示例显示了一些声明：</span><br><span class="line">int i;</span><br><span class="line">int f(int x);</span><br><span class="line">class C;</span><br><span class="line"></span><br><span class="line">以下示例显示了一些定义：</span><br><span class="line">int i&#123;42&#125;;</span><br><span class="line">int f(int x)&#123; return x * i; &#125;</span><br><span class="line">class Dog &#123;</span><br><span class="line">public:</span><br><span class="line">void  do()&#123;&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+&#x3D;&#x3D;程序由一个或多个翻译单元链接后形成。翻译单元由一个实现文件和它直接或间接包含的所有头文件组成。每个翻译单元由编译器独立编译。编译完成后，链接器将编译的翻译单元合并到单个程序中，链接器需要为每个名字找到有且仅且一个定义。&#x3D;&#x3D;</li>
+</ul>
+<h3 id="链接定义"><a href="#链接定义" class="headerlink" title="链接定义"></a>链接定义</h3><p>一个名称被称为具有链接是指它表示的实体（对象、引用、函数、模板, 类型、命名空间或值）可以在其它范围（scope）通过申明的方式被引入。</p>
+<ul>
+<li>当名称具有外部链接时，它所表示的实体可以被其它翻译单元的范围或本翻译单元的其它范围引用。</li>
+<li>当名称具有内部链接时，它所表示的实体只能在本翻译单元的其它范围内被引用。</li>
+<li>当一个名称具有模块链接时，它所表示的实体可以在相同模块单元的其它范围或者同一模块的其它模块单元的范围内被引用。</li>
+<li>当一个名称没有链接时，它所表示的实体不能在其他范围内被引用。</li>
+</ul>
+<h3 id="链接举例"><a href="#链接举例" class="headerlink" title="链接举例"></a>链接举例</h3><h4 id="内部链接"><a href="#内部链接" class="headerlink" title="内部链接"></a>内部链接</h4><p>下列具有命名空间范围的名称具有内部链接：</p>
+<ul>
+<li>显式声明为静态的变量、变量模板（指实例化后定义的变量）、函数或函数模板（指实例化后定义的函数）.</li>
+<li>匿名枚举的数据成员</li>
+<li>除了下列情况的non-volatile的const非模板变量<ul>
+<li>显示申明为extern</li>
+<li>inline or exported</li>
+<li>先前申明过，并且先前的声明为非内部链接</li>
+</ul>
+</li>
+</ul>
+<p>(以上为标准中的定义，很难理解，个人觉得常用的如下：const 变量为内部链接， extern const变量为外部链接）<br>另外在未命名命名空间或未命名命名空间内的命名空间中声明的所有名称，即使是显式声明为extern的名称，都具有内部链接。</p>
+<p>备注：内部链接的变量和函数在每个翻译单元中都存在一个实例。</p>
+<p>未命名名字空间为内部链接举例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//a.cpp</span><br><span class="line">namespace &#123; namespace na &#123;</span><br><span class="line">int g_b = 0;</span><br><span class="line">extern int g_a = 3;</span><br><span class="line">&#125; // namespace na</span><br><span class="line">&#125; // namespace ::na</span><br><span class="line"></span><br><span class="line">TEST(linkage, a_1) &#123;</span><br><span class="line">    cout &lt;&lt; na::g_a;  //ok</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b.cpp</span><br><span class="line">namespace &#123; namespace na &#123;</span><br><span class="line">extern int g_a;</span><br><span class="line">TEST(linkage, b_1) &#123;</span><br><span class="line">    cout &lt;&lt; g_a &lt;&lt; endl; // cant find definition</span><br><span class="line">&#125;</span><br><span class="line">&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="外部链接"><a href="#外部链接" class="headerlink" title="外部链接"></a>外部链接</h4><p>声明于命名空间作用域的下列任何名字均具有外部链接，除非这些名字在无名命名空间内声明或它们声明于具名模块且未被导出 (C++20 起)： </p>
+<ul>
+<li>未声明为 static 的函数、命名空间作用域内未声明为 static 的非 const 变量，和所有声明为 extern 的变量； </li>
+<li><del>枚举； 类,</del>（c++标准说这样的枚举和类具有外部链接，个人目前无法理解）</li>
+<li>类成员函数、静态数据成员（不论是否 const），及首次以类体内的 friend 声明引入的函数的名字； </li>
+<li>未声明为 static 的函数模板。 </li>
+<li>任何首次声明于块作用域的下列名称拥有外部链接： <ul>
+<li>声明为 extern 的变量名； </li>
+<li>函数名。<br>备注：个人认为枚举为常量不存在是否需要链接。类（除静态数据成员和成员函数）也只是编译时的概念，和链接无关。<br>下面例子演示了类和枚举在多个编译单元定义的情况：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">//a.cpp</span><br><span class="line">enum class CarModel &#123; X = 1 &#125;;</span><br><span class="line">enum DogType &#123; DT_LA = 1 &#125;;</span><br><span class="line"></span><br><span class="line">class SS &#123;</span><br><span class="line">public:</span><br><span class="line">    void p() &#123;</span><br><span class="line">        cout &lt;&lt; &quot;a&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TEST(linkage, a_6) &#123;</span><br><span class="line">    SS s;</span><br><span class="line">    s.p();</span><br><span class="line">    cout &lt;&lt; (int)CarModel::X &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; DT_LA &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//b.cpp</span><br><span class="line">enum class CarModel &#123; X = 2 &#125;;</span><br><span class="line">enum  DogType &#123; DT_LA = 2 &#125;;</span><br><span class="line"></span><br><span class="line">class SS &#123;</span><br><span class="line">public:</span><br><span class="line">    void p() &#123;</span><br><span class="line">        cout &lt;&lt; &quot;b&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TEST(linkage, b_6) &#123;</span><br><span class="line">    SS s;</span><br><span class="line">    s.p();</span><br><span class="line">    cout &lt;&lt; (int)CarModel::X &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; DT_LA &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST(linkage, b2_6) &#123;</span><br><span class="line">    class SS &#123;</span><br><span class="line">    public:</span><br><span class="line">        void p() &#123;</span><br><span class="line">            cout &lt;&lt; &quot;b&quot; &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    SS s;</span><br><span class="line">    s.p();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="无链接"><a href="#无链接" class="headerlink" title="无链接"></a>无链接</h3><p>声明于块作用域的下列任何名字均无链接： </p>
+<ul>
+<li>未显式声明为 extern 的变量（不管有没有 static 修饰符）； </li>
+<li>局部类及其成员函数； </li>
+<li>声明于块作用域的其他名字，例如 typedef、枚举及枚举项。</li>
+</ul>
+<h2 id="Inline"><a href="#Inline" class="headerlink" title="Inline"></a>Inline</h2><p>C++中的inline是个容易被误解的关键字，即使是专家也常会犯错。<br>不信 请打开《Thinking in C++ 2rd Edition Volumn 1》，找到Chapter 9 “Inline Function”的Exercise 6： “Prove that inline functions default to internal linkage.”为什么我说这里作者犯错了呢？<br>因为C++ 标准中明确写到：“The inline keyword has no effect on the linkage of a function.“看标准明确表示inline关键字不对函数的linkage产生影响，作者却要读者试图证明inline function默认为internal linkage！</p>
+<p>inline 与函数的linkage无关。inline函数同样可以用static和extern修饰，并具备同一般函数相同的linkage。标准要求 external linkage的inline函数在所有编译单元中具有相同的地址。external linkage的inline函数内定义的静态变量同样应在所有编译单元中表现为单一对象，具有相同的地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">// linkage.h</span><br><span class="line">#pragma once</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">//extern linkage</span><br><span class="line">inline int eif() &#123;</span><br><span class="line">    static int n = 0;</span><br><span class="line">    return ++n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// internal linkage</span><br><span class="line">static inline int iif() &#123;</span><br><span class="line">    static int n = 0;</span><br><span class="line">    return ++n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// internal linkage no-inline</span><br><span class="line">static int nf() &#123;</span><br><span class="line">    static int n = 0;</span><br><span class="line">    return ++n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline int g_ei = 0; //extern linkage</span><br><span class="line">inline static int g_ii = 0; // internal linkage</span><br><span class="line"></span><br><span class="line">// a.cpp</span><br><span class="line">#include &quot;linkage.h&quot;</span><br><span class="line">TEST(linkage, a_5) &#123;</span><br><span class="line">    cout &lt;&lt; &amp;eif &lt;&lt; &quot; &quot; &lt;&lt; eif() &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &amp;iif &lt;&lt; &quot; &quot; &lt;&lt; iif() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &amp;nf &lt;&lt; &quot; &quot; &lt;&lt; nf() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &amp;g_ei &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &amp;g_ii &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// b.cpp</span><br><span class="line">#include &quot;linkage.h&quot;</span><br><span class="line">TEST(linkage, b_5) &#123;</span><br><span class="line">    cout &lt;&lt; &amp;eif &lt;&lt; &quot; &quot; &lt;&lt; eif() &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &amp;iif &lt;&lt; &quot; &quot; &lt;&lt; iif() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &amp;nf &lt;&lt; &quot; &quot; &lt;&lt; nf() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &amp;g_ei &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &amp;g_ii &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&#x3D;&#x3D;只应该在头文件中定义inline函数和inline变量&#x3D;&#x3D;</p>
+<p>别在多个cpp中定义具有外部链接的相同类型的inline函数或变量。虽然可以编译通过，但是运行结果可能不是你想要的。请看下面例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// a.cpp</span><br><span class="line">inline void ig() &#123;</span><br><span class="line">    static int i = 0;</span><br><span class="line">    cout &lt;&lt; &quot;ig in a &quot; &lt;&lt; ++i &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">inline int g_ia = 3;</span><br><span class="line">TEST(linkage, a_4) &#123;</span><br><span class="line">cout &lt;&lt; &amp;ig &lt;&lt; endl;</span><br><span class="line">ig();</span><br><span class="line">cout &lt;&lt; &amp;g_ia &lt;&lt; &quot; &quot; &lt;&lt; g_ia &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//b.cpp</span><br><span class="line">inline void ig() &#123;</span><br><span class="line">    static int i = 0;</span><br><span class="line">    cout &lt;&lt; &quot;ig in b &quot; &lt;&lt; ++i &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">inline int g_ia = 4;</span><br><span class="line"></span><br><span class="line">TEST(linkage, b_4) &#123;</span><br><span class="line">    cout &lt;&lt; &amp;ig &lt;&lt; endl;</span><br><span class="line">ig();</span><br><span class="line">cout &lt;&lt; &amp;g_ia &lt;&lt; &quot; &quot; &lt;&lt; g_ia &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c-base/" rel="tag"># c++ base</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/07/12-%E4%BC%A0%E8%BE%93%E5%B1%82/" rel="prev" title="传输层">
+      <i class="fa fa-chevron-left"></i> 传输层
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/07/13-%E5%A0%86%E7%A0%B4%E5%9D%8F/" rel="next" title="c++ 堆破坏">
+      c++ 堆破坏 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E5%AE%9E%E4%BD%93%E4%B8%8D%E6%98%AF%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">以下实体不是对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Alignment"><span class="nav-number">2.</span> <span class="nav-text">Alignment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%9D%99%E6%80%81%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E4%B8%8D%E6%98%AF%E5%8F%98%E9%87%8F-is-data-member"><span class="nav-number">3.1.</span> <span class="nav-text">非静态数据成员不是变量  is data member</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-number">4.</span> <span class="nav-text">范围</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E8%8C%83%E5%9B%B4"><span class="nav-number">4.1.</span> <span class="nav-text">块范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-parameter-scope"><span class="nav-number">5.</span> <span class="nav-text">Function parameter scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Namespace-scope"><span class="nav-number">6.</span> <span class="nav-text">Namespace scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-scope"><span class="nav-number">7.</span> <span class="nav-text">Class scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeration-scope"><span class="nav-number">8.</span> <span class="nav-text">Enumeration scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Template-parameter-scope"><span class="nav-number">9.</span> <span class="nav-text">Template parameter scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Point-of-declaration"><span class="nav-number">10.</span> <span class="nav-text">Point of declaration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E6%9C%9F-Storage-duration"><span class="nav-number">11.</span> <span class="nav-text">存储期(Storage duration)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E6%9C%9F%EF%BC%88Lifetime%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">生命期（Lifetime）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BF%BB%E8%AF%91%E5%8D%95%E5%85%83%E5%92%8C%E9%93%BE%E6%8E%A5"><span class="nav-number">13.</span> <span class="nav-text">翻译单元和链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%AE%9A%E4%B9%89"><span class="nav-number">13.1.</span> <span class="nav-text">链接定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E4%B8%BE%E4%BE%8B"><span class="nav-number">13.2.</span> <span class="nav-text">链接举例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E9%93%BE%E6%8E%A5"><span class="nav-number">13.2.1.</span> <span class="nav-text">内部链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E9%93%BE%E6%8E%A5"><span class="nav-number">13.2.2.</span> <span class="nav-text">外部链接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E9%93%BE%E6%8E%A5"><span class="nav-number">13.3.</span> <span class="nav-text">无链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inline"><span class="nav-number">14.</span> <span class="nav-text">Inline</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

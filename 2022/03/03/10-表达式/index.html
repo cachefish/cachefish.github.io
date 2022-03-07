@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="表达式（Expressions）表达式定义表达式（expression）是C++语言的基石，是C++表达计算的主要机制。表达式的求值可以产生一个值（比如 2+2 的求值产生值 4），也可能产生副作用（比如对 std::printf(“%d”,4) 的求值在标准输出上打印字符 ‘4’）。 定义：1.表达式是由运算符和它们的操作数的构成的序列，它指定一项计算。2.任何运算符的操作数都可以是其他的表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++ 表达式">
+<meta property="og:url" content="https://cachefish.github.io/2022/03/03/10-%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="表达式（Expressions）表达式定义表达式（expression）是C++语言的基石，是C++表达计算的主要机制。表达式的求值可以产生一个值（比如 2+2 的求值产生值 4），也可能产生副作用（比如对 std::printf(“%d”,4) 的求值在标准输出上打印字符 ‘4’）。 定义：1.表达式是由运算符和它们的操作数的构成的序列，它指定一项计算。2.任何运算符的操作数都可以是其他的表达式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-03T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-07T02:10:36.269Z">
+<meta property="article:tag" content="c++ base">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/03/03/10-%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>c++ 表达式 | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/03/10-%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          c++ 表达式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-03 19:30:00" itemprop="dateCreated datePublished" datetime="2022-03-03T19:30:00+08:00">2022-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-07 10:10:36" itemprop="dateModified" datetime="2022-03-07T10:10:36+08:00">2022-03-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-base/" itemprop="url" rel="index"><span itemprop="name">c++ base</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="表达式（Expressions）"><a href="#表达式（Expressions）" class="headerlink" title="表达式（Expressions）"></a>表达式（Expressions）</h2><p>表达式定义<br>表达式（expression）是C++语言的基石，是C++表达计算的主要机制。表达式的求值可以产生一个值（比如 2+2 的求值产生值 4），也可能产生副作用（比如对 std::printf(“%d”,4) 的求值在标准输出上打印字符 ‘4’）。</p>
+<h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>1.表达式是由运算符和它们的操作数的构成的序列，它指定一项计算。<br>2.任何运算符的操作数都可以是其他的表达式或初等表达式。（例如，1+2<em>3 中 operator+ 的操作数是子表达式 2</em>3 和初等表达式 1）。 </p>
+<p>初等表达式<br>初等表达式包括以下各项： </p>
+<ul>
+<li>字面量（例如 2 或 “Hello, world”） </li>
+<li>标识表达式，包括 <ul>
+<li>经过适当声明的无限定的标识符（例如 n 或 cout），以及 </li>
+<li>经过适当声明的有限定的标识符（例如 std::string::npos）</li>
+</ul>
+</li>
+<li>lambda 表达式 (C++11) </li>
+<li>折叠表达式 (C++17) </li>
+<li>requires 表达式 (C++20)<br>括号中的任何表达式也被归类为初等表达式：这确保了括号具有比任何运算符更高的优先级。括号保持值、类型和值类别不变。</li>
+</ul>
+<p>标识符表达式可以出现在 . 和 -&gt;运算符后面。</p>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li>static_cast转换—个类型为另—相关类型</li>
+<li>dynamic_cast在继承层级中转换</li>
+<li>const_cast 添加或移除cv限定符</li>
+<li>reinterpret_cast转换类型到无关类型</li>
+<li>C风格转型以static_cast , const_cast 及 reinterpret_cast的混合转换一个类型到另一类型new创建有动态存f储其期的对象</li>
+<li>delete销毁先前由new表达式创建的对象，并释放其所拥有的内存区域sizeof查询类型的大小</li>
+<li>sizeof. ..查询形参包的大小C++11起)typeid查询类型的类型信息</li>
+<li>noexcept查询表达式是否能抛出异常(C++11起)alignof查询类型的对齐要求(C++11起)</li>
+</ul>
+<h2 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h2><p>字面量是 C++ 程序中用以直接写在源代码中的常量值。 </p>
+<ul>
+<li>整数字面量是整数类型的十进制、八进制、十六进制或二进制 (C++14 起)的数值 </li>
+<li>字符字面量是有下列类型之一的单个字符： </li>
+<li>char 或 wchar_t </li>
+<li>char16_t 或 char32_t (C++11 起) </li>
+<li>char8_t (C++20 起) </li>
+<li>浮点字面量是float、double 或 long double 类型的值 </li>
+<li>字符串字面量是有下列类型之一的字符序列： </li>
+<li>const char[] 或 const wchar_t[] </li>
+<li>const char16_t[] 或 const char32_t[]  </li>
+<li>const char8_t[] (C++20 起) </li>
+<li>布尔字面量是 bool 类型的值，即 true 和 false </li>
+<li>nullptr 是指针字面量，指定一个空指针值 。</li>
+<li>用户定义字面量是用户指定的类型的常量值 。operator “”<br>备注：<ul>
+<li>对于字符串一般存储在只读数据段，然后通过地址引用。（lvalue）</li>
+<li>其它字面量被直接编码成汇编指令的常量，所以在代码段。(prvalue)</li>
+</ul>
+</li>
+</ul>
+<h3 id="不求值表达式"><a href="#不求值表达式" class="headerlink" title="不求值表达式"></a>不求值表达式</h3><p>运算符 typeid、sizeof、noexcept 和 decltype 的操作数是不求值表达式（除非运算符为 typeid 而操作数是多态泛左值），因为这些运算符仅查询其操作数的编译期性质。因此，std::size_t n &#x3D; sizeof(std::cout &lt;&lt; 42); 不进行控制台输出。<br>当typeid操作数是polymorphic glvalues，该表达式需要求值。 </p>
+<h3 id="弃值表达式"><a href="#弃值表达式" class="headerlink" title="弃值表达式"></a>弃值表达式</h3><p>弃值表达式是仅用来实施其副作用的表达式。&#x3D;&#x3D;从这种表达式计算的值被舍弃。&#x3D;&#x3D;这样的表达式包括任何表达式语句的完整表达式，内建逗号运算符的左边的操作数。</p>
+<h3 id="值类别"><a href="#值类别" class="headerlink" title="值类别"></a>值类别</h3><p>每一个表达式都有一个类型（type）,该类型描述了表达式求值得到的结果的静态类型。表达式：7，拥有类型: int。表达式：5+2，它的类型也是 int。如果一个变量 x 的类型为int，那么表达式：x 的类型也是int。</p>
+<p>每一个表达式还拥有一个值类别（value category）,值类别描述了表达式的值是如何形成的，同时也影响表达式的行为。尽管值类别称呼上有个值，但是这个术语用来分类表达式，而不是值。（Despite their names, these terms classify expressions, not values）。</p>
+<hr>
+<ol>
+<li>● 泛左值 (glvalue)（“泛化 (generalized)”的左值）：表达式的求值确定一个对象、位域或函数的身份。（这样的实体拥有存储空间）； </li>
+<li>● 纯右值 (prvalue)（“纯 (pure)”的右值）：根据表达式所处于的上下文，其求值是用来初始化一个对象或者位域，或者用来计算一个内置操作符的操作数的值；或者这个表达式是void类型。</li>
+<li>● 亡值 (xvalue)（“将亡 (expiring)”的值）：是一个代表其资源能够被重新使用的对象或位域的泛左值； (通常因为它处于生命期的终结)</li>
+<li>● 左值 (lvalue)：是非亡值的泛左值。（如此称呼的历史原因是，左值可以出现于赋值表达式的左边）； </li>
+<li>● 右值 (rvalue)：是纯右值或者亡值。（如此称呼的历史原因是，右值可以出现于赋值表达式的右边）。</li>
+</ol>
+<p>备注：C++中初始化和赋值是两个独立的概念。初始化的一些场景：1.初始化函数参数；2.初始化函数返回值；3.在声明符后跟一个初始化器。见上面的定义prvalue的一个作用就是用作初始化。</p>
+<p>lvalue, xvalue和prvalue是基本值类别，每个表达式只能属于其中一个类别。内置运算对其操作数的值类别和其生成值的值类别都有规定，比如内置的赋值运算符期待左边的操作数为lvalue,右边的操作数为prvalue，并且生成一个lvalue作为其结果。重载的操作符相当于函数调用，其期待的操作数的值类别 和结果的值类别有它们的参数和返回类型决定。</p>
+<h3 id="表达式的结果（result）"><a href="#表达式的结果（result）" class="headerlink" title="表达式的结果（result）"></a>表达式的结果（result）</h3><ul>
+<li>glvalue的结果是这个表达式表示的实体(对象、位域或函数)。</li>
+<li>prvalue的结果是表达式存储在它上下文中的值；类型为void的prvalue没有结果。</li>
+</ul>
+<h4 id="prvalue的结果对象（result-object）："><a href="#prvalue的结果对象（result-object）：" class="headerlink" title="prvalue的结果对象（result object）："></a>prvalue的结果对象（result object）：</h4><ul>
+<li>prvalue的结果对象是被prvalue初始化的对象。</li>
+<li>用来计算内置运算符的操作数的值的prvalue没有结果对象，void类型的prvalue也没有结果对象。</li>
+<li>类和数组类型的prvalue总是有一个结果对象，除非它作为decltype的操作数。</li>
+<li>对于非void类型的prvalue弃值表达式，一个被物化的零时对象做为它的结果对象。</li>
+</ul>
+<h4 id="典型值类型举例"><a href="#典型值类型举例" class="headerlink" title="典型值类型举例"></a>典型值类型举例</h4><h5 id="左值表达式："><a href="#左值表达式：" class="headerlink" title="左值表达式："></a>左值表达式：</h5><ol>
+<li>关联一个变量或一个函数的表达式。即使变量的类型是右值引用，由其名字构成的表达式仍是左值表达式；例如int&amp;&amp; a,  当a作为表达式时为lvalue； void(f)(), 当f作为表达式时也是lvalue;</li>
+<li>返回类型为左值引用的函数调用或重载运算符表达式，例如 std::getline(std::cin, str)、std::cout &lt;&lt; 1、str1 &#x3D; str2 或 ++it；</li>
+<li>内建的间接寻址表达式，例如*p；  </li>
+<li>a &#x3D; b，a +&#x3D; b，a %&#x3D; b，以及所有其他内建的赋值及复合赋值表达式； </li>
+<li>++a 和 –a，内建的前置自增与前置自减表达式；</li>
+<li>数组下标表达式，数组为lvaue时. </li>
+<li>逗号表达式，第二个操作数为lvalue； </li>
+<li>三元条件表达式 ，返回操作数为lvalue. 例如 a ? b:c</li>
+<li>字符串字面量，例如 “Hello, world!”；但它不可修改 。</li>
+<li>返回函数右值引用的函数调用表达式或重载的运算符表达式</li>
+</ol>
+<h5 id="纯右值表达式："><a href="#纯右值表达式：" class="headerlink" title="纯右值表达式："></a>纯右值表达式：</h5><ol>
+<li>包含字面量的表达式。这个字面量，不是字符串字面值，也不是用户自定义的字面值。 </li>
+<li>调用一个函数的表达式.这个函数返回的是值类型或void，不是引用类型.</li>
+<li>用一元运算符 &amp; 的表达式（获得内存地址）</li>
+<li>内置的算术运算符表达式;例如：a + b, a % b, a &amp; b, a &lt;&lt; b,</li>
+<li>内置后加，后减表达式;例如：a++ and a—</li>
+<li>内置的逻辑表达式;例如： a &amp;&amp; b, a || b, !a</li>
+<li>内置的比较表达式：例如：a &lt; b, a &#x3D;&#x3D; b, a &gt;&#x3D; b</li>
+<li>逗号表达式，第二个操作数为pralue</li>
+<li>三元条件表达式，返回操作数为prvalue. 例如 a ? b:c</li>
+<li>this 指针</li>
+<li>枚举值</li>
+<li>lambda表达式 <h5 id="亡值表达式："><a href="#亡值表达式：" class="headerlink" title="亡值表达式："></a>亡值表达式：</h5></li>
+<li>返回类型为对象的右值引用的函数调。</li>
+<li>向对象的右值引用的类型转化。例如 std::move(x)； </li>
+<li>数组下标表达式，数组为xvalue。例如a[1]； </li>
+<li>对象成员表达式，对象是xvalue类类型的对象，该成员是非静态的非引用数据成员。例如a.m;</li>
+<li>对象成员指针表达式，对象是xvalue类类型的对象，指针为数据成员指针。例如a.*m;</li>
+<li>临时量物化后，指代该临时对象的表达式。<br>例子：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct A &#123;</span><br><span class="line">   int m;</span><br><span class="line"> &#125;;</span><br><span class="line">A&amp;&amp; operator+(A, A);</span><br><span class="line">A&amp;&amp; f()；</span><br><span class="line">A a;</span><br><span class="line">A&amp;&amp; ar = static_cast&lt;A&amp;&amp;&gt;(a);</span><br><span class="line">the expressions f(), f().m, static_cast&lt;A&amp;&amp;&gt;(a), and a + a are xvalues. The expression ar is an lvalue.</span><br></pre></td></tr></table></figure>
+<h3 id="临时量物化（temporary-materialization）"><a href="#临时量物化（temporary-materialization）" class="headerlink" title="临时量物化（temporary materialization）"></a>临时量物化（temporary materialization）</h3>当pvalue作为一个操作符的操作数，并且这个操作数期待一个glvaue，这个pvalue被临时量物化转化为xvalue.<br>类型为T的prvalue转为为类型为T的xvalue，此转换以该纯右值初始化一个 T 类型的临时对象（以临时对象作为求值该纯右值的结果对象），并产生一个亡值代表（denoting)该临时对象。 T必须是完全类型。若T是类类型或类类型的数组，则它必须有可访问且未被删除的析构函数</li>
+</ol>
+<p>当pvalue作为一个操作符的操作数，并且这个操作数期待一个glvaue，这个pvalue被临时量物化转化为xvalue.<br>类型为T的prvalue转为为类型为T的xvalue，此转换以该纯右值初始化一个 T 类型的临时对象（以临时对象作为求值该纯右值的结果对象），并产生一个亡值代表（denoting)该临时对象。 T必须是完全类型。若T是类类型或类类型的数组，则它必须有可访问且未被删除的析构函数 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">struct S &#123; int m; &#125;;</span><br><span class="line">int k = S().m; // C++17 起成员访问期待泛左值；S() 纯右值被转换为亡值。</span><br></pre></td></tr></table></figure>
+<p>例如临时量物化在下例情况下发生： </p>
+<ol>
+<li>引用绑定到prvalue时； </li>
+<li>在类prvalue上进行成员访问时； </li>
+<li>数组prvalue转换为指针;</li>
+<li>数组prvalue使用下标表达式时； </li>
+<li>prvalue作为弃值表达式时；</li>
+</ol>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>&#x3D;&#x3D;prvalue表示一个纯的值，没有存储空间;  glvalue有存储空间且有值，因为有空间所以有身份。&#x3D;&#x3D;</p>
+<h3 id="各种值类别的特性："><a href="#各种值类别的特性：" class="headerlink" title="各种值类别的特性："></a>各种值类别的特性：</h3><h4 id="泛左值"><a href="#泛左值" class="headerlink" title="泛左值"></a>泛左值</h4><p>glvalue可以通过lvalue-to-rvalue, array-to-pointer,或function-to-pointer隐式转换为prvalue，</p>
+<h4 id="Lvalue-to-rvalue-conversion"><a href="#Lvalue-to-rvalue-conversion" class="headerlink" title="Lvalue to rvalue conversion"></a>Lvalue to rvalue conversion</h4><p>任何非函数、非数组类型T的glvalue都可以隐式转换为相同类型的prvalue<br>这种转换模拟了将一个值从内存位置读入CPU寄存器的过程</p>
+<h4 id="Array-to-pointer-conversion"><a href="#Array-to-pointer-conversion" class="headerlink" title="Array to pointer conversion"></a>Array to pointer conversion</h4><p>类型为“N T 数组”或“未知T边界数组”的左值或右值可以隐式转换为类型为“T指针”的prvalue。如果数组是prvalue，则会发生临时物化。(因为c++ 17)指针指向数组的第一个元素。</p>
+<h4 id="Function-to-pointer"><a href="#Function-to-pointer" class="headerlink" title="Function to pointer"></a>Function to pointer</h4><p>函数类型T的左值可以隐式转换为指向该函数的prvalue指针。这不适用于非静态成员函数，因为引用非静态成员函数的左值不存在。</p>
+<h3 id="左值"><a href="#左值" class="headerlink" title="左值"></a>左值</h3><p>可以对lvalue取地址。例如 &amp;++I and &amp;std::endl是有效的表达式。<br>可修改的lvalue可以作为赋值操作符的左操作数。<br>lvalue可以初始化左值引用,</p>
+<h3 id="右值"><a href="#右值" class="headerlink" title="右值"></a>右值</h3><p>rvalue不能被取地址。例如： &amp;int(), &amp;i++[3], &amp;42, and &amp;std::move(x) 是无效的。<br>rvalue不能当赋值运算符的左操作数<br>rvalue可以初始化常量左值引用<br>rvalue可以初始化右值引用</p>
+<h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><h4 id="CPL"><a href="#CPL" class="headerlink" title="CPL"></a>CPL</h4><p>编程语言 CPL 率先为表达式引入了值类别：所有 CPL 表达式都能以“右侧模式 (right-hand mode)”求值，但只有某些类型的表达式在“左侧模式 (left-hand mode)”有意义。在右侧模式中求值时，表达式的效果为计算出一个值（右侧值，或右值）。在左侧模式中求值时，表达式的效果则为给出一个地址（左侧值，或左值）。“左”和“右”代表“赋值之左”和“赋值之右”。 </p>
+<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><p>C 编程语言遵循相似的分类法，但赋值的作用不再重要：C 的表达式被分为“左值 (lvalue) 表达式”和其他（函数和非对象值），其中“左值 (lvalue)”的含义为标识一个对象的表达式，即“定位器值 (locator value)”[4]。 </p>
+<h4 id="C-98"><a href="#C-98" class="headerlink" title="C++98"></a>C++98</h4><p>2011 年前的 C++ 遵循 C 模型，但做了如下改变：<br>1.恢复了用“右值 (rvalue)”来称呼非左值表达式。<br>2.规定函数为左值。<br>3.引用能绑定到左值，但只有 const 的引用能绑定到右值。<br>4.几种非左值的 C 表达式在 C++ 中成为了左值表达式。 </p>
+<h4 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h4><p>随着移动语义引入到 C++11 之中，值类别被重新进行了定义，以区别表达式的两种独立的性质[5]：<br>·拥有身份 (identity)：可以确定表达式是否与另一表达式指代同一实体，例如通过比较它们所标识的对象或函数的（直接或间接获得的）地址；<br>·可被移动：移动构造函数、移动赋值运算符或实现了移动语义的其他函数能够绑定于这个表达式。<br>C++11 中：<br>·拥有身份且不可被移动的表达式被称作左值 (lvalue)表达式；<br>·拥有身份且可被移动的表达式被称作亡值 (xvalue)表达式；<br>·不拥有身份且可被移动的表达式被称作纯右值 (prvalue)表达式；<br>·不拥有身份且不可被移动的表达式未被使用。<br>拥有身份的表达式被称作“泛左值 (glvalue) 表达式”。左值和亡值都是泛左值表达式。<br>可被移动的表达式被称作“右值 (rvalue) 表达式”。纯右值和亡值都是右值表达式。 </p>
+<h4 id="C-17"><a href="#C-17" class="headerlink" title="C++17"></a>C++17</h4><p>C++17 中，某些场合强制要求进行复制消除，而这要求将纯右值表达式从被它们所初始化的临时对象中分离出来，这就是我们现有的系统。<br> &#x3D;&#x3D;要注意，与 C++11 的方案相比，纯右值已不再是可被移动&#x3D;&#x3D;</p>
+<h3 id="decltype-specifier"><a href="#decltype-specifier" class="headerlink" title="decltype specifier"></a>decltype specifier</h3><p>检查实体的声明类型，或表达式的类型和值类别。<br>语法<br>decltype ( 实体 )     (1)<br>decltype ( 表达式 )     (2)                                 </p>
+<p>1)如果实参是没有括号的标识表达式或没有括号的类成员访问表达式，那么 decltype 产生以该表达式命名的实体的类型。<br>2)如果实参是其他类型为 T 的任何表达式，且<br>a) 如果 表达式 的值类别是亡值，将会 decltype 产生 T&amp;&amp;；<br>b) 如果 表达式 的值类别是左值，将会 decltype 产生 T&amp;；<br>c) 如果 表达式 的值类别是纯右值，将会 decltype 产生 T。 </p>
+<p>注意如果对象的名字带有括号，那么它会被当做通常的左值表达式，从而 decltype(x) 和 decltype((x)) 通常是不同的类型。 </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c-base/" rel="tag"># c++ base</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/03/11-%E5%88%9D%E5%A7%8B%E5%8C%96/" rel="prev" title="c++ 初始化">
+      <i class="fa fa-chevron-left"></i> c++ 初始化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/07/12-%E4%BC%A0%E8%BE%93%E5%B1%82/" rel="next" title="传输层">
+      传输层 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88Expressions%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">表达式（Expressions）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">定义：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">字面量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E6%B1%82%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">不求值表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%83%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">弃值表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E7%B1%BB%E5%88%AB"><span class="nav-number">2.3.</span> <span class="nav-text">值类别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%88result%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">表达式的结果（result）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#prvalue%E7%9A%84%E7%BB%93%E6%9E%9C%E5%AF%B9%E8%B1%A1%EF%BC%88result-object%EF%BC%89%EF%BC%9A"><span class="nav-number">2.4.1.</span> <span class="nav-text">prvalue的结果对象（result object）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%80%BC%E7%B1%BB%E5%9E%8B%E4%B8%BE%E4%BE%8B"><span class="nav-number">2.4.2.</span> <span class="nav-text">典型值类型举例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A6%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">左值表达式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%AF%E5%8F%B3%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">纯右值表达式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%A1%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.4.2.3.</span> <span class="nav-text">亡值表达式：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E9%87%8F%E7%89%A9%E5%8C%96%EF%BC%88temporary-materialization%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">临时量物化（temporary materialization）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">2.6.</span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E5%80%BC%E7%B1%BB%E5%88%AB%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%9A"><span class="nav-number">2.7.</span> <span class="nav-text">各种值类别的特性：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%9B%E5%B7%A6%E5%80%BC"><span class="nav-number">2.7.1.</span> <span class="nav-text">泛左值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lvalue-to-rvalue-conversion"><span class="nav-number">2.7.2.</span> <span class="nav-text">Lvalue to rvalue conversion</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-to-pointer-conversion"><span class="nav-number">2.7.3.</span> <span class="nav-text">Array to pointer conversion</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Function-to-pointer"><span class="nav-number">2.7.4.</span> <span class="nav-text">Function to pointer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A6%E5%80%BC"><span class="nav-number">2.8.</span> <span class="nav-text">左值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%B3%E5%80%BC"><span class="nav-number">2.9.</span> <span class="nav-text">右值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2"><span class="nav-number">2.10.</span> <span class="nav-text">历史</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CPL"><span class="nav-number">2.10.1.</span> <span class="nav-text">CPL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C"><span class="nav-number">2.10.2.</span> <span class="nav-text">C</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-98"><span class="nav-number">2.10.3.</span> <span class="nav-text">C++98</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-11"><span class="nav-number">2.10.4.</span> <span class="nav-text">C++11</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-17"><span class="nav-number">2.10.5.</span> <span class="nav-text">C++17</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decltype-specifier"><span class="nav-number">2.11.</span> <span class="nav-text">decltype specifier</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
