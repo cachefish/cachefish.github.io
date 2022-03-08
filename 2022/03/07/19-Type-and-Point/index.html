@@ -125,17 +125,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
   </ul>
@@ -169,7 +169,7 @@
     <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/07/19-Type-and-Point/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/2229.jfif">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="来世做春风，浪漫且自由">
     </span>
@@ -276,27 +276,27 @@
 </li>
 </ul>
 <h2 id="Pointer"><a href="#Pointer" class="headerlink" title="Pointer"></a>Pointer</h2><p>Pointers to functions<br>指向函数的指针可以用非成员函数或静态成员函数的地址初始化。<br>由于函数到指针的隐式转换，address-of操作符是可选的:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void f(int);        // function type</span><br><span class="line">void (*p1)(int) = &amp;f;//pointer-to-function type</span><br><span class="line">void (*p2)(int) = f; // same as &amp;f</span><br></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span>)</span></span>;        <span class="comment">// function type</span></span><br><span class="line"><span class="keyword">void</span> (*p1)(<span class="keyword">int</span>) = &amp;f;<span class="comment">//pointer-to-function type</span></span><br><span class="line"><span class="keyword">void</span> (*p2)(<span class="keyword">int</span>) = f; <span class="comment">// same as &amp;f</span></span><br></pre></td></tr></table></figure>
 
 <p>与函数或对函数的引用不同，函数的指针是对象，因此可以存储在数组、复制、赋值等。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void (a[10])(int); // Error: array of functions</span><br><span class="line">void (&amp;a[10])(int); // Error: array of references</span><br><span class="line">void (*a[10])(int); // OK: array of pointers to functions</span><br></pre></td></tr></table></figure>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void (a[10])(int); // Error:<span class="built_in"> array </span>of functions</span><br><span class="line">void (&amp;a[10])(int); // Error:<span class="built_in"> array </span>of references</span><br><span class="line">void (*a[10])(int); // OK:<span class="built_in"> array </span>of pointers to functions</span><br></pre></td></tr></table></figure>
 <p>涉及到函数指针的声明通常可以用类型别名来简化:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">using F = void(int);  // named type alias to simplify declarations</span><br><span class="line">F a[10];  // Error: array of functions</span><br><span class="line">F&amp; a[10]; // Error: array of references</span><br><span class="line">F* a[10]; // OK: array of pointers to functions</span><br></pre></td></tr></table></figure>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">using F = void(int);  // named type alias to simplify declarations</span><br><span class="line">F a[10];  // Error:<span class="built_in"> array </span>of functions</span><br><span class="line">F&amp; a[10]; // Error:<span class="built_in"> array </span>of references</span><br><span class="line">F* a[10]; // OK:<span class="built_in"> array </span>of pointers to functions</span><br></pre></td></tr></table></figure>
 <p>解引用函数指针将产生标识被指向函数的左值:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int f();</span><br><span class="line">int (*p)() = f;  // pointer p is pointing to f</span><br><span class="line">int (&amp;r)() = *p; // the lvalue that identifies f is bound to a reference</span><br><span class="line">r();           // function f invoked through lvalue reference</span><br><span class="line">(*p)();        // function f invoked through the function lvalue</span><br><span class="line">p();           // function f invoked directly through the pointer</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">int</span> <span class="title">f</span>()</span>;</span><br><span class="line"><span class="built_in">int</span> (*p)() = f;  <span class="comment">// pointer p is pointing to f</span></span><br><span class="line"><span class="built_in">int</span> (&amp;r)() = *p; <span class="comment">// the lvalue that identifies f is bound to a reference</span></span><br><span class="line">r();           <span class="comment">// function f invoked through lvalue reference</span></span><br><span class="line">(*p)();        <span class="comment">// function f invoked through the function lvalue</span></span><br><span class="line">p();           <span class="comment">// function f invoked directly through the pointer</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="Pointers-to-data-members"><a href="#Pointers-to-data-members" class="headerlink" title="Pointers to data members"></a>Pointers to data members</h3><p>指向C类成员的非静态成员对象m的指针可以用表达式&amp;C::m进行精确初始化。像&amp;(C::m)或&amp;m这样的表达式在C的成员函数中不能形成指向成员的指针。</p>
 <p>这样的指针可以用作指向成员的指针访问操作符的右操作数。<br>operator.* and operator-&gt;*: </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct C &#123; int m; &#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line">int C::* p = &amp;C::m;      // pointer to data member m of class C</span><br><span class="line">        C c = &#123;7&#125;;</span><br><span class="line">        std::cout &lt;&lt; c.*p &lt;&lt; &#x27;\n&#x27;;  // prints 7</span><br><span class="line">        C* cp = &amp;c;</span><br><span class="line">        cp-&gt;m = 10;</span><br><span class="line">        std::cout &lt;&lt; cp-&gt;*p &lt;&lt; &#x27;\n&#x27;; // prints 10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span> &#123; <span class="type">int</span> m; &#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="type">int</span> C::* p = &amp;C::m;      <span class="comment">// pointer to data member m of class C</span></span><br><span class="line">        C c = &#123;<span class="number">7</span>&#125;;</span><br><span class="line">        std::cout &lt;&lt; c.*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;  <span class="comment">// prints 7</span></span><br><span class="line">        C* cp = &amp;c;</span><br><span class="line">        cp-&gt;m = <span class="number">10</span>;</span><br><span class="line">        std::cout &lt;&lt; cp-&gt;*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; <span class="comment">// prints 10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Pointers-to-member-functions"><a href="#Pointers-to-member-functions" class="headerlink" title="Pointers to member functions"></a>Pointers to member functions</h3><p>指向C类成员的非静态成员函数f的指针可以用表达式&amp;C::f精确地初始化。像&amp;(C::f)或&amp;f这样的表达式在C的成员函数中不能形成指向成员函数的指针</p>
 <p>这样的指针可以用作指向成员的指针访问操作符的右操作数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct C&#123;</span><br><span class="line">void f(int n) &#123; std::cout &lt;&lt; n &lt;&lt; &#x27;\n&#x27;; &#125;</span><br><span class="line">&#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line">   // pointer to member function f of class C</span><br><span class="line">   void (C::* p)(int) = &amp;C::f;</span><br><span class="line">   C c;</span><br><span class="line">   (c.*p)(1);                  // prints 1</span><br><span class="line">   C* cp = &amp;c;</span><br><span class="line">   (cp-&gt;*p)(2);                // prints 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span>&#123;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123; std::cout &lt;&lt; n &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   <span class="comment">// pointer to member function f of class C</span></span><br><span class="line">   <span class="built_in">void</span> (C::* p)(<span class="type">int</span>) = &amp;C::f;</span><br><span class="line">   C c;</span><br><span class="line">   (c.*p)(<span class="number">1</span>);                  <span class="comment">// prints 1</span></span><br><span class="line">   C* cp = &amp;c;</span><br><span class="line">   (cp-&gt;*p)(<span class="number">2</span>);                <span class="comment">// prints 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="静态与动态类型"><a href="#静态与动态类型" class="headerlink" title="静态与动态类型"></a>静态与动态类型</h2><p>静态类型<br>由程序编译时分析产生的表达式的类型称为表达式的静态类型。静态类型在程序执行时不会改变。</p>
 <p>动态类型<br>如果某些glvalue表达式引用了一个多态对象，那么它最派生的对象的类型被称为动态类型</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// given</span><br><span class="line">struct B &#123; virtual ~B() &#123;&#125; &#125;; // polymorphic type</span><br><span class="line">struct D: B &#123;&#125;; // polymorphic type</span><br><span class="line">D d; // most-derived object</span><br><span class="line">B* ptr = &amp;d;</span><br><span class="line">// the static type of (*ptr) is B</span><br><span class="line">// the dynamic type of (*ptr) is D</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> given</span><br><span class="line">struct B &#123; virtual ~B() &#123;&#125; &#125;; <span class="regexp">//</span> polymorphic type</span><br><span class="line">struct D: B &#123;&#125;; <span class="regexp">//</span> polymorphic type</span><br><span class="line">D d; <span class="regexp">//</span> most-derived object</span><br><span class="line">B* ptr = &amp;d;</span><br><span class="line"><span class="regexp">//</span> the static type of (*ptr) is B</span><br><span class="line"><span class="regexp">//</span> the dynamic type of (*ptr) is D</span><br></pre></td></tr></table></figure>
 
 <h2 id="Typeid"><a href="#Typeid" class="headerlink" title="Typeid"></a>Typeid</h2><p>如果type是引用类型，则结果指向表示被引用类型的std::type_info对象。</p>
 <h2 id="Type-traits"><a href="#Type-traits" class="headerlink" title="Type traits"></a>Type traits</h2><p>类型特征定义了一个基于编译时模板的接口，用于查询或修改类型的属性。</p>
@@ -313,7 +313,7 @@
 <h5 id="定义不完全的对象类型可以被补全"><a href="#定义不完全的对象类型可以被补全" class="headerlink" title="定义不完全的对象类型可以被补全:"></a>定义不完全的对象类型可以被补全:</h5><ul>
 <li>一个类类型(例如类X)可能在一个翻译单元的某个点上是不完整的，然后在稍后完成;类型类X在这两点上是相同的类型:</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct X;             // X is an incomplete type</span><br><span class="line">extern X* xp;         // xp is a pointer to an incomplete type</span><br><span class="line">void foo() &#123;</span><br><span class="line">  xp++;              // ill-formed: X is incomplete</span><br><span class="line">&#125;</span><br><span class="line">struct X &#123; int i; &#125;;  // now X is a complete type</span><br><span class="line">X x;</span><br><span class="line">void bar() &#123;</span><br><span class="line">  xp = &amp;x;            // OK: type is “pointer to X”</span><br><span class="line">  xp++;               // OK: X is complete</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> X;             <span class="comment">// X is an incomplete type</span></span><br><span class="line"><span class="keyword">extern</span> X* xp;         <span class="comment">// xp is a pointer to an incomplete type</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span>()</span> &#123;</span><br><span class="line">  xp++;              <span class="comment">// ill-formed: X is incomplete</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> X &#123; <span class="built_in">int</span> i; &#125;;  <span class="comment">// now X is a complete type</span></span><br><span class="line">X x;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bar</span>()</span> &#123;</span><br><span class="line">  xp = &amp;x;            <span class="comment">// OK: type is “pointer to X”</span></span><br><span class="line">  xp++;               <span class="comment">// OK: X is complete</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>每个实现对基本类型大小的选择统称为数据模型。<br>四种数据模型被广泛接受:</p>
 <p>32位系统:</p>
@@ -345,6 +345,23 @@
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/03/07/19-Type-and-Point/" title="c++ 类型与指针">https://cachefish.github.io/2022/03/07/19-Type-and-Point/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -428,6 +445,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
   <p class="site-author-name" itemprop="name"></p>
   <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
 </div>
@@ -462,6 +481,9 @@
         <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -483,12 +505,12 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2021 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder"></span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -544,5 +566,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
 </html>

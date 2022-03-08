@@ -129,17 +129,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
   </ul>
@@ -173,7 +173,7 @@
     <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/07/12-%E4%BC%A0%E8%BE%93%E5%B1%82/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/2229.jfif">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="来世做春风，浪漫且自由">
     </span>
@@ -298,7 +298,7 @@
 <p>接收方一般都是采用累积确认的方式。也就是说接收方不必对收到的分组逐个发送确认。而是在收到几个分组后，对按序到达的最后一个分组发送确认。如果收到了这个分组确认信息，则表示到这个分组为止的所有分组都已经正确接收到了。</p>
 <h4 id="累积确认"><a href="#累积确认" class="headerlink" title="累积确认"></a>累积确认</h4><p>优点是容易实现，即使确认丢失也不必重传。<br>缺点是，不能正确的向发送方反映出接收方已经正确收到的所以分组的信息。<br>比如发送方发送了前 5 个分组，而中间的第 3 个分组丢失了，这时候接收方只能对前 2 个发出确认。而不知道后面 3 个分组的下落，因此只能把后面的 3 个分组都重传一次，这种机制叫 Go-back-N（回退 N），表示需要再退回来重传已发送过的 N 个分组。</p>
 <h3 id="选择重传协议"><a href="#选择重传协议" class="headerlink" title="选择重传协议"></a>选择重传协议</h3><p>接收端总会缓存所有收到的帧，当某个帧出现错误时，只会要求重传这一个帧，只有当某个序号后的所有帧都正确收到后，才会一起提交给高层应用。重传协议的缺点在于接受端需要更多的缓存。<br>TCP 的可靠运输机制<br>TCP 的可靠运输机制是基于连续 ARQ 协议和滑动窗口协议的。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">已经发送并确认 |============= 发送窗口 ===========| 缓存中还不允许发送的 |</span><br><span class="line">============= |已经发送但未确认 | 允许发送但还未发送| ===================|</span><br></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">已经发送并确认 |<span class="string">============= 发送窗口 ===========</span>|<span class="string"> 缓存中还不允许发送的 </span>|</span><br><span class="line">============= |<span class="string">已经发送但未确认 </span>|<span class="string"> 允许发送但还未发送</span>|<span class="string"> ===================</span>|</span><br></pre></td></tr></table></figure>
 <p>TCP 协议在发送方维持了一个发送窗口，发送窗口以前的报文段是已经发送并确认了的报文段，发送窗口中包含了已经发送但未确认的报文段和允许发送但还未发送的报文段，发送窗口以后的报文段是缓存中还不允许发送的报文段。当发送方向接收方发送报文时，会依次发送窗口内的所有报文段，并且设置一个定时器，这个定时器可以理解为是最早发送但未收到确认的报文段。</p>
 <p>&#x3D;&#x3D;TCP 协议的可靠传输机制更像是窗口滑动协议和选择重传协议的一个混合体。&#x3D;&#x3D;</p>
 <h3 id="TCP-的流量控制机制"><a href="#TCP-的流量控制机制" class="headerlink" title="TCP 的流量控制机制"></a>TCP 的流量控制机制</h3><p>TCP 提供了流量控制的服务，这个服务的主要目的是控制发送方的发送速率，保证接收方来得及接收。因为一旦发送的速率大于接收方所能接收的速率，就会造成报文段的丢失。接收方主要是通过接收窗口来告诉发送方自己所能接收的大小，发送方根据接收方的接收窗口的大小来调整发送窗口的大小，以此来达到控制发送速率的目的。</p>
@@ -315,6 +315,23 @@
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/03/07/12-%E4%BC%A0%E8%BE%93%E5%B1%82/" title="传输层">https://cachefish.github.io/2022/03/07/12-传输层/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -327,12 +344,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/03/10-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="c++ 表达式">
-      <i class="fa fa-chevron-left"></i> c++ 表达式
+    <a href="/2022/03/07/18-Object-and-variable/" rel="prev" title="c++ Object">
+      <i class="fa fa-chevron-left"></i> c++ Object
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/07/18-Object-and-variable/" rel="next" title="c++ Object">
-      c++ Object <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/07/13-%E5%A0%86%E7%A0%B4%E5%9D%8F/" rel="next" title="c++ 堆破坏">
+      c++ 堆破坏 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -398,6 +415,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
   <p class="site-author-name" itemprop="name"></p>
   <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
 </div>
@@ -432,6 +451,9 @@
         <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -453,12 +475,12 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2021 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder"></span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -514,5 +536,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
 </html>

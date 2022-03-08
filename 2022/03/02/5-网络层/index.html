@@ -127,17 +127,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
   </ul>
@@ -171,7 +171,7 @@
     <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/02/5-%E7%BD%91%E7%BB%9C%E5%B1%82/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/2229.jfif">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="来世做春风，浪漫且自由">
     </span>
@@ -236,7 +236,7 @@
 <h2 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h2><p>ip协议定义了用以实现面向无连接服务的网络分组格式。是一个面向无连接的、不可靠的数据报传输协议</p>
 <p>无连接指的是不维护IP分组发送后的状态信息，并且每个数据分组的处理是相对独立的。</p>
 <p>不可靠指的是IP协议不能保证每个ip分组能够成功的到达目的结点，也不能保证分组传输的顺序。</p>
-<h2 id="ip协议格式"><a href="#ip协议格式" class="headerlink" title="ip协议格式"></a>ip协议格式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">版本  首部长度 服务类型 总长度 标识 标志 片偏移 生存时间(TTL) 协议 首部校验和 可选字段 ip地址</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="ip协议格式"><a href="#ip协议格式" class="headerlink" title="ip协议格式"></a>ip协议格式</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">版本  首部长度 服务类型 总长度 标识 标志 片偏移 生存时间(<span class="meta">TTL</span>) 协议 首部校验和 可选字段 <span class="built_in">ip</span>地址</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h4 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a>ip地址</h4><p>以32位二进制位的形式存储于计算机中，32位的ip地址由网络标识和主机号两部分组成(网络标识用于标识该主机所在的网络，而主机号则表示该主机在相应网络中的特定位置)</p>
 <p>A: 0.0.0.0—–127.255.255.255<br>B: 128.0.0.0—–191.255.255.255<br>C: 192.0.0.0—-223.255.255.255<br>D: 224.0.0.0—-255.255.255.255</p>
 <hr>
@@ -267,6 +267,23 @@
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/03/02/5-%E7%BD%91%E7%BB%9C%E5%B1%82/" title="网络层">https://cachefish.github.io/2022/03/02/5-网络层/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -350,6 +367,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
   <p class="site-author-name" itemprop="name"></p>
   <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
 </div>
@@ -384,6 +403,9 @@
         <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -405,12 +427,12 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2021 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder"></span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -466,5 +488,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
 </html>

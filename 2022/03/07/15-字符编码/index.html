@@ -125,17 +125,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
   </ul>
@@ -169,7 +169,7 @@
     <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/07/15-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/2229.jfif">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="来世做春风，浪漫且自由">
     </span>
@@ -236,10 +236,10 @@
 <li>char16_t类型的UTF-16字符字面值，例如u’a’</li>
 <li>char32 t类型的UTF-32字符字面值，例如U’a’</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">auto s3 = u&quot;hello&quot;; const char16_t*</span><br><span class="line">auto s4 = U&quot;heelo&quot;; const char32_t*</span><br><span class="line">const wchar_t wide = L&quot;zyxw&quot;;</span><br><span class="line">const wchar_t newline=L&quot;hello\ngood&quot;;</span><br><span class="line"></span><br><span class="line">//c++20 -&gt;</span><br><span class="line">const char8_t u8str1 = u8&quot;hello world&quot;;</span><br><span class="line">const char8_t u8str2 = u8&quot;\U0001F607 is 0:-&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> s3 = <span class="string">u&quot;hello&quot;</span>; <span class="type">const</span> <span class="type">char16_t</span>*</span><br><span class="line"><span class="keyword">auto</span> s4 = <span class="string">U&quot;heelo&quot;</span>; <span class="type">const</span> <span class="type">char32_t</span>*</span><br><span class="line"><span class="type">const</span> <span class="type">wchar_t</span> wide = <span class="string">L&quot;zyxw&quot;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">wchar_t</span> newline=<span class="string">L&quot;hello\ngood&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//c++20 -&gt;</span></span><br><span class="line"><span class="type">const</span> <span class="type">char8_t</span> u8str1 = <span class="string">u8&quot;hello world&quot;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char8_t</span> u8str2 = <span class="string">u8&quot;\U0001F607 is 0:-&quot;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="std-string-文本"><a href="#std-string-文本" class="headerlink" title="std::string 文本"></a>std::string 文本</h2><p>string字面值是用户定义的字面值(见下文)的标准库实现，表示为“xyz”(带有s后缀)。这种字符串字面值产生一个临时对象，类型为std::string、std::wstring、std::u32string或std::u16string，这取决于所指定的前缀。如果没有使用任何前缀，就会产生一个std::string。L”xyz”生成一个std::wstring。u”xyz”s生成一个std:u16string, u”xyz”s生成一个std:u32string。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">string str&#123;&quot;hello&quot;s&#125;;</span><br><span class="line">string str2&#123;u8&quot;&quot;Hello world&quot;&#125;;</span><br><span class="line">u8string u8str2&#123;u8&quot;Hello World&quot;&#125;;</span><br><span class="line">wstring str3&#123;L&quot;hello&quot;s&#125;;</span><br><span class="line">u16string str4&#123;u&quot;hello&quot;s&#125;;</span><br><span class="line">u32string str5&#123;U&quot;hello&quot;s&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str&#123;<span class="string">&quot;hello&quot;</span>s&#125;;</span><br><span class="line"><span class="built_in">string</span> str2&#123;u8<span class="string">&quot;&quot;</span>Hello world<span class="string">&quot;&#125;;</span></span><br><span class="line"><span class="string">u8string u8str2&#123;u8&quot;</span>Hello World<span class="string">&quot;&#125;;</span></span><br><span class="line"><span class="string">wstring str3&#123;L&quot;</span>hello<span class="string">&quot;s&#125;;</span></span><br><span class="line"><span class="string">u16string str4&#123;u&quot;</span>hello<span class="string">&quot;s&#125;;</span></span><br><span class="line"><span class="string">u32string str5&#123;U&quot;</span>hello<span class="string">&quot;s&#125;;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
 
 <h3 id="字符文本的执行期编码："><a href="#字符文本的执行期编码：" class="headerlink" title="字符文本的执行期编码："></a>字符文本的执行期编码：</h3><p>除了普通字符和宽字符由编译器决定，其余字符文本都给予前缀表示的方式进行编码。可见同一个编译单元中字符的执行期编码可以有多种。</p>
 <p>对于程序运行过程的和外界交互（网络收发，文件读写，数据库读写等）涉及到的字符，则要规定好编码方式，然后进行处理。</p>
@@ -249,6 +249,23 @@
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/03/07/15-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" title="c++ 字符编码">https://cachefish.github.io/2022/03/07/15-字符编码/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -261,8 +278,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/07/17-netfiliter/" rel="prev" title="netfiliter">
-      <i class="fa fa-chevron-left"></i> netfiliter
+    <a href="/2022/03/07/16-c-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" rel="prev" title="c++ 基本概念">
+      <i class="fa fa-chevron-left"></i> c++ 基本概念
     </a></div>
       <div class="post-nav-item">
     <a href="/2022/03/07/14-%E5%A3%B0%E6%98%8E/" rel="next" title="c++ 声明">
@@ -332,6 +349,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
   <p class="site-author-name" itemprop="name"></p>
   <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
 </div>
@@ -366,6 +385,9 @@
         <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -387,12 +409,12 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2021 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder"></span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -448,5 +470,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
 </html>

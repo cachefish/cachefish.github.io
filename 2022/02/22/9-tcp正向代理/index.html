@@ -126,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
   </ul>
@@ -170,7 +170,7 @@
     <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/02/22/9-tcp%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/2229.jfif">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="来世做春风，浪漫且自由">
     </span>
@@ -245,14 +245,14 @@
 <p>说明：通常主函数就是一个大循环，有新连接就开个 Goroutine 处理这个客户端连接。客户端连接先进行握手后会发送想要访问的目的服务器地址，代理服务器先尝试 connect ，成功连接上则通知客户端，客户端开始发送真正的数据。这时候做一下数据的转发就可以了。由于 TCP 是全双工的协议，收发独立，再加上 Goroutine 已经相当廉价了，所以可以开启两个 Goroutine， 一个负责收，一个负责发，互相不影响。不可以开启多个线程（Goroutine）去对同一个 TCP 连接并行地发送数据，因为这样发送的数据是交错在一起的，是错误的。</p>
 <hr>
 <h2 id="3-2-Reactor-同步非阻塞"><a href="#3-2-Reactor-同步非阻塞" class="headerlink" title="3.2 Reactor 同步非阻塞"></a>3.2 Reactor 同步非阻塞</h2><p>一般来说，在 Linux 下，C&#x2F;C++，Python 这种比较多使用 Reactor 模式。 Reactor 通常是一个主线程大循环，由于使用了 I&#x2F;O 多路复用技术，使得单线程也能有很好的 I&#x2F;O 性能。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//c++伪代码</span><br><span class="line">int main() &#123;</span><br><span class="line">    while (true) &#123;</span><br><span class="line">        err, events = poller.wait(interval)</span><br><span class="line">        processTimerTask() //处理定时器任务</span><br><span class="line">        if (err) &#123;</span><br><span class="line">            //处理错误</span><br><span class="line">            continue</span><br><span class="line">        &#125; </span><br><span class="line">        for (event : events) &#123;</span><br><span class="line">            if (event.isReadable()) &#123;</span><br><span class="line">                //处理读事件</span><br><span class="line">                handleRead(event)</span><br><span class="line">            &#125;</span><br><span class="line">            if (event.isWriteable()) &#123;</span><br><span class="line">                //处理写事件</span><br><span class="line">            &#125;</span><br><span class="line">            if (event.isClosed()) &#123;</span><br><span class="line">                //处理关闭套接字事件</span><br><span class="line">            &#125;</span><br><span class="line">            if (event.hasError()) &#123;</span><br><span class="line">                //处理错误事件</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//c++伪代码</span></span><br><span class="line"><span class="function"><span class="built_in">int</span> <span class="title">main</span>()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        err, events = poller.wait(interval)</span><br><span class="line">        processTimerTask() <span class="comment">//处理定时器任务</span></span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            <span class="comment">//处理错误</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">event</span> : events) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">event</span>.isReadable()) &#123;</span><br><span class="line">                <span class="comment">//处理读事件</span></span><br><span class="line">                handleRead(<span class="keyword">event</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">event</span>.isWriteable()) &#123;</span><br><span class="line">                <span class="comment">//处理写事件</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">event</span>.isClosed()) &#123;</span><br><span class="line">                <span class="comment">//处理关闭套接字事件</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">event</span>.hasError()) &#123;</span><br><span class="line">                <span class="comment">//处理错误事件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>poller 底层一般有 select，epoll 等。通常情况下使用 epoll 性能最好。单线程可以很容易支撑好几万并发。</p>
 <h2 id="3-2-1-「异步」代码的「保存上下文」"><a href="#3-2-1-「异步」代码的「保存上下文」" class="headerlink" title="3.2.1 「异步」代码的「保存上下文」"></a>3.2.1 「异步」代码的「保存上下文」</h2><p>无论是 Proactor 还是 Reactor ，凡是接近 Node.js 那种异步的写法，都需要主动保存「上下文」在自己的内存中。「上下文」通常包含没收完整的数据 buffer ，目前的状态 state。</p>
 <p>&#x2F;&#x2F;c++伪代码<br>struct ConnContext {<br>    Buffer buffer; &#x2F;&#x2F; 接收的消息（可能还不是一个完整的消息）<br>    State state;   &#x2F;&#x2F; 状态<br>}</p>
 <hr>
 <p>read 函数一次性读的字节数也是不确定的，有时需要多次调用 read 才能接受完完整的数据。由于数据不完整，并不能执行接下来的流程，所以要先把数据缓存在一个地方，然后无奈返回。等数据接收完整了，才能进入下一个处理程序。一般每个连接都有一个上下文，由 map 保存对应关系。有些协议实现起来状态比较多，比如有好几次握手，必要时还需要使用状态机保存状态。每次有读事件的时候，都会调用 handleRead 函数，这时候根据之前保存的状态，很容易恢复到之前执行的函数的位置（通过switch case分发）。</p>
 <hr>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// c++ 伪代码</span><br><span class="line">void handleRead(conn) &#123;</span><br><span class="line">    context = contexts[conn]</span><br><span class="line">    switch (context.state) &#123;</span><br><span class="line">        case eSTATE_HANDSHAKE1:</span><br><span class="line">            handshake1(conn, context)</span><br><span class="line">            break</span><br><span class="line">        case eSTATE_HANDSHAKE2:</span><br><span class="line">            handshake2(conn, context)</span><br><span class="line">            break</span><br><span class="line">        // 省略</span><br><span class="line">        // ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void handshake1(conn, context) &#123;</span><br><span class="line">    data = read_some(conn)</span><br><span class="line">    append(context.buffer, data)</span><br><span class="line">    if (context.buffer 不是一个完整的数据) &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    //发送一些东西</span><br><span class="line">    send_some(...)</span><br><span class="line">    // 将 context.buffer 处理过的数据清理掉</span><br><span class="line">    // 现在handleshake1状态结束了，更改为下一个状态</span><br><span class="line">    context.state = eSTATE_HANDSHAKE2</span><br><span class="line">    // 下一次读事件将会调用 handshake2 函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// c++ 伪代码</span></span><br><span class="line"><span class="keyword">void</span> handleRead(conn) &#123;</span><br><span class="line">    <span class="keyword">context</span> = contexts[conn]</span><br><span class="line">    switch (<span class="keyword">context</span><span class="variable">.state</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> eSTATE_HANDSHAKE1:</span><br><span class="line">            handshake1(conn, <span class="keyword">context</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">case</span> eSTATE_HANDSHAKE2:</span><br><span class="line">            handshake2(conn, <span class="keyword">context</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="comment">// 省略</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> handshake1(conn, <span class="keyword">context</span>) &#123;</span><br><span class="line">    data = read_some(conn)</span><br><span class="line">    append(<span class="keyword">context</span><span class="variable">.buffer</span>, data)</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">context</span><span class="variable">.buffer</span> 不是一个完整的数据) &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//发送一些东西</span></span><br><span class="line">    send_some(...)</span><br><span class="line">    <span class="comment">// 将 context.buffer 处理过的数据清理掉</span></span><br><span class="line">    <span class="comment">// 现在handleshake1状态结束了，更改为下一个状态</span></span><br><span class="line">    <span class="keyword">context</span><span class="variable">.state</span> = eSTATE_HANDSHAKE2</span><br><span class="line">    <span class="comment">// 下一次读事件将会调用 handshake2 函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="3-2-2-gethostbyname-是阻塞的"><a href="#3-2-2-gethostbyname-是阻塞的" class="headerlink" title="3.2.2 gethostbyname 是阻塞的"></a>3.2.2 gethostbyname 是阻塞的</h2><p>由于用到了域名，所以需要 DNS 服务将域名转换成为 IP 地址。</p>
 <p>Linux 下 gethostbyname 似乎是阻塞的。这与同步非阻塞式的代码可谓格格不入。可以换一个非阻塞的实现。除此之外，Golang的 DNS 函数库并没有做缓存处理，这就意味着可能会频繁访问 DNS 服务器，速度没有优势，可能对 DNS 服务器也是个不小的负担。所以可以自行设计一个 DNS 缓存，是个不错的主意。</p>
 <h2 id="4-TCP协议"><a href="#4-TCP协议" class="headerlink" title="4. TCP协议"></a>4. TCP协议</h2><p>假设读者对 TCP 协议有了基本了解，知道滑动窗口，知道拥塞控制。</p>
@@ -268,12 +268,29 @@
 <hr>
 <h2 id="4-2-TCP-可靠性"><a href="#4-2-TCP-可靠性" class="headerlink" title="4.2 TCP 可靠性"></a>4.2 TCP 可靠性</h2><p>TCP 可靠性体现在不乱，不重，不漏。他能很好地防止报文意外丢失，但不能100%防止人为篡改报文，当报文+校验和一起被替换，还是很难被察觉的。TCP 可靠传输并不等于他有数据安全，这是两个概念。但事实上，TCP 在不断发展。 它的 29 号选项 TCP Authentication Option 使用了 SHA 哈希大大提高了篡改数据的难度。对于一个代理服务器来说，只需要单纯转发数据就可以，可以不用过于关心数据的篡改问题。</p>
 <h2 id="tcp代理服务"><a href="#tcp代理服务" class="headerlink" title="tcp代理服务"></a>tcp代理服务</h2><p>proxy server接收client的tcp链接请求，并把client端的数据发送给代理服务器，代理服务器把数据发送给后端的被代理服务器server1…serverN，并把server1…serverN的执行结果再返回给client。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">              |-----------------|            |---------------| </span><br><span class="line">client &lt;-----&gt;  | proxy server    | &lt;-----&gt;    |     server 1  |</span><br><span class="line">                |-----------------|            |---------------|</span><br><span class="line">                            /|\                   ... ...</span><br><span class="line">                             |                 |---------------|</span><br><span class="line">                             |----------------&gt;|     server N  |</span><br><span class="line">                                               |---------------|</span><br></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">              |<span class="string">-----------------</span>|<span class="string">            </span>|<span class="string">---------------</span>|<span class="string"> </span></span><br><span class="line"><span class="string">client &lt;-----&gt;  </span>|<span class="string"> proxy server    </span>|<span class="string"> &lt;-----&gt;    </span>|<span class="string">     server 1  </span>|</span><br><span class="line">                |<span class="string">-----------------</span>|<span class="string">            </span>|<span class="string">---------------</span>|</span><br><span class="line">                            /|<span class="string">\                   ... ...</span></span><br><span class="line"><span class="string">                             </span>|<span class="string">                 </span>|<span class="string">---------------</span>|</span><br><span class="line">                             |<span class="string">----------------&gt;</span>|<span class="string">     server N  </span>|</span><br><span class="line">                                               |<span class="string">---------------</span>|</span><br></pre></td></tr></table></figure>
     </div>
 
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/02/22/9-tcp%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/" title="tcp正向代理">https://cachefish.github.io/2022/02/22/9-tcp正向代理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -358,6 +375,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
   <p class="site-author-name" itemprop="name"></p>
   <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
 </div>
@@ -392,6 +411,9 @@
         <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -413,12 +435,12 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2021 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder"></span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -474,5 +496,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
 </html>

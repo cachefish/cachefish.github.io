@@ -125,17 +125,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
   </ul>
@@ -169,7 +169,7 @@
     <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/03/10-%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/2229.jfif">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="来世做春风，浪漫且自由">
     </span>
@@ -318,11 +318,11 @@
 <li>数组下标表达式，数组为xvalue。例如a[1]； </li>
 <li>对象成员表达式，对象是xvalue类类型的对象，该成员是非静态的非引用数据成员。例如a.m;</li>
 <li>对象成员指针表达式，对象是xvalue类类型的对象，指针为数据成员指针。例如a.*m;</li>
-<li>临时量物化后，指代该临时对象的表达式。<br>例子：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct A &#123;</span><br><span class="line">   int m;</span><br><span class="line"> &#125;;</span><br><span class="line">A&amp;&amp; operator+(A, A);</span><br><span class="line">A&amp;&amp; f()；</span><br><span class="line">A a;</span><br><span class="line">A&amp;&amp; ar = static_cast&lt;A&amp;&amp;&gt;(a);</span><br><span class="line">the expressions f(), f().m, static_cast&lt;A&amp;&amp;&gt;(a), and a + a are xvalues. The expression ar is an lvalue.</span><br></pre></td></tr></table></figure>
+<li>临时量物化后，指代该临时对象的表达式。<br>例子：<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> A &#123;</span><br><span class="line">   <span class="built_in">int</span> m;</span><br><span class="line"> &#125;;</span><br><span class="line">A&amp;&amp; <span class="keyword">operator</span>+(A, A);</span><br><span class="line">A&amp;&amp; f()；</span><br><span class="line">A a;</span><br><span class="line">A&amp;&amp; ar = static_cast&lt;A&amp;&amp;&gt;(a);</span><br><span class="line"><span class="function">the expressions <span class="title">f</span>(), <span class="title">f</span>().m, <span class="title">static_cast</span>&lt;<span class="title">A</span>&amp;&amp;&gt;(<span class="params">a</span>), <span class="keyword">and</span> a + a are xvalues. The expression ar <span class="keyword">is</span> an lvalue.</span></span><br></pre></td></tr></table></figure>
 <h3 id="临时量物化（temporary-materialization）"><a href="#临时量物化（temporary-materialization）" class="headerlink" title="临时量物化（temporary materialization）"></a>临时量物化（temporary materialization）</h3>当pvalue作为一个操作符的操作数，并且这个操作数期待一个glvaue，这个pvalue被临时量物化转化为xvalue.<br>类型为T的prvalue转为为类型为T的xvalue，此转换以该纯右值初始化一个 T 类型的临时对象（以临时对象作为求值该纯右值的结果对象），并产生一个亡值代表（denoting)该临时对象。 T必须是完全类型。若T是类类型或类类型的数组，则它必须有可访问且未被删除的析构函数</li>
 </ol>
 <p>当pvalue作为一个操作符的操作数，并且这个操作数期待一个glvaue，这个pvalue被临时量物化转化为xvalue.<br>类型为T的prvalue转为为类型为T的xvalue，此转换以该纯右值初始化一个 T 类型的临时对象（以临时对象作为求值该纯右值的结果对象），并产生一个亡值代表（denoting)该临时对象。 T必须是完全类型。若T是类类型或类类型的数组，则它必须有可访问且未被删除的析构函数 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">struct S &#123; int m; &#125;;</span><br><span class="line">int k = S().m; // C++17 起成员访问期待泛左值；S() 纯右值被转换为亡值。</span><br></pre></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> S &#123; <span class="built_in">int</span> m; &#125;;</span><br><span class="line"><span class="built_in">int</span> k = <span class="constructor">S()</span>.m; <span class="comment">// C++17 起成员访问期待泛左值；S() 纯右值被转换为亡值。</span></span><br></pre></td></tr></table></figure>
 <p>例如临时量物化在下例情况下发生： </p>
 <ol>
 <li>引用绑定到prvalue时； </li>
@@ -352,6 +352,23 @@
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/03/03/10-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="c++ 表达式">https://cachefish.github.io/2022/03/03/10-表达式/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -368,8 +385,8 @@
       <i class="fa fa-chevron-left"></i> c++ 初始化
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/07/12-%E4%BC%A0%E8%BE%93%E5%B1%82/" rel="next" title="传输层">
-      传输层 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/07/18-Object-and-variable/" rel="next" title="c++ Object">
+      c++ Object <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -435,6 +452,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
   <p class="site-author-name" itemprop="name"></p>
   <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
 </div>
@@ -469,6 +488,9 @@
         <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -490,12 +512,12 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2021 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder"></span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -551,5 +573,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
 </html>
