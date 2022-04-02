@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="个人品质 上心：人下班了，心未下班，灵感通常都是在路上，洗澡，吃饭等闲散时光产生的。 细致：不犯低级错误。 敏锐：能从蛛丝马迹中寻找线索。 耐心：和问题死磕到底，不解决问题誓不罢休。 勤学好思：多读书，多看牛人的代码，多思考为什么。 轻度强迫症：坚持原则，绝不妥协。 追求简洁，清晰，各个维度具有美感的设计和代码。 好的代码该有的样子：   一眼望过去规整，有美感。  代码是来交流的，你能忍受杂乱无">
+  <meta name="description" content="https:&#x2F;&#x2F;zh.cppreference.com&#x2F;w&#x2F;%E9%A6%96%E9%A1%B5 • STL库是用模板（template）写出来的，模板是STL库的基础。STL大致由以下几部分组成： • 容器（container） • 迭代器（iterator） ---&gt; 指针 • 适配器（Adapter） • 算法（algorithm） • 函数对象（functor） • 配置器（a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++基础">
-<meta property="og:url" content="https://cachefish.github.io/2022/03/02/8-%E8%A7%89%E6%82%9F/index.html">
+<meta property="og:title" content="c++ stl">
+<meta property="og:url" content="https://cachefish.github.io/2022/03/11/STL/index.html">
 <meta property="og:site_name" content="cachecatのBlog">
-<meta property="og:description" content="个人品质 上心：人下班了，心未下班，灵感通常都是在路上，洗澡，吃饭等闲散时光产生的。 细致：不犯低级错误。 敏锐：能从蛛丝马迹中寻找线索。 耐心：和问题死磕到底，不解决问题誓不罢休。 勤学好思：多读书，多看牛人的代码，多思考为什么。 轻度强迫症：坚持原则，绝不妥协。 追求简洁，清晰，各个维度具有美感的设计和代码。 好的代码该有的样子：   一眼望过去规整，有美感。  代码是来交流的，你能忍受杂乱无">
+<meta property="og:description" content="https:&#x2F;&#x2F;zh.cppreference.com&#x2F;w&#x2F;%E9%A6%96%E9%A1%B5 • STL库是用模板（template）写出来的，模板是STL库的基础。STL大致由以下几部分组成： • 容器（container） • 迭代器（iterator） ---&gt; 指针 • 适配器（Adapter） • 算法（algorithm） • 函数对象（functor） • 配置器（a">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-02T11:30:00.000Z">
-<meta property="article:modified_time" content="2022-03-03T01:33:35.307Z">
+<meta property="article:published_time" content="2022-03-11T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-04-02T01:31:41.730Z">
 <meta property="article:tag" content="c++ base">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://cachefish.github.io/2022/03/02/8-%E8%A7%89%E6%82%9F/">
+<link rel="canonical" href="https://cachefish.github.io/2022/03/11/STL/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>c++基础 | cachecatのBlog</title>
+  <title>c++ stl | cachecatのBlog</title>
   
 
 
@@ -166,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/02/8-%E8%A7%89%E6%82%9F/">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/03/11/STL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/2229.jfif">
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          c++基础
+          c++ stl
         </h1>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-03-02 19:30:00" itemprop="dateCreated datePublished" datetime="2022-03-02T19:30:00+08:00">2022-03-02</time>
+              <time title="创建时间：2022-03-11 19:30:00" itemprop="dateCreated datePublished" datetime="2022-03-11T19:30:00+08:00">2022-03-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-03 09:33:35" itemprop="dateModified" datetime="2022-03-03T09:33:35+08:00">2022-03-03</time>
+                <time title="修改时间：2022-04-02 09:31:41" itemprop="dateModified" datetime="2022-04-02T09:31:41+08:00">2022-04-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,30 +219,86 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="个人品质"><a href="#个人品质" class="headerlink" title="个人品质"></a>个人品质</h2><ul>
-<li>上心：人下班了，心未下班，灵感通常都是在路上，洗澡，吃饭等闲散时光产生的。</li>
-<li>细致：不犯低级错误。</li>
-<li>敏锐：能从蛛丝马迹中寻找线索。</li>
-<li>耐心：和问题死磕到底，不解决问题誓不罢休。</li>
-<li>勤学好思：多读书，多看牛人的代码，多思考为什么。</li>
-<li>轻度强迫症：坚持原则，绝不妥协。</li>
-<li>追求简洁，清晰，各个维度具有美感的设计和代码。</li>
-<li><h2 id="好的代码该有的样子："><a href="#好的代码该有的样子：" class="headerlink" title="好的代码该有的样子："></a>好的代码该有的样子：</h2></li>
+        <blockquote>
+</blockquote>
+<p> <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5">https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5</a></p>
+<p>• STL库是用模板（template）写出来的，模板是STL库的基础。STL大致由以下几部分组成：</p>
+<pre><code>• 容器（container）
+• 迭代器（iterator） ---&gt; 指针
+• 适配器（Adapter）
+• 算法（algorithm）
+• 函数对象（functor）
+• 配置器（allocator） ---  透明的
+</code></pre>
+<p>容器、迭代器、容器适配器都是用类模板实现的，迭代器用于遍历容器中的每一个元素，&#x3D;&#x3D;算法用于操作数据&#x3D;&#x3D;</p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p>• 如果没有STL的支持，在处理一些复杂问题时，要自行设计存储模式，如数组管理，插入删除操作等，这不但很繁琐，而且bug频出，是程序出问题最多的地方。STL运用模板类库机制，为数据存储，查找和其他操作提供了一整套方案，大大提高了程序的正确性。不仅如此，类库对常用的很多操作进行了优化处理，大大提高了程序的效率。<br>• 容器是可容纳一些数据的类模板，STL中有vector、list、deque、set&#x2F;multiset、map&#x2F;multimap等容器。</p>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><ul>
+<li>在有的专业书籍中，迭代器也称游标，可以将迭代器初步理解为广义指针，迭代器和指针功能很像，迭代器是通过重载一元的”*”和”-&gt;”来从容器中间接地返回一个值。</li>
+<li>迭代器有5种，依次为:<ul>
+<li><pre><code> 随机访问迭代器（Random Access Iterator）
+</code></pre>
+</li>
+<li><pre><code> 双向迭代器（Bidirectional Iterator）
+</code></pre>
+</li>
+<li><pre><code>前向迭代器（Forward Iterator）
+</code></pre>
+</li>
+<li><pre><code> 输入迭代器（Input Iterator）
+</code></pre>
+</li>
+<li><pre><code> 输出迭代器（Output Iterator）
+</code></pre>
+</li>
 </ul>
-<ol>
-<li>一眼望过去规整，有美感。<br>  代码是来交流的，你能忍受杂乱无章，也要为其它人考虑下吧。况且乱中会出错。</li>
-<li>层次清晰，对称。<br>  整个复杂的计算机世界都是分层建立起来的，各司其职，才能井井有条。你自己写的小小的代码也应当如此。<br>   对称不光能让一个东西协调，还能避免出错，易于理解。构造，析构; 开始，停止。</li>
-<li>低耦合，高内聚。<br> 软件世界的精髓。可以对应许多耳熟能详的东西：封装，隐藏细节，屏蔽变化，高复用，函数式编程，模块化，可测性….</li>
-<li>有恰如其分的注释。</li>
-<li>简单，易懂，易维护。</li>
-</ol>
-<h2 id="命名规范："><a href="#命名规范：" class="headerlink" title="命名规范："></a>命名规范：</h2><p>形式A:aaa_bbb<br>形式B:AaaBbb<br>形式C:AAA_BBB</p>
-<p>除类名用形式B,常量用形式C,其余所有地方都用形式A.（变量名,函数名,源&#x2F;头文件名,动态库，静态库，工程名，解决方案名，makefile名．．．．．．)</p>
-<p>类名，变量名用名词结构，方法名用动宾结构。<br>名字都应该尽量简短，达意。</p>
-<h3 id="类名"><a href="#类名" class="headerlink" title="类名"></a>类名</h3><p>不允许像MFC中那样以C开头</p>
-<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p>纯数据类的成员变量不用以m_开头，其它类成员变量需要以m_开头。<br>原因：前缀m_主要时用来区分成员变量和局部变量，如果一个类是纯数据类，那么基本上是没有复杂成员函数的，所以不存在成员变量和局部变量区分的必要。纯数据类的成员变量通常是public的，加了m_，反而带来使用上的不便。</p>
-<h3 id="全局变量名"><a href="#全局变量名" class="headerlink" title="全局变量名"></a>全局变量名</h3><p>g_variable_name<br>避免使用全局变量。用单健类来实现，或者重新设计逻辑。</p>
-<h2 id="排版规范-核心规则："><a href="#排版规范-核心规则：" class="headerlink" title="排版规范 核心规则："></a>排版规范 核心规则：</h2><p>1.每行不超过110个字符。<br>2.缩进量4个space，tab键必须设置为替换为 4 个space。<br>3.所有块语句必须加{ ,即使单行代码<br>4.由于所有语句块都加了{}, 代码已经不密集了，尽量不要无谓的空行。<br>5.所有左大括号 { 前都不换行。<br>6.函数的多个参数尽可能在不超过总长度的前提下放在1行，换行要和第一个参数对齐：<br>7.初始化列表<br>如果单行能放下就不换行，否则全部换行，如下所示：<br>和成员变量之间有换行。成员变量优先放在默认成员初始化器（default member initializer）中，以免漏初始化。</p>
+</li>
+</ul>
+<h3 id="适配器"><a href="#适配器" class="headerlink" title="适配器"></a>适配器</h3><p>• 适配器就是Interface(接口)，&#x3D;&#x3D;对容器、迭代器和算法进行包装&#x3D;&#x3D;，但其实质还是容器、迭代器和算法，只是不依赖于具体的标准容器、迭代器和算法类型，容器适配器可以理解为容器的模板，迭代器适配器可理解为迭代器的模板，算法适配器可理解为算法的模板。<br>• 常见的容器适配器有：<br>    stack、queue、priority_queue<br>    （不支持迭代器访问）</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>STL包含了很多对容器进行处理的函数，它们的处理思路大体相同：使用迭代器来标识要处理的数据或数据段、以及结果的存放位置，有的函数还作为对象参数传递给另一个函数，实现数据的处理。</li>
+</ul>
+<h4 id="vector容器"><a href="#vector容器" class="headerlink" title="vector容器"></a>vector容器</h4><p>vector，字面翻译为向量(动态数组)，其用法类似于数组，但其功能比数组更强大。简单地说，vector是数组的类表示，它提供了自动管理内存的功能，可以动态改变vector对象的长度，并随着元素的增删而增大或缩小(?)，提供了对元素的随机访问，和数组一样，在vector尾部添加和删除元素（push_back和pop_back）的时间是固定的，但在vector中间或头部增删元素(insert,erase)的时间和复杂度线性正比于vector容器对象中元素的多少。</p>
+<h4 id="deque容器"><a href="#deque容器" class="headerlink" title="deque容器"></a>deque容器</h4><ul>
+<li>deque表示双端队列（double-ended queue），deque容器对象支持下标随机访问，在deque头部和尾部添加删除元素时的时间都是固定的，因此，如果有很多操作是针对序列的头部位置的，建议使用deque容器。但是，如果是在deque的中间进行元素的增删处理，操作的复杂度和时间正比于deque对象中元素的多少。</li>
+</ul>
+<h4 id="list容器"><a href="#list容器" class="headerlink" title="list容器"></a>list容器</h4><ul>
+<li>list类模板表示双向链表，除了首尾元素外，list容器对象中的每个元素都和前面的元素相链接，list不支持下标随机访问，只能通过迭代器双向遍历。</li>
+<li>和vector和deque不同的是，在list的任何位置增删元素的时间都是固定的。</li>
+</ul>
+<h4 id="set容器"><a href="#set容器" class="headerlink" title="set容器"></a>set容器</h4><ul>
+<li>使用set容器必须#include <set>。</li>
+<li>其使用形式如下：<br>  set&lt;存储类型[,排序函数或对象]&gt; 容器对象名;<br>  第1个参数用以指定存储类型，第2个参数是可选的，用来指定对关键字进行排序的函数或函数对象(函数对象后面介绍)，在默认情况下，将使用less&lt;&gt;类模板，字面意义上可理解为按从小到大进行排列。可以自己设定排序方式：set&lt;int, greater<int>&gt;</li>
+<li>根据set的特点，STL提供了3种创建set的方式：<ul>
+<li>创建空set容器对象，如：<br>  set<int> obS;</li>
+<li>将迭代器的区间作为参数的构造函数，如：<br>  int sz[9]&#x3D;{1,2,3,4,5,6,3,5,6};<br>  set<int> A(sz,sz+9);</li>
+<li>根据已有同类型的容器创建新容器，如<br>  set<int> B(A);<br>• set不支持[]下标式的随机访问，必须通过迭代器访问元素。</li>
+</ul>
+</li>
+</ul>
+<h4 id="map容器"><a href="#map容器" class="headerlink" title="map容器"></a>map容器</h4><ul>
+<li><p>使用map必须包括头文件<map>。</p>
+</li>
+<li><p>map的元素是一对对的“关键字-值”组合，“关键字”用于搜寻，而“值”用来表示我们要存取的数据。</p>
+</li>
+<li><p>在map容器中，每个关键字只能出现一次，不能重复。</p>
+</li>
+<li><p>可使用类模板pair&lt;class T1,class T2&gt;来表示map容器中形如“关键字-值”的每个元素。如下述语句就生成了map容器对象的一个元素t：</p>
+<ul>
+<li>pair&lt;const int, string&gt; t(600036,”招商银行”);<br>  ○ cout &lt;&lt; t.first &lt;&lt; t.second &lt;&lt; endl;<br>t.first表示600036，t.second表示,”招商银行”<br>   也可创建pair&lt;class T1,class T2&gt;的匿名元素：<br>  • pair&lt;const int, string&gt;(600036,”招商银行”);<br>  • const表示关键字是只读的。</li>
+</ul>
+</li>
+<li><p>创建map容器对象的格式如下，各参数含义和set的类似：<br>  map&lt;关键字类型,值类型[,排序函数或对象]&gt; 容器对象名;</p>
+</li>
+<li><p>创建方式也是3种：</p>
+<ul>
+<li>1.创建空map容器对象，如：<br>  map&lt;int,string&gt; obM;</li>
+<li>2.将迭代器的区间作为参数的构造函数，如<br>  pair&lt;int,string&gt; sz[4]&#x3D;{<br>  pair&lt;int,string&gt;(1,”北京”),pair&lt;int,string&gt;(2,”深圳”),<br>  pair&lt;int,string&gt;(3,”广州”),pair&lt;int,string&gt;(2,”苏州”)};<br>   map&lt;int,string&gt; obM(sz,sz+4);</li>
+<li>3.根据已有同类型的容器创建新容器<br>  map&lt;int,string&gt; B(A);</li>
+</ul>
+</li>
+<li><p>map支持[]下标式的随机访问，也支持迭代器访问元素。</p>
+</li>
+</ul>
 
     </div>
 
@@ -258,7 +314,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://cachefish.github.io/2022/03/02/8-%E8%A7%89%E6%82%9F/" title="c++基础">https://cachefish.github.io/2022/03/02/8-觉悟/</a>
+    <a href="https://cachefish.github.io/2022/03/11/STL/" title="c++ stl">https://cachefish.github.io/2022/03/11/STL/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -278,12 +334,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/02/24/4-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" rel="prev" title="数据链路层">
-      <i class="fa fa-chevron-left"></i> 数据链路层
+    <a href="/2022/03/10/c-11/" rel="prev" title="c++ 11">
+      <i class="fa fa-chevron-left"></i> c++ 11
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/02/5-%E7%BD%91%E7%BB%9C%E5%B1%82/" rel="next" title="网络层">
-      网络层 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/14/systemctl/" rel="next" title="linux">
+      linux <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -343,7 +399,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E5%93%81%E8%B4%A8"><span class="nav-number">1.</span> <span class="nav-text">个人品质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%BD%E7%9A%84%E4%BB%A3%E7%A0%81%E8%AF%A5%E6%9C%89%E7%9A%84%E6%A0%B7%E5%AD%90%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">好的代码该有的样子：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">命名规范：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%90%8D"><span class="nav-number">3.1.</span> <span class="nav-text">类名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%90%8D"><span class="nav-number">3.3.</span> <span class="nav-text">全局变量名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E7%89%88%E8%A7%84%E8%8C%83-%E6%A0%B8%E5%BF%83%E8%A7%84%E5%88%99%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">排版规范 核心规则：</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">适配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vector%E5%AE%B9%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">vector容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deque%E5%AE%B9%E5%99%A8"><span class="nav-number">4.2.</span> <span class="nav-text">deque容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list%E5%AE%B9%E5%99%A8"><span class="nav-number">4.3.</span> <span class="nav-text">list容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set%E5%AE%B9%E5%99%A8"><span class="nav-number">4.4.</span> <span class="nav-text">set容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#map%E5%AE%B9%E5%99%A8"><span class="nav-number">4.5.</span> <span class="nav-text">map容器</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
