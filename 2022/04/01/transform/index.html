@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="结果变换  字符串处理123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tranform">
+<meta property="og:url" content="https://cachefish.github.io/2022/04/01/transform/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="结果变换  字符串处理123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-01T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-04-07T01:58:00.339Z">
+<meta property="article:tag" content="linux shell">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/04/01/transform/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>tranform | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/04/01/transform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/2229.jfif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          tranform
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-01 19:30:00" itemprop="dateCreated datePublished" datetime="2022-04-01T19:30:00+08:00">2022-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-07 09:58:00" itemprop="dateModified" datetime="2022-04-07T09:58:00+08:00">2022-04-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux-shell/" itemprop="url" rel="index"><span itemprop="name">linux shell</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="结果变换-字符串处理"><a href="#结果变换-字符串处理" class="headerlink" title="结果变换  字符串处理"></a>结果变换  字符串处理</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/bin/</span>bash</span><br><span class="line"></span><br><span class="line">compile_result=$(cat &lt;&lt; EOF</span><br><span class="line">[<span class="number">221</span><span class="regexp">/2278] SOLINK hdf/</span>hdf/libcamera_buffer_manager.z.so</span><br><span class="line">[<span class="number">222</span><span class="regexp">/2278] SOLINK hdf/</span>hdf/libcamera_client.z.so</span><br><span class="line">[<span class="number">223</span><span class="regexp">/2278] CXX obj/</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/u</span>nittest<span class="regexp">/buffer_queue_test/</span>buffer_queue_test.o</span><br><span class="line">FAILED: obj<span class="regexp">/foundation/g</span>raphic<span class="regexp">/standard/</span>frameworks<span class="regexp">/surface/</span>test<span class="regexp">/unittest/</span>buffer_queue_test/buffer_queue_test.o</span><br><span class="line">..<span class="regexp">/../</span>prebuilts<span class="regexp">/clang/</span>host<span class="regexp">/linux-x86/</span>clang-r353983c<span class="regexp">/bin/</span>clang++ -MMD -MF obj<span class="regexp">/foundation/g</span>raphic<span class="regexp">/standard/</span>frameworks<span class="regexp">/surface/</span>test<span class="regexp">/unittest/</span>buffer_queue_test<span class="regexp">/buffer_queue_test.o.d -DV8_DEPRECATION_WARNINGS -DNO_TCMALLOC -D_GNU_SOURCE -DHAVE_SYS_UIO_H -DANDROID -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -DCOMPONENT_BUILD -DCR_LIBCXX_REVISION=344254 -DCR_LIBCXXABI_REVISION=344215 -D_LIBCPP_ENABLE_NODISCARD -D__GNU_SOURCE=1 -DCHROMIUM_CXX_TWEAK_INLINES -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -I../</span>.. -Igen -I..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/include -I../</span>..<span class="regexp">/foundation/g</span>raphic<span class="regexp">/standard/i</span>nterfaces<span class="regexp">/innerkits/</span>surface -I..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/interfaces/i</span>nnerkits<span class="regexp">/common -I../</span>..<span class="regexp">/utils/</span><span class="keyword">native</span><span class="regexp">/base/i</span>nclude -I..<span class="regexp">/../</span>developtools<span class="regexp">/liblog -I../</span>..<span class="regexp">/drivers/</span>peripheral<span class="regexp">/base -I../</span>..<span class="regexp">/drivers/</span>peripheral<span class="regexp">/display/i</span>nterfaces<span class="regexp">/include -I../</span>..<span class="regexp">/third_party/</span>bounds_checking_function<span class="regexp">/include -I../</span>..<span class="regexp">/foundation/</span>communication<span class="regexp">/ipc/i</span>nterfaces<span class="regexp">/innerkits/i</span>pc_core<span class="regexp">/include -I../</span>..<span class="regexp">/foundation/</span>communication<span class="regexp">/ipc/i</span>pc<span class="regexp">/native/</span>src<span class="regexp">/core/i</span>nclude -I..<span class="regexp">/../</span>foundation<span class="regexp">/communication/i</span>pc<span class="regexp">/ipc/</span><span class="keyword">native</span><span class="regexp">/src/m</span>ock<span class="regexp">/include -I../</span>..<span class="regexp">/utils/</span><span class="keyword">native</span><span class="regexp">/base/i</span>nclude -I..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/utils/i</span>nclude -I..<span class="regexp">/../</span>drivers<span class="regexp">/peripheral/</span>base -I..<span class="regexp">/../</span>foundation<span class="regexp">/distributedschedule/</span>samgr<span class="regexp">/interfaces/i</span>nnerkits<span class="regexp">/samgr_proxy/i</span>nclude -I..<span class="regexp">/../</span>foundation<span class="regexp">/distributedschedule/</span>samgr<span class="regexp">/adapter/i</span>nterfaces<span class="regexp">/innerkits/i</span>nclude -I..<span class="regexp">/../</span>third_party<span class="regexp">/googletest/g</span>oogletest<span class="regexp">/include -I../</span>..<span class="regexp">/prebuilts/</span>aosp_prebuilt_libs<span class="regexp">/asdk_libs/</span>ndk<span class="regexp">/libcxx/i</span>nclude -fno-strict-aliasing --param=ssp-buffer-<span class="keyword">size</span>=<span class="number">4</span> -fstack-protector-strong -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -funwind-tables -fPIC -fcolor-diagnostics -fmerge-all-constants -Xclang -mllvm -Xclang -instcombine-lower-dbg-declare=<span class="number">0</span> -no-canonical-prefixes -fcomplete-member-pointers -ffunction-sections -fno-<span class="keyword">short</span>-enums --target=arm-linux-androideabi -isystem..<span class="regexp">/../</span>prebuilts<span class="regexp">/aosp_prebuilt_libs/</span>asdk_libs<span class="regexp">/ndk/</span>sysroot<span class="regexp">/usr/i</span>nclude<span class="regexp">/arm-linux-androideabi -D__ANDROID_API__=29 -march=armv7-a -mfloat-abi=softfp -mtune=generic-armv7-a -mfpu=neon -mthumb -Wall -Werror -Wextra -Wimplicit-fallthrough -Wthread-safety -Wno-missing-field-initializers -Wno-unused-parameter -Wno-c++11-narrowing -Wno-unneeded-internal-declaration -Wno-undefined-var-template -Wno-nonportable-include-path -Wno-user-defined-warnings -Wno-unused-lambda-capture -Wno-null-pointer-arithmetic -Wno-enum-compare-switch -O2 -fno-ident -fdata-sections -ffunction-sections -fomit-frame-pointer -gdwarf-3 -g2 -ggnu-pubnames -fno-common -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -fPIE -Wall -Werror -g3 -Dprivate=public -Dprotected=public -DBINDER_IPC_32BIT -DCONFIG_DUAL_FRAMEWORK -DBINDER_IPC_32BIT -DCONFIG_STANDARD_SYSTEM -DBUILD_PUBLIC_VERSION -std=c++17 -fno-exceptions -fno-rtti -nostdinc++ -isystem../</span>..<span class="regexp">/prebuilts/</span>aosp_prebuilt_libs<span class="regexp">/asdk_libs/</span>ndk<span class="regexp">/libcxx/i</span>nclude -isystem..<span class="regexp">/../</span>prebuilts<span class="regexp">/aosp_prebuilt_libs/</span>asdk_libs<span class="regexp">/ndk/</span>libcxxabi<span class="regexp">/include --sysroot=../</span>..<span class="regexp">/prebuilts/</span>aosp_prebuilt_libs<span class="regexp">/asdk_libs/</span>ndk<span class="regexp">/sysroot -fvisibility-inlines-hidden -c ../</span>..<span class="regexp">/foundation/g</span>raphic<span class="regexp">/standard/</span>frameworks<span class="regexp">/surface/</span>test<span class="regexp">/unittest/</span>buffer_queue_test.cpp -o obj<span class="regexp">/foundation/g</span>raphic<span class="regexp">/standard/</span>frameworks<span class="regexp">/surface/</span>test<span class="regexp">/unittest/</span>buffer_queue_test/buffer_queue_test.o</span><br><span class="line">..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/u</span>nittest/buffer_queue_test.cpp:<span class="number">71</span>:<span class="number">5</span>: error: no type named <span class="string">&#x27;RequestBufferReturnValue&#x27;</span> in <span class="string">&#x27;BufferQueue&#x27;</span>; did you mean <span class="string">&#x27;IBufferProducer::RequestBufferReturnValue&#x27;</span>?</span><br><span class="line">    BufferQueue::RequestBufferReturnValue retval;</span><br><span class="line">    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    IBufferProducer::RequestBufferReturnValue</span><br><span class="line">..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/interfaces/i</span>nnerkits<span class="regexp">/surface/i</span>buffer_producer.h:<span class="number">31</span>:<span class="number">12</span>: note: <span class="string">&#x27;IBufferProducer::RequestBufferReturnValue&#x27;</span> declared here</span><br><span class="line">    struct RequestBufferReturnValue &#123;</span><br><span class="line">           ^</span><br><span class="line">..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/u</span>nittest/buffer_queue_test.cpp:<span class="number">74</span>:<span class="number">63</span>: error: too few arguments to function <span class="keyword">call</span>, expected <span class="number">3</span>, have <span class="number">2</span></span><br><span class="line">    SurfaceError ret = bq-&gt;RequestBuffer(requestConfig, retval);</span><br><span class="line">                       ~~~~~~~~~~~~~~~~~                      ^</span><br><span class="line">..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/include/</span>buffer_queue.h:<span class="number">55</span>:<span class="number">5</span>: note: <span class="string">&#x27;RequestBuffer&#x27;</span> declared here</span><br><span class="line">    SurfaceError RequestBuffer(const BufferRequestConfig &amp;config, BufferExtraData &amp;bedata,</span><br><span class="line">    ^</span><br><span class="line">..<span class="regexp">/../</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/u</span>nittest/buffer_queue_test.cpp:<span class="number">90</span>:<span class="number">29</span>: error: non-const lvalue reference to type <span class="string">&#x27;sptr&lt;SurfaceBufferImpl&gt;&#x27;</span> cannot bind to a value of unrelated type <span class="string">&#x27;sptr&lt;SurfaceBuffer&gt;&#x27;</span></span><br><span class="line">    ret = bq-&gt;AcquireBuffer(retval.buffer, retval.fence, timestamp, damage);</span><br><span class="line">                            ^~~~~~~~~~~~~</span><br><span class="line"><span class="number">3</span> errors generated.</span><br><span class="line">[<span class="number">224</span><span class="regexp">/2278] SOLINK hdf/</span>hdf/libcamera_pipeline_core.z.so</span><br><span class="line">[<span class="number">225</span><span class="regexp">/2278] CXX obj/</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/</span>systemtest<span class="regexp">/surface_revert_ipc_test/</span>surface_revert_ipc_test.o</span><br><span class="line">[<span class="number">226</span><span class="regexp">/2278] CXX obj/</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/</span>systemtest<span class="regexp">/surface_ipc_test/</span>surface_ipc_test.o</span><br><span class="line">[<span class="number">227</span><span class="regexp">/2278] CXX obj/</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/u</span>nittest<span class="regexp">/buffer_manager_test/</span>buffer_manager_test.o</span><br><span class="line">[<span class="number">228</span><span class="regexp">/2278] CXX obj/</span>foundation<span class="regexp">/graphic/</span>standard<span class="regexp">/frameworks/</span>surface<span class="regexp">/test/u</span>nittest<span class="regexp">/consumer_surface_test/</span>consumer_surface_test.o</span><br><span class="line">ninja: build stopped: subcommand failed.</span><br><span class="line">build: ninja error</span><br><span class="line">used: <span class="number">49</span> seconds</span><br><span class="line">pycache statistics</span><br><span class="line">manage pycache contents</span><br><span class="line">pycache daemon exit</span><br><span class="line">EOF</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">crash_result=$(cat &lt;&lt; EOF</span><br><span class="line">audit: type=<span class="number">1400</span> audit(<span class="number">89.910</span>:<span class="number">313</span>): avc:  denied  &#123; ptrace &#125; <span class="keyword">for</span>  pid=<span class="number">508</span> comm=<span class="string">&quot;processdump&quot;</span> scontext=u:r:bootanim:s0 tcontext=u:r:bootanim:s0 tclass=process permissive=<span class="number">1</span></span><br><span class="line">audit: type=<span class="number">1400</span> audit(<span class="number">90.030</span>:<span class="number">314</span>): avc:  denied  &#123; <span class="keyword">write</span> &#125; <span class="keyword">for</span>  pid=<span class="number">508</span> comm=<span class="string">&quot;processdump&quot;</span> name=<span class="string">&quot;faultloggerd.server&quot;</span> dev=<span class="string">&quot;tmpfs&quot;</span> ino=<span class="number">10699</span> scontext=u:r:bootanim:s0 tcontext=u:object_r:socket_device:s0 tclass=sock_file permissive=<span class="number">1</span></span><br><span class="line">audit: type=<span class="number">1400</span> audit(<span class="number">90.030</span>:<span class="number">315</span>): avc:  denied  &#123; connectto &#125; <span class="keyword">for</span>  pid=<span class="number">508</span> comm=<span class="string">&quot;processdump&quot;</span> path=<span class="string">&quot;/dev/socket/faultloggerd.server&quot;</span> scontext=u:r:bootanim:s0 tcontext=u:r:faultloggerd:s0 tclass=unix_stream_socket permissive=<span class="number">1</span></span><br><span class="line">audit: type=<span class="number">1400</span> audit(<span class="number">90.030</span>:<span class="number">316</span>): avc:  denied  &#123; search &#125; <span class="keyword">for</span>  pid=<span class="number">355</span> comm=<span class="string">&quot;faultloggerd&quot;</span> name=<span class="string">&quot;faultlog&quot;</span> dev=<span class="string">&quot;mmcblk0p7&quot;</span> ino=<span class="number">102</span> scontext=u:r:faultloggerd:s0 tcontext=u:object_r:faultlogger_core_file:s0 tclass=dir permissive=<span class="number">1</span></span><br><span class="line">audit: type=<span class="number">1400</span> audit(<span class="number">90.030</span>:<span class="number">317</span>): avc:  denied  &#123; use &#125; <span class="keyword">for</span>  pid=<span class="number">508</span> comm=<span class="string">&quot;processdump&quot;</span> path=<span class="string">&quot;/data/log/faultlog/temp/cppcrash-360-90&quot;</span> dev=<span class="string">&quot;mmcblk0p7&quot;</span> ino=<span class="number">1002</span> scontext=u:r:bootanim:s0 tcontext=u:r:faultloggerd:s0 tclass=fd permissive=<span class="number">1</span></span><br><span class="line">DEBUG: *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line">DEBUG: Build fingerprint: <span class="string">&#x27;10/QP1A.190711.020/.20210529.152153:userdebug/test-keys&#x27;</span></span><br><span class="line">DEBUG: Revision: <span class="string">&#x27;0&#x27;</span></span><br><span class="line">DEBUG: ABI: <span class="string">&#x27;arm&#x27;</span></span><br><span class="line">DEBUG: Timestamp: <span class="number">1970</span>-<span class="number">01</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">30</span>+<span class="number">0000</span></span><br><span class="line">DEBUG: pid: <span class="number">360</span>, tid: <span class="number">360</span>, name: bootanimation  &gt;&gt;&gt; <span class="regexp">/system/</span>bin/bootanimation &lt;&lt;&lt;</span><br><span class="line">DEBUG: uid: <span class="number">0</span></span><br><span class="line">DEBUG: signal <span class="number">6</span> (SIGABRT), code -<span class="number">1</span> (SI_QUEUE), fault addr --------</span><br><span class="line">DEBUG: Abort message: <span class="string">&#x27;terminating&#x27;</span></span><br><span class="line">DEBUG:     r0  <span class="number">00000000</span>  r1  <span class="number">00000168</span>  r2  <span class="number">00000006</span>  r3  be916230</span><br><span class="line">DEBUG:     r4  be916244  r5  be916228  r6  <span class="number">00000168</span>  r7  <span class="number">0000016</span>b</span><br><span class="line">DEBUG:     r8  be916240  r9  be916230  r10 be916260  r11 be916250</span><br><span class="line">DEBUG:     ip  <span class="number">00000168</span>  sp  be916200  lr  af442c43  pc  af442c56</span><br><span class="line">DEBUG:</span><br><span class="line">DEBUG: backtrace:</span><br><span class="line">DEBUG:       #<span class="number">00</span> pc <span class="number">0005</span>ec56  <span class="regexp">/system/</span>lib/libc.so (abort+<span class="number">166</span>) (BuildId: <span class="number">1</span>e8dd9673cd9bca53ad6598c9241a872)</span><br><span class="line">DEBUG:       #<span class="number">01</span> pc <span class="number">0003606</span>d  <span class="regexp">/system/</span>lib/libc++.so (abort_message+<span class="number">88</span>) (BuildId: <span class="number">09</span>dfdb05bee9d1ae619e760b283fba69)</span><br><span class="line">DEBUG:       #<span class="number">02</span> pc <span class="number">00036161</span>  <span class="regexp">/system/</span>lib/libc++.so (demangling_terminate_handler()+<span class="number">24</span>) (BuildId: <span class="number">09</span>dfdb05bee9d1ae619e760b283fba69)</span><br><span class="line">DEBUG:       #<span class="number">03</span> pc <span class="number">00044</span>ecb  <span class="regexp">/system/</span>lib/libc++.so (std::__terminate(<span class="keyword">void</span> (*)())+<span class="number">2</span>) (BuildId: <span class="number">09</span>dfdb05bee9d1ae619e760b283fba69)</span><br><span class="line">DEBUG:       #<span class="number">04</span> pc <span class="number">00044</span>e69  <span class="regexp">/system/</span>lib/libc++.so (std::terminate()+<span class="number">28</span>) (BuildId: <span class="number">09</span>dfdb05bee9d1ae619e760b283fba69)</span><br><span class="line">DEBUG:       #<span class="number">05</span> pc <span class="number">0007</span>fedf  <span class="regexp">/system/</span>lib/libc++.so (std::__1::thread::~thread()+<span class="number">10</span>) (BuildId: <span class="number">09</span>dfdb05bee9d1ae619e760b283fba69)</span><br><span class="line">DEBUG:       #<span class="number">06</span> pc <span class="number">00008127</span>  <span class="regexp">/system/</span>lib/libwmservice.z.so (BuildId: <span class="number">9599</span>fc3faca5bb5b3e001aab2717d0fd)</span><br><span class="line">DEBUG:       #<span class="number">07</span> pc <span class="number">0000816</span>b  <span class="regexp">/system/</span>lib/libwmservice.z.so (BuildId: <span class="number">9599</span>fc3faca5bb5b3e001aab2717d0fd)</span><br><span class="line">DEBUG:       #<span class="number">08</span> pc <span class="number">0000701</span>b  <span class="regexp">/system/</span>lib/libwmservice.z.so (BuildId: <span class="number">9599</span>fc3faca5bb5b3e001aab2717d0fd)</span><br><span class="line">DEBUG:       #<span class="number">09</span> pc <span class="number">000</span>a83ad  <span class="regexp">/system/</span>lib/libc.so (__cxa_finalize+<span class="number">144</span>) (BuildId: <span class="number">1</span>e8dd9673cd9bca53ad6598c9241a872)</span><br><span class="line">DEBUG:       #<span class="number">10</span> pc <span class="number">000</span>a3921  <span class="regexp">/system/</span>lib/libc.so (exit+<span class="number">10</span>) (BuildId: <span class="number">1</span>e8dd9673cd9bca53ad6598c9241a872)</span><br><span class="line">DEBUG:       #<span class="number">11</span> pc <span class="number">00005</span>acb  <span class="regexp">/system/</span>bin/bootanimation (BuildId: <span class="number">1757</span>f806e491b8a26c075566e8d5a677)</span><br><span class="line">DEBUG:       #<span class="number">12</span> pc <span class="number">00005</span>aa3  <span class="regexp">/system/</span>bin/bootanimation (BuildId: <span class="number">1757</span>f806e491b8a26c075566e8d5a677)</span><br><span class="line">DEBUG:       #<span class="number">13</span> pc <span class="number">00005</span>a9d  <span class="regexp">/system/</span>bin/bootanimation (BuildId: <span class="number">1757</span>f806e491b8a26c075566e8d5a677)</span><br><span class="line">DEBUG:       #<span class="number">14</span> pc <span class="number">00005</span>a97  <span class="regexp">/system/</span>bin/bootanimation (BuildId: <span class="number">1757</span>f806e491b8a26c075566e8d5a677)</span><br><span class="line">DEBUG:       #<span class="number">15</span> pc <span class="number">00009</span>d85  <span class="regexp">/system/</span>lib/libeventhandler.z.so (AppExecFwk::EventHandler::DistributeEvent(std::__1::unique_ptr&lt;AppExecFwk::InnerEvent, <span class="keyword">void</span> (*)(AppExecFwk::InnerEvent*)&gt; const&amp;)+<span class="number">384</span>) (BuildId: <span class="number">19</span>d5f5844c6c7884d930e6249486696f)</span><br><span class="line">DEBUG:       #<span class="number">16</span> pc <span class="number">0000</span>f3d7  <span class="regexp">/system/</span>lib/libeventhandler.z.so (BuildId: <span class="number">19</span>d5f5844c6c7884d930e6249486696f)</span><br><span class="line">DEBUG:       #<span class="number">17</span> pc <span class="number">0000</span>e613  <span class="regexp">/system/</span>lib/libeventhandler.z.so (AppExecFwk::EventRunner::Run()+<span class="number">62</span>) (BuildId: <span class="number">19</span>d5f5844c6c7884d930e6249486696f)</span><br><span class="line">DEBUG:       #<span class="number">18</span> pc <span class="number">00005303</span>  <span class="regexp">/system/</span>bin/bootanimation (BuildId: <span class="number">1757</span>f806e491b8a26c075566e8d5a677)</span><br><span class="line">DEBUG:       #<span class="number">19</span> pc <span class="number">00059213</span>  <span class="regexp">/system/</span>lib/libc.so (__libc_init+<span class="number">66</span>) (BuildId: <span class="number">1</span>e8dd9673cd9bca53ad6598c9241a872)</span><br><span class="line">DEBUG:       #<span class="number">20</span> pc <span class="number">00005033</span>  <span class="regexp">/system/</span>bin/bootanimation (BuildId: <span class="number">1757</span>f806e491b8a26c075566e8d5a677)</span><br><span class="line">DEBUG:       #<span class="number">21</span> pc <span class="number">0002</span>ef2b  <span class="regexp">/system/</span>bin/linker (__dl__ZN6soinfoD1Ev+<span class="number">14</span>) (BuildId: bbc02384daaf0dda5631ee38f31bd6aa)</span><br><span class="line">DEBUG:       #<span class="number">22</span> pc <span class="number">00020</span>b37  [stack]</span><br><span class="line">init: Service <span class="string">&#x27;bootanimation&#x27;</span> (pid <span class="number">360</span>) received signal <span class="number">6</span></span><br><span class="line">init: Untracked pid <span class="number">512</span> exited with status <span class="number">0</span></span><br><span class="line">init: Untracked pid <span class="number">514</span> exited with status <span class="number">0</span></span><br><span class="line">EOF</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">log_result=$(cat &lt;&lt; EOF</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.075</span>   <span class="number">262</span>   <span class="number">274</span> I <span class="number">02903</span>/BatterySrvClient: [battery_srv_client.cpp] GetChargingStatus#  Calling GetChargingStatus Success!</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.075</span>   <span class="number">262</span>   <span class="number">274</span> D <span class="number">02907</span>/PowerMgrJSNAPI: [battery_info.cpp] GetChargingState# chargeState <span class="number">0</span></span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.075</span>   <span class="number">262</span>   <span class="number">274</span> I <span class="number">03</span>b00/JSApp: app Log: SystemUI_StatusBar tag:batteryStatus --&gt;Battery updateBattery checkBatteryStatus: <span class="number">0</span></span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.075</span>   <span class="number">262</span>   <span class="number">274</span> I <span class="number">03</span>b00/JSApp: app Log: SystemUI_StatusBar tag:batteryStatus --&gt;Battery updateBattery: <span class="number">100</span> charging: <span class="keyword">true</span></span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.075</span>   <span class="number">262</span>   <span class="number">274</span> I <span class="number">03</span>b00/JSApp: app Log: SystemUI_StatusBar tag:batteryStatus --&gt;Battery updateBattery mBackgroundColor: #<span class="number">00</span>ff21</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.090</span>   <span class="number">202</span>   <span class="number">217</span> W <span class="number">01510</span>/IPCObjectProxy: no databus session attach to <span class="keyword">this</span> handle, maybe need update</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.090</span>   <span class="number">262</span>   <span class="number">262</span> E <span class="number">01510</span>/IPCObjectStub: IPCObjectStub::ProcessProto called, type = <span class="number">0</span>, normal stub object</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.090</span>   <span class="number">202</span>   <span class="number">217</span> W <span class="number">01510</span>/IPCObjectProxy: it is normal binder, not dbinder</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.091</span>   <span class="number">262</span>   <span class="number">262</span> I <span class="number">00000</span>/VsyncHelperImpl: RequestNextVsync: Success, Way: ListenNextVsync</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.091</span>   <span class="number">262</span>   <span class="number">262</span> I <span class="number">00000</span>/VsyncHelperImpl: RequestFrameCallback: Success, Way: RequestNextVsync time: <span class="number">0</span></span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.099</span>   <span class="number">262</span>   <span class="number">262</span> I <span class="number">00000</span>/VsyncHelperImpl: operator(): DispatchFrameCallback, time: <span class="number">21291099810</span>, timestamp: <span class="number">2559319676620</span></span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.100</span>   <span class="number">202</span>   <span class="number">219</span> W <span class="number">01510</span>/IPCObjectProxy: it is normal binder, <span class="keyword">try</span> to <span class="keyword">delete</span> handle to index</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.100</span>   <span class="number">262</span>   <span class="number">267</span> W <span class="number">01510</span>/IPCObjectStub: IPCObjectStub destroyed</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.100</span>   <span class="number">202</span>   <span class="number">219</span> W <span class="number">01510</span>/IPCObjectProxy: handle = <span class="number">1</span> destroyed</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.130</span>   <span class="number">262</span>   <span class="number">274</span> I <span class="number">03900</span>/Ace: [&lt;<span class="keyword">private</span>&gt;(&lt;<span class="keyword">private</span>&gt;)] ace Log: [JS Framework] (debug)</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.130</span>   <span class="number">262</span>   <span class="number">274</span> I <span class="number">03900</span>/Ace: [&lt;<span class="keyword">private</span>&gt;(&lt;<span class="keyword">private</span>&gt;)] ace Log: [JS Framework] (debug)</span><br><span class="line">[<span class="number">2021</span>-<span class="number">05</span>-<span class="number">26</span> <span class="number">17</span>:<span class="number">11</span>:<span class="number">58</span>] <span class="number">01</span>-<span class="number">01</span> <span class="number">05</span>:<span class="number">54</span>:<span class="number">51.150</span>   <span class="number">202</span>   <span class="number">217</span> W <span class="number">01510</span>/IPCObjectProxy: no databus session attach to <span class="keyword">this</span> handle, maybe need update</span><br><span class="line">EOF</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$compile_result&quot; | grep &quot;error:&quot;&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$compile_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot;error:&quot;</span></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$crash_result&quot; | grep &quot; pc &quot;&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$crash_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot; pc 0&quot;</span></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$log_result&quot; | egrep &quot;/(JSApp|Ace)&quot;&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$log_result&quot;</span> | egrep <span class="string">&quot;/(JSApp|Ace)&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$crash_result&quot; | sed s/\([^(]*\)(.*\(BuildId\)/\1(\2/g&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$crash_result&quot;</span> | sed <span class="string">&#x27;s/\([^(]*\)(.*\(BuildId\)/\1(\2/g&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$crash_result&quot; | grep &quot; pc 0&quot; | awk &#123;print $5&#125;&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$crash_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot; pc 0&quot;</span> | awk <span class="string">&#x27;&#123;print $5&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$crash_result&quot; | sed s/\([^(]*\)(.*\(BuildId\)/\1(\2/g | grep &quot; pc 0&quot; | awk &#123;print $6 $7&#125;&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$crash_result&quot;</span> | sed <span class="string">&#x27;s/\([^(]*\)(.*\(BuildId\)/\1(\2/g&#x27;</span> | <span class="keyword">grep</span> <span class="string">&quot; pc 0&quot;</span> | awk <span class="string">&#x27;&#123;print $6 $7&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$crash_result&quot; | grep &quot; pc 0&quot; | awk &#123;print $(NF-1)$(NF)&#125;&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$crash_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot; pc 0&quot;</span> | awk <span class="string">&#x27;&#123;print $(NF-1)$(NF)&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$crash_result&quot; | grep &quot; pc 0&quot; | awk -F pc &#123;print $2&#125;&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$crash_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot; pc 0&quot;</span> | awk -F <span class="string">&#x27;pc&#x27;</span> <span class="string">&#x27;&#123;print $2&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$compile_result&quot; | grep &quot;error:&quot; | cut -d: -f1&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$compile_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot;error:&quot;</span> | cut -d: -f1</span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$compile_result&quot; | grep &quot;error:&quot; | cut -d: -f2&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$compile_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot;error:&quot;</span> | cut -d: -f2</span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$compile_result&quot; | grep &quot;error:&quot; | cut -d: -f3&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$compile_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot;error:&quot;</span> | cut -d: -f3</span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$compile_result&quot; | grep &quot;error:&quot; | cut -d: -f4&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$compile_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot;error:&quot;</span> | cut -d: -f4</span><br><span class="line"></span><br><span class="line">echo -e <span class="string">&quot;\n\n&quot;</span><span class="string">&#x27;echo &quot;$compile_result&quot; | grep &quot;error:&quot; | cut -d: -f5-&#x27;</span></span><br><span class="line">echo <span class="string">&quot;$compile_result&quot;</span> | <span class="keyword">grep</span> <span class="string">&quot;error:&quot;</span> | cut -d: -f5-</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/04/01/transform/" title="tranform">https://cachefish.github.io/2022/04/01/transform/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-shell/" rel="tag"># linux shell</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/01/while/" rel="prev" title="while">
+      <i class="fa fa-chevron-left"></i> while
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/01/shortcut/" rel="next" title="shortcut">
+      shortcut <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%8F%98%E6%8D%A2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">结果变换  字符串处理</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":240,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>

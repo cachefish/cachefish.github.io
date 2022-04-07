@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="HTTP报文格式HTTP报文分为请求报文和响应报文两种，每种报文必须按照特有格式生成，才能被浏览器端识别。 其中，浏览器端向服务器发送的为请求报文，服务器处理后返回给浏览器端的为响应报文。 请求报文HTTP请求报文由请求行（request line）、请求头部（header）、空行和请求数据四个部分组成。 其中，请求分为两种，GET和POST，具体的：GET 12345678910 GET &#x2F;56">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http报文">
+<meta property="og:url" content="https://cachefish.github.io/2022/04/01/http%E6%8A%A5%E6%96%87/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="HTTP报文格式HTTP报文分为请求报文和响应报文两种，每种报文必须按照特有格式生成，才能被浏览器端识别。 其中，浏览器端向服务器发送的为请求报文，服务器处理后返回给浏览器端的为响应报文。 请求报文HTTP请求报文由请求行（request line）、请求头部（header）、空行和请求数据四个部分组成。 其中，请求分为两种，GET和POST，具体的：GET 12345678910 GET &#x2F;56">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://note.youdao.com/yws/res/4207/WEBRESOURCE010b5bc4e51f397b051bf576018de99c">
+<meta property="article:published_time" content="2022-04-01T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-04-07T01:57:44.973Z">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://note.youdao.com/yws/res/4207/WEBRESOURCE010b5bc4e51f397b051bf576018de99c">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/04/01/http%E6%8A%A5%E6%96%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>http报文 | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/04/01/http%E6%8A%A5%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/2229.jfif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          http报文
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-01 19:30:00" itemprop="dateCreated datePublished" datetime="2022-04-01T19:30:00+08:00">2022-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-07 09:57:44" itemprop="dateModified" datetime="2022-04-07T09:57:44+08:00">2022-04-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="HTTP报文格式"><a href="#HTTP报文格式" class="headerlink" title="HTTP报文格式"></a>HTTP报文格式</h3><p>HTTP报文分为请求报文和响应报文两种，每种报文必须按照特有格式生成，才能被浏览器端识别。</p>
+<p>其中，浏览器端向服务器发送的为请求报文，服务器处理后返回给浏览器端的为响应报文。</p>
+<h4 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h4><p>HTTP请求报文由请求行（request line）、请求头部（header）、空行和请求数据四个部分组成。</p>
+<p>其中，请求分为两种，GET和POST，具体的：<br>GET</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> GET <span class="regexp">/562f25980001b1b106000338.jpg HTTP/</span><span class="number">1.1</span></span><br><span class="line"> Host:img.mukewang.com</span><br><span class="line"> User-Agent:Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; WOW64)</span><br><span class="line"> AppleWebKit<span class="regexp">/537.36 (KHTML, like Gecko) Chrome/</span><span class="number">51.0</span>.<span class="number">2704.106</span> Safari/<span class="number">537.36</span></span><br><span class="line"> Accept:image<span class="regexp">/webp,image/</span>*,*/*;q=<span class="number">0.8</span></span><br><span class="line"> Referer:http:<span class="regexp">//</span>www.imooc.com/</span><br><span class="line"> Accept-Encoding:gzip, deflate, sdch</span><br><span class="line"> Accept-Language:zh-CN,zh;q=<span class="number">0.8</span></span><br><span class="line">空行</span><br><span class="line">请求数据为空</span><br></pre></td></tr></table></figure>
+<p>POST</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> / HTTP1.1</span><br><span class="line">Host:www.wrox.com</span><br><span class="line">User-Agent:Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .<span class="keyword">NET</span> CLR 2.0.50727; .<span class="keyword">NET</span> CLR 3.0.04506.648; .<span class="keyword">NET</span> CLR 3.5.21022)</span><br><span class="line">Content-<span class="keyword">Type</span>:application/x-www-<span class="keyword">form</span>-urlencoded</span><br><span class="line">Content-Length:40</span><br><span class="line">Connection: <span class="keyword">Keep</span>-Alive</span><br><span class="line">空行</span><br><span class="line">name=Professional%20Ajax&amp;publisher=Wiley</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>请求行，用来说明请求类型,要访问的资源以及所使用的HTTP版本。<br>GET说明请求类型为GET，&#x2F;562f25980001b1b106000338.jpg(URL)为要访问的资源，该行的最后一部分说明使用的是HTTP1.1版本。</p>
+</li>
+<li><p>请求头部，紧接着请求行（即第一行）之后的部分，用来说明服务器要使用的附加信息。</p>
+</li>
+</ul>
+<p>HOST，给出请求资源所在服务器的域名。<br>User-Agent，HTTP客户端程序的信息，该信息由你发出请求使用的浏览器来定义,并且在每个请求中自动发送等。<br>Accept，说明用户代理可处理的媒体类型。<br>Accept-Encoding，说明用户代理支持的内容编码。<br>Accept-Language，说明用户代理能够处理的自然语言集。<br>Content-Type，说明实现主体的媒体类型。<br>Content-Length，说明实现主体的大小。<br>Connection，连接管理，可以是Keep-Alive或close。</p>
+<p>空行，请求头部后面的空行是必须的即使第四部分的请求数据为空，也必须有空行。</p>
+<p>请求数据也叫主体，可以添加任意的其他数据。</p>
+<h4 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h4><p>HTTP响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line"> Date: Fri, <span class="number">22</span> May <span class="number">2009</span> <span class="number">06</span>:<span class="number">07</span>:<span class="number">21</span> GMT</span><br><span class="line"> Content-Type: <span class="type">text</span>/html; charset=UTF-<span class="number">8</span></span><br><span class="line"> 空行</span><br><span class="line"> <span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">       </span><span class="language-xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">       </span><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">             <span class="comment">&lt;!--body goes here--&gt;</span></span></span><br><span class="line"><span class="language-xml">       <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>状态行，由HTTP协议版本号， 状态码， 状态消息 三部分组成。<br> 第一行为状态行，（HTTP&#x2F;1.1）表明HTTP版本为1.1版本，状态码为200，状态消息为OK。</li>
+<li>消息报头，用来说明客户端要使用的一些附加信息。<br> 第二行和第三行为消息报头，Date:生成响应的日期和时间；Content-Type:指定了MIME类型的HTML(text&#x2F;html),编码类型是UTF-8。</li>
+<li>空行，消息报头后面的空行是必须的。</li>
+<li>响应正文，服务器返回给客户端的文本信息。空行后面的html部分为响应正文</li>
+</ul>
+<h3 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h3><p>HTTP有5种类型的状态码，具体的：</p>
+<ul>
+<li>1xx：指示信息–表示请求已接收，继续处理。</li>
+<li>2xx：成功–表示请求正常处理完毕。</li>
+<li>200 OK：客户端请求被正常处理。</li>
+<li>206 Partial content：客户端进行了范围请求。</li>
+<li>3xx：重定向–要完成请求必须进行更进一步的操作。</li>
+<li>301 Moved Permanently：永久重定向，该资源已被永久移动到新位置，将来任何对该资源的访问都要使用本响应返回的若干个URI之一。</li>
+<li>302 Found：临时重定向，请求的资源现在临时从不同的URI中获得。</li>
+<li>4xx：客户端错误–请求有语法错误，服务器无法处理请求。</li>
+<li>400 Bad Request：请求报文存在语法错误。</li>
+<li>403 Forbidden：请求被服务器拒绝。</li>
+<li>404 Not Found：请求不存在，服务器上找不到请求的资源。</li>
+<li>5xx：服务器端错误–服务器处理请求出错。</li>
+<li>500 Internal Server Error：服务器在执行请求时出现错误。</li>
+</ul>
+<h4 id="http处理流程"><a href="#http处理流程" class="headerlink" title="http处理流程"></a>http处理流程</h4><h5 id="http报文处理流程"><a href="#http报文处理流程" class="headerlink" title="http报文处理流程"></a>http报文处理流程</h5><p>浏览器端发出http连接请求，主线程创建http对象接收请求并将所有数据读入对应buffer，将该对象插入任务队列，工作线程从任务队列中取出一个任务进行处理。</p>
+<p>工作线程取出任务后，调用process_read函数，通过主、从状态机对请求报文进行解析。</p>
+<p>解析完之后，跳转do_request函数生成响应报文，通过process_write写入buffer，返回给浏览器端。</p>
+<h5 id="服务器接收http请求"><a href="#服务器接收http请求" class="headerlink" title="服务器接收http请求"></a>服务器接收http请求</h5><p>浏览器端发出http连接请求，主线程创建http对象接收请求并将所有数据读入对应buffer，将该对象插入任务队列，工作线程从任务队列中取出一个任务进行处理。</p>
+<h4 id="流程图与状态机"><a href="#流程图与状态机" class="headerlink" title="流程图与状态机"></a>流程图与状态机</h4><p>从状态机负责读取报文的一行，主状态机负责对该行数据进行解析，主状态机内部调用从状态机，从状态机驱动主状态机。<br><img src="https://note.youdao.com/yws/res/4207/WEBRESOURCE010b5bc4e51f397b051bf576018de99c" alt="image.png"></p>
+<h5 id="主状态机"><a href="#主状态机" class="headerlink" title="主状态机"></a>主状态机</h5><p>三种状态，标识解析位置。</p>
+<pre><code>- CHECK_STATE_REQUESTLINE，解析请求行
+- CHECK_STATE_HEADER，解析请求头
+- CHECK_STATE_CONTENT，解析消息体，仅用于解析POST请求
+</code></pre>
+<p>从状态机<br>三种状态，标识解析一行的读取状态。</p>
+<pre><code>- LINE_OK，完整读取一行
+- LINE_BAD，报文语法有误
+- LINE_OPEN，读取的行不完整
+</code></pre>
+<p>浏览器端发出http连接请求，服务器端主线程创建http对象接收请求并将所有数据读入对应buffer，将该对象插入任务队列后，工作线程从任务队列中取出一个任务进行处理。</p>
+<p>各子线程通过process函数对任务进行处理，调用process_read函数和process_write函数分别完成报文解析与报文响应两个任务。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void http_conn::process<span class="literal">()</span></span><br><span class="line"> &#123;</span><br><span class="line">     HTTP_CODE read_ret=process<span class="constructor">_read()</span>;</span><br><span class="line"> </span><br><span class="line">     <span class="comment">//NO_REQUEST，表示请求不完整，需要继续接收请求数据</span></span><br><span class="line">     <span class="keyword">if</span>(read_ret==NO_REQUEST)</span><br><span class="line">     &#123;</span><br><span class="line">         <span class="comment">//注册并监听读事件</span></span><br><span class="line">         modfd(m_epollfd,m_sockfd,EPOLLIN);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//调用process_write完成报文响应</span></span><br><span class="line">    <span class="built_in">bool</span> write_ret=process<span class="constructor">_write(<span class="params">read_ret</span>)</span>;</span><br><span class="line">    <span class="keyword">if</span>(!write_ret)</span><br><span class="line">    &#123;</span><br><span class="line">        close<span class="constructor">_conn()</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//注册并监听写事件</span></span><br><span class="line">    modfd(m_epollfd,m_sockfd,EPOLLOUT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="HTTP-CODE含义"><a href="#HTTP-CODE含义" class="headerlink" title="HTTP_CODE含义"></a>HTTP_CODE含义</h4><p>表示HTTP请求的处理结果，在头文件中初始化了八种情形，在报文解析时只涉及到四种。</p>
+<ul>
+<li>NO_REQUEST<ul>
+<li>请求不完整，需要继续读取请求报文数据</li>
+</ul>
+</li>
+<li>GET_REQUEST<ul>
+<li>获得了完整的HTTP请求</li>
+</ul>
+</li>
+<li>BAD_REQUEST<ul>
+<li>HTTP请求报文有语法错误</li>
+</ul>
+</li>
+<li>INTERNAL_ERROR<ul>
+<li>服务器内部错误，该结果在主状态机逻辑switch的default下，一般不会触发</li>
+</ul>
+</li>
+</ul>
+<h5 id="解析报文整体流程"><a href="#解析报文整体流程" class="headerlink" title="解析报文整体流程"></a>解析报文整体流程</h5><p>process_read通过while循环，将主从状态机进行封装，对报文的每一行进行循环处理。</p>
+<ul>
+<li><p>判断条件</p>
+<ul>
+<li>主状态机转移到CHECK_STATE_CONTENT，该条件涉及解析消息体</li>
+<li>从状态机转移到LINE_OK，该条件涉及解析请求行和请求头部</li>
+<li>两者为或关系，当条件为真则继续循环，否则退出</li>
+</ul>
+</li>
+<li><p>循环体</p>
+<ul>
+<li>从状态机读取数据</li>
+<li>调用get_line函数，通过m_start_line将从状态机读取数据间接赋给text</li>
+<li>主状态机解析text</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>在HTTP报文中，每一行的数据由\r\n作为结束字符，空行则是仅仅是字符\r\n。因此，可以通过查找\r\n将报文拆解成单独的行进行解析，</p>
+<p>从状态机负责读取buffer中的数据，将每行数据末尾的\r\n置为\0\0，并更新从状态机在buffer中读取的位置m_checked_idx，以此来驱动主状态机解析。</p>
+<ul>
+<li><p>从状态机从m_read_buf中逐字节读取，判断当前字节是否为\r</p>
+<ul>
+<li><p>接下来的字符是\n，将\r\n修改成\0\0，将m_checked_idx指向下一行的开头，则返回LINE_OK</p>
+</li>
+<li><p>接下来达到了buffer末尾，表示buffer还需要继续接收，返回LINE_OPEN</p>
+</li>
+<li><p>否则，表示语法错误，返回LINE_BAD</p>
+</li>
+</ul>
+</li>
+<li><p>当前字节不是\r，判断是否是\n（一般是上次读取到\r就到了buffer末尾，没有接收完整，再次接收时会出现这种情况）</p>
+<ul>
+<li>如果前一个字符是\r，则将\r\n修改成\0\0，将m_checked_idx指向下一行的开头，则返回LINE_OK</li>
+</ul>
+</li>
+<li><p>当前字节既不是\r，也不是\n</p>
+<ul>
+<li>表示接收不完整，需要继续接收，返回LINE_OPEN</li>
+</ul>
+</li>
+</ul>
+<h5 id="主状态机逻辑"><a href="#主状态机逻辑" class="headerlink" title="主状态机逻辑"></a>主状态机逻辑</h5><p>主状态机初始状态是CHECK_STATE_REQUESTLINE，通过调用从状态机来驱动主状态机，在主状态机进行解析前，从状态机已经将每一行的末尾\r\n符号改为\0\0，以便于主状态机直接取出对应字符串进行处理。</p>
+<ul>
+<li><p>CHECK_STATE_REQUESTLINE</p>
+<ul>
+<li><p>主状态机的初始状态，调用parse_request_line函数解析请求行</p>
+</li>
+<li><p>解析函数从m_read_buf中解析HTTP请求行，获得请求方法、目标URL及HTTP版本号</p>
+</li>
+<li><p>解析完成后主状态机的状态变为CHECK_STATE_HEADER</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>解析完请求行后，主状态机继续分析请求头。在报文中，请求头和空行的处理使用的同一个函数，这里通过判断当前的text首位是不是\0字符，若是，则表示当前处理的是空行，若不是，则表示当前处理的是请求头。</p>
+<ul>
+<li><p>CHECK_STATE_HEADER</p>
+<ul>
+<li>调用parse_headers函数解析请求头部信息</li>
+<li>判断是空行还是请求头，若是空行，进而判断content-length是否为0，如果不是0，表明是POST请求，则状态转移到CHECK_STATE_CONTENT，否则说明是GET请求，则报文解析结束。</li>
+<li>若解析的是请求头部字段，则主要分析connection字段，content-length字段，其他字段可以直接跳过，各位也可以根据需求继续分析。</li>
+<li>connection字段判断是keep-alive还是close，决定是长连接还是短连接</li>
+<li>content-length字段，这里用于读取post请求的消息体长度</li>
+</ul>
+</li>
+</ul>
+<p>CHECK_STATE_CONTENT<br>仅用于解析POST请求，调用parse_content函数解析消息体<br>用于保存post请求消息体，为后面的登录和注册做准备</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/04/01/http%E6%8A%A5%E6%96%87/" title="http报文">https://cachefish.github.io/2022/04/01/http报文/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/http/" rel="tag"># http</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/01/fork/" rel="prev" title="fork">
+      <i class="fa fa-chevron-left"></i> fork
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/01/flow-control/" rel="next" title="flow_control">
+      flow_control <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">HTTP报文格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">请求报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87"><span class="nav-number">1.2.</span> <span class="nav-text">响应报文</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">HTTP状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">http处理流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#http%E6%8A%A5%E6%96%87%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">http报文处理流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A5%E6%94%B6http%E8%AF%B7%E6%B1%82"><span class="nav-number">2.1.2.</span> <span class="nav-text">服务器接收http请求</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">2.2.</span> <span class="nav-text">流程图与状态机</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">2.2.1.</span> <span class="nav-text">主状态机</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-CODE%E5%90%AB%E4%B9%89"><span class="nav-number">2.3.</span> <span class="nav-text">HTTP_CODE含义</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%8A%A5%E6%96%87%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-number">2.3.1.</span> <span class="nav-text">解析报文整体流程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">2.4.</span> <span class="nav-text">注意</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E7%8A%B6%E6%80%81%E6%9C%BA%E9%80%BB%E8%BE%91"><span class="nav-number">2.4.1.</span> <span class="nav-text">主状态机逻辑</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":240,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
