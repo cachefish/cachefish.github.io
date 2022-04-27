@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cachefish.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Linux下的iptables iptables 作为一个客户端代理，通过iptables可以将用户的安全设定配置到防火墙中。netfilter才是防火墙真正的安全框架（framework），netfilter位于内核空间  Netfitler当数据包与规则匹配时，iptables就根据规则所定义的方法来处理这些数据包，如放行（accept）、拒绝（reject）和丢弃（drop）等。配置防火墙的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="udhcpc">
+<meta property="og:url" content="https://cachefish.github.io/2022/04/06/iptables/index.html">
+<meta property="og:site_name" content="cachecatのBlog">
+<meta property="og:description" content="Linux下的iptables iptables 作为一个客户端代理，通过iptables可以将用户的安全设定配置到防火墙中。netfilter才是防火墙真正的安全框架（framework），netfilter位于内核空间  Netfitler当数据包与规则匹配时，iptables就根据规则所定义的方法来处理这些数据包，如放行（accept）、拒绝（reject）和丢弃（drop）等。配置防火墙的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-06T11:30:00.000Z">
+<meta property="article:modified_time" content="2022-04-27T07:58:58.247Z">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="linux iptables">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cachefish.github.io/2022/04/06/iptables/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>udhcpc | cachecatのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">cachecatのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">localhost</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">19</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">19</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">49</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cachefish.github.io/2022/04/06/iptables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/2229.jfif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="来世做春风，浪漫且自由">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cachecatのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          udhcpc
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-06 19:30:00" itemprop="dateCreated datePublished" datetime="2022-04-06T19:30:00+08:00">2022-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-27 15:58:58" itemprop="dateModified" datetime="2022-04-27T15:58:58+08:00">2022-04-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux-iptables/" itemprop="url" rel="index"><span itemprop="name">linux iptables</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Linux下的iptables"><a href="#Linux下的iptables" class="headerlink" title="Linux下的iptables"></a>Linux下的iptables</h2><hr>
+<p>iptables 作为一个客户端代理，通过iptables可以将用户的安全设定配置到防火墙中。<br>netfilter才是防火墙真正的安全框架（framework），netfilter位于内核空间</p>
+<hr>
+<h2 id="Netfitler"><a href="#Netfitler" class="headerlink" title="Netfitler"></a>Netfitler</h2><p>当数据包与规则匹配时，iptables就根据规则所定义的方法来处理这些数据包，如放行（accept）、拒绝（reject）和丢弃（drop）等。配置防火墙的主要工作就是添加、修改和删除这些规则。</p>
+<p>做NAT操作需要保证系统开启ipv4转发<br>&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;ip_forward&#x3D;1</p>
+<h4 id="例子-将192-168-0-12的7788端口数据转发到192-168-0-11的7799端口"><a href="#例子-将192-168-0-12的7788端口数据转发到192-168-0-11的7799端口" class="headerlink" title="例子: 将192.168.0.12的7788端口数据转发到192.168.0.11的7799端口"></a>例子: 将192.168.0.12的7788端口数据转发到192.168.0.11的7799端口</h4><p>思路:<br>    把发到本机7788端口的数据包转到0.11:7799<br>    把本机要发到0.11:7799的数据包源地址改为本机地址</p>
+<p>iptables -t nat -A PREROUTEING -p tcp –dport 7788 -j DNAT –to 192.168.0.11:7788</p>
+<p>iptables -t nat -A POSTROUTING -p tcp -d 192.168.0.11 –dport 7799 -j SNAT –to 192.168.0.12</p>
+<p>-j SNAT –to 192.168.0.12可写为 -j MASQUERADE(默认转为出口网卡的ip地址)</p>
+<h5 id="聚合做NAT"><a href="#聚合做NAT" class="headerlink" title="聚合做NAT"></a>聚合做NAT</h5><p>iptables -t nat -A POSTROUTING -s $ip&#x2F;$masq_ip_mask  -j MASQUERADE</p>
+<h5 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h5><p>在PREROUTINGREDIRECT中有没有将数据重定向到1080端口的规则<br>sudo iptables -t nat -vnL PREROUTINGREDIRECT –line-number | awk ‘{print $NF}’|grep 1080</p>
+<p>sudo iptables -t nat -A PREROUTINGREDIRECT -p tcp -s 172.31.0.0&#x2F;16 -j REDIRECT –to-ports 1080</p>
+<h5 id="开放端口-accept"><a href="#开放端口-accept" class="headerlink" title="开放端口 accept"></a>开放端口 accept</h5><p>sudo iptables -t nat -A OUTPUTPASS -p tcp –dport 22 -J ACCEPT</p>
+<h5 id="设置pmtu"><a href="#设置pmtu" class="headerlink" title="设置pmtu"></a>设置pmtu</h5><ol>
+<li>多表中添加 –damp-mss-to-pmtu</li>
+<li>保证TCP数据经过MTU较小的tun0时能够正确的分包</li>
+</ol>
+<p>为达到最佳的传输效能TCP在建立连接时会协商MSS（最大分段长度，一般为1460字节）值，即MTU（最大传输单元，不超过1500字节）减去IP数据包包头20字节和TCP数据包头20字节，取最小的MSS值为本次连接的最大MSS值，Iptables下TCPMSS模块即用来调整TCP数据包中MSS数值。<br>在ADSL拨号环境中由于PPP包头占用8字节，MTU为1492字节，MSS为1452字节，如不能正确设置会导致网络不正常，可以通过TCPMSS模块调整MSS大小。<br>TCPMSS使用参数：</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#http://www.haiyun.me</span></span><br><span class="line"><span class="built_in">--set-mss</span> <span class="string">value</span> <span class="comment">#设置特定MSS值</span></span><br><span class="line"><span class="built_in">--clamp-mss-to-pmtu</span> <span class="comment">#根据MTU自动调整MS</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -t mangle -<span class="selector-tag">I</span> POSTROUTING -o pppoe-wan -<span class="selector-tag">p</span> tcp -m tcp <span class="attr">--tcp-flags</span> SYN,RST SYN -j TCPMSS <span class="attr">--clamp-mss-to-pmtu</span> </span><br><span class="line">#自动调整经pppoe-wan接口发出的TCP数据MSS</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#echo</span> &quot;set mss&quot;</span><br><span class="line">iptables -t mangle -<span class="selector-tag">I</span> FORWARD -o tun+ -<span class="selector-tag">p</span> tcp <span class="attr">--tcp-flags</span> SYN,RST SYN -j TCPMSS <span class="attr">--clamp-mss-to-pmtu</span></span><br><span class="line">iptables -t mangle -<span class="selector-tag">I</span> FORWARD -<span class="selector-tag">i</span> wlan+ -<span class="selector-tag">p</span> tcp <span class="attr">--tcp-flags</span> SYN,RST SYN -j TCPMSS <span class="attr">--clamp-mss-to-pmtu</span></span><br><span class="line">iptables -t mangle -<span class="selector-tag">I</span> FORWARD -<span class="selector-tag">i</span> br+ -<span class="selector-tag">p</span> tcp <span class="attr">--tcp-flags</span> SYN,RST SYN -j TCPMSS <span class="attr">--clamp-mss-to-pmtu</span></span><br><span class="line">iptables -t mangle -<span class="selector-tag">A</span> OUTPUT -o tun+ -<span class="selector-tag">p</span> tcp <span class="attr">--tcp-flags</span> SYN,RST SYN -j TCPMSS <span class="attr">--clamp-mss-to-pmtu</span></span><br><span class="line">iptables -t mangle -<span class="selector-tag">A</span> POSTROUTING -<span class="selector-tag">p</span> tcp <span class="attr">--tcp-flags</span> SYN,RST SYN -j TCPMSS <span class="attr">--clamp-mss-to-pmtu</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>设置完结果为</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">root</span>@zlhf:/home/butel/config# iptables -t mangle -vnL</span><br><span class="line"><span class="attribute">Chain</span> PREROUTING (policy ACCEPT <span class="number">5164</span>K packets, <span class="number">1815</span>M bytes)</span><br><span class="line"> <span class="attribute">pkts</span> bytes target     prot opt in     out     source               destination</span><br><span class="line"></span><br><span class="line"><span class="attribute">Chain</span> INPUT (policy ACCEPT <span class="number">5131</span>K packets, <span class="number">1803</span>M bytes)</span><br><span class="line"> <span class="attribute">pkts</span> bytes target     prot opt in     out     source               destination</span><br><span class="line"></span><br><span class="line"><span class="attribute">Chain</span> FORWARD (policy ACCEPT <span class="number">31511</span> packets, <span class="number">11</span>M bytes)</span><br><span class="line"> <span class="attribute">pkts</span> bytes target     prot opt in     out     source               destination</span><br><span class="line">    <span class="attribute">0</span>     <span class="number">0</span> TCPMSS     tcp  --  br+    *       <span class="number">0.0.0.0</span>/<span class="number">0</span>            <span class="number">0.0.0.0</span>/<span class="number">0</span>            tcp flags:<span class="number">0</span>x06/<span class="number">0</span>x02 TCPMSS clamp to PMTU</span><br><span class="line">   <span class="attribute">76</span>  <span class="number">3952</span> TCPMSS     tcp  --  wlan+  *       <span class="number">0.0.0.0</span>/<span class="number">0</span>            <span class="number">0.0.0.0</span>/<span class="number">0</span>            tcp flags:<span class="number">0</span>x06/<span class="number">0</span>x02 TCPMSS clamp to PMTU</span><br><span class="line">   <span class="attribute">19</span>   <span class="number">988</span> TCPMSS     tcp  --  *      tun+    <span class="number">0.0.0.0</span>/<span class="number">0</span>            <span class="number">0.0.0.0</span>/<span class="number">0</span>            tcp flags:<span class="number">0</span>x06/<span class="number">0</span>x02 TCPMSS clamp to PMTU</span><br><span class="line"></span><br><span class="line"><span class="attribute">Chain</span> OUTPUT (policy ACCEPT <span class="number">5100</span>K packets, <span class="number">1435</span>M bytes)</span><br><span class="line"> <span class="attribute">pkts</span> bytes target     prot opt in     out     source               destination</span><br><span class="line"><span class="attribute">25899</span> <span class="number">1865</span>K TCPMSS     tcp  --  *      tun+    <span class="number">0.0.0.0</span>/<span class="number">0</span>            <span class="number">0.0.0.0</span>/<span class="number">0</span>            tcp flags:<span class="number">0</span>x06/<span class="number">0</span>x02 TCPMSS clamp to PMTU</span><br><span class="line"></span><br><span class="line"><span class="attribute">Chain</span> POSTROUTING (policy ACCEPT <span class="number">5131</span>K packets, <span class="number">1446</span>M bytes)</span><br><span class="line"> <span class="attribute">pkts</span> bytes target     prot opt in     out     source               destination</span><br><span class="line"> <span class="attribute">115K</span> <span class="number">8065</span>K TCPMSS     tcp  --  *      *       <span class="number">0.0.0.0</span>/<span class="number">0</span>            <span class="number">0.0.0.0</span>/<span class="number">0</span>            tcp flags:<span class="number">0</span>x06/<span class="number">0</span>x02 TCPMSS clamp to PMTU</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="网络中的mss与mtu相关"><a href="#网络中的mss与mtu相关" class="headerlink" title="网络中的mss与mtu相关"></a>网络中的mss与mtu相关</h4><p> 关于mtu和mss 网上的资料很多，在看《tcp&#x2F;ip详解卷1》的时候里面重点说了下mtu的重要性. 但是却没找到mss，或许是因为mss是tcp层的一个概念吧，当然mss和mtu也有莫大的关系.这里为什么再写一下，是因为在实际工作中，前方测试遇到的一个奇怪问题. 解决完之后，做一个总结而已.<br>     那么什么奇怪的问题呢？ 就是大部分网站能上去，有些网站上不去. 或许经常玩网络设备的人马上就会想到了mtu或者mss ，当时我们没有遇到过.并没有发现问题！通过网络接口抓包也没有发现什么… 因为在家里测试没有问题.所以只有环境的问题了，那么问题出在了什么地方呢？ </p>
+<h5 id="这里先说说mtu"><a href="#这里先说说mtu" class="headerlink" title="这里先说说mtu"></a>这里先说说mtu</h5><p>mtu是一个链路层的一个概念，mtu的定义：除去帧头的数据包大小.RFC 894（以太网）<br>以太网帧报头为 目的地址 6+源地址 6+协议类型 2+CRC 4&#x3D;18 bytes<br> 所以一般以太网mtu最大是1500 ，而对于ppp还要减去8字节的开销，就是1492字节.<br>我们就从lan到wan数据包的流程说起吧.<br>首先pc会发送一个数据帧，一般模式1500（mtu）.虽然有mtu协商的功能，但是有时候并不那么智能.这里举例：<br>#ping  -f -l  2000   x.x.x.x<br>这里ping一个大包 ，并且不允许分片.<br>#来自 x.x.x.x 的回复: 需要拆分数据包但是设置 DF。<br>有时候网络中pc会发一个我们认为合理的包，但是不通.首先pc发送的数据帧，先达到switch芯片,那么switch一般会允许多大的帧通过呢？<br>这里我们简单的参考6097的一个芯片. 默认是允许1522的帧（tag） 1518 （untag） ，如果开启了超大帧模式，为1632.<br>而对于lan侧，或许我们调整可以接收的范围就行了.当然很多时候pc不会发送一个那么大的帧. 如果是从vlan到pc呢？<br>首先对于一个网络设备，从tcp&#x2F;udp层封包，往下面传递，到vlan，加tag，封帧，驱动发送.所以vlan所允许的mtu很重要，或许发送给pc的帧，pc不能接受!<br>如果vlan的mtu为1500 ，那么最大可以发送出去的帧为1522 （tag） ，1518（untag） .<br>所以在ip层，如果ip包大于mtu值，会分片小于mtu.并发送出去. 这里并不讲数据包的收发具体的函数流程.<br>但是实际中我们需要上网，就需要wan—lan之间的数据通信. 一般我们的路由器会pppoe拨号，即wan口. 我们知道对于pppoe的帧，它会附加8字节的pppoe头信息，所以一般默认的pppoe所允许的mtu大小为1500-8&#x3D;1492 .<br>这里附加说明一下对于icmp包的，ip头长度默认是28字节，而一般ip头位20字节，（默认没有附加字段）。<br>2. 在ip foward的时候会检查mss和mtu值.决定是否分片.而mss和tcp连接有关.<br>一般在tcp建立连接的时候，双方会协商出来一个最小的mss值，因为一般tcp通信中一些数据包不允许分片.所以需要在发送的时候，直接发送一个比较小的数据报文.<br>不然就会被网络处理的时候丢弃掉.<br>我们来看看mss的定义：<br>MSS： Maxitu Segment Size 最大分段大小<br>它是tcp数据包每次能够传输的最大数据分段.为了达到最佳的传输效能，tcp<br>协议在建立连接的时候通常要协商双方的MSS值，这个值一般是减去ip头和tcp头<br>即1460，<br>而有时候我们会遇到一些问题：<br>MSS—路径最大传输单元 (PMTU) 黑洞路由器  当路由器必须将 IP 包分段但又因 DF 标记设置为 1 而不能分段时，路由器可采用以下任一种方式：</p>
+<ol>
+<li>发送符合 RFC 792 中最初定义的“ICMP Destination Unreachable-Fragmentation Needed and DF Set”消息，然后丢弃该包。  原始消息格式中不包含有关转发失败的链路的 IP MTU 的信息。</li>
+<li>发送符合 RFC 1191 中重新定义的“ICMP Destination Unreachable-Fragmentation Needed and DF Set”消息，然后丢弃该包。此新消息格式包含一个 MTU 字段，可指出转发失败的链路的 IP MTU。   RFC 1191 定义了路径 MTU (PMTU) 发现，它使得成对的 TCP 对等方能够动态地发现二者之间路径的 IP MTU，从而发现该路径的 TCP MSS。一旦收到符合 RFC 1191 定义的“Destination Unreachable-Fragmentation Needed and DF Set”消息，TCP 就会将该连接的 MSS 调整为指定 IP MTU 减去 TCP 和 IP 报头的大小。这样，在该 TCP 连接上发送的后续包就不会超过最大大小，无需分段即可在该路径上传输。 </li>
+<li>直接丢弃包。   直接丢弃需分段但 DF 标记设置为 1 的包的路由器称为 PMTU 黑洞路由器。</li>
+</ol>
+<p>PMTU 黑洞路由器会给 TCP 连接带来问题<br>在 TCP 三次握手期间交换的 TCP 数据段不会太大，因而不会被 PMTU 黑洞路由器丢弃。但是，一旦开始在连接上传输数据—假定基于协商的 MSS 确定的 PMTU 比实际 PMTU 大—TCP 数据段的大于实际 PMTU 的 IP 包就会被直接丢弃<br>是的，有时候我们不能保证每个网络设备都有（2）中，mtu自动发现功能. 对于涉及PPPOE＋NAT、IPsec、L2TP、GRE等组网，通常由于报文太大需要分片，这样会降低传输速率; 所以选择一个合适的MSS对传输数据来说比较重要.<br>linux中一般可以通过netfilter iptables设置TCP MSS来解决<br><code>iptables -A FORWARD -p tcp- -tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</code></p>
+<p>这条规则的目的就是改变TCP MSS以适应PMTU(Path MTU)<br><code>iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN- j TCPMSS --set-mss 128</code><br>设置MSS为128</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>cachefish
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cachefish.github.io/2022/04/06/iptables/" title="udhcpc">https://cachefish.github.io/2022/04/06/iptables/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/network/" rel="tag"># network</a>
+              <a href="/tags/linux-iptables/" rel="tag"># linux iptables</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/06/udhcpc/" rel="prev" title="udhcpc">
+      <i class="fa fa-chevron-left"></i> udhcpc
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/07/LAN/" rel="next" title="LAN">
+      LAN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E4%B8%8B%E7%9A%84iptables"><span class="nav-number">1.</span> <span class="nav-text">Linux下的iptables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netfitler"><span class="nav-number">2.</span> <span class="nav-text">Netfitler</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-%E5%B0%86192-168-0-12%E7%9A%847788%E7%AB%AF%E5%8F%A3%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%8F%91%E5%88%B0192-168-0-11%E7%9A%847799%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.0.1.</span> <span class="nav-text">例子: 将192.168.0.12的7788端口数据转发到192.168.0.11的7799端口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%81%9ANAT"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">聚合做NAT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3-accept"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">开放端口 accept</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEpmtu"><span class="nav-number">2.0.1.4.</span> <span class="nav-text">设置pmtu</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84mss%E4%B8%8Emtu%E7%9B%B8%E5%85%B3"><span class="nav-number">2.0.2.</span> <span class="nav-text">网络中的mss与mtu相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%99%E9%87%8C%E5%85%88%E8%AF%B4%E8%AF%B4mtu"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">这里先说说mtu</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/images/2229.jfif">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">来世做春风，浪漫且自由</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cachefish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cachefish" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/cachefish@163g.com" title="E-Mail → cachefish@163g.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cachecat</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":240,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
